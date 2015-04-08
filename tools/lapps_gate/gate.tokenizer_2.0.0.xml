@@ -1,0 +1,11 @@
+<tool id='gate.tokenizer_2.0.0' name='GATE Tokenizer v2.0.0' version='2.0.0'>
+  <description>ANNIE Tokeniser from GATE.</description>
+  <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd gate.tokenizer_2.0.0 $input $output</command>
+  <inputs>
+    <param name='input' type='data' label='input' />
+  </inputs>
+  <outputs>
+    <data name='output' format='gate' />
+  </outputs>
+  <help>ANNIE Tokeniser from GATE.</help>
+</tool>
