@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<toolbox>
+	<section id="datasource" name="Datasources">
+		<tool file="lapps_datasource/masc_list.xml"/>
+		<tool file="lapps_datasource/masc_fetch.xml"/> 
+	</section>
+	<section id="stanford" name="Stanford NLP Tools">
+		<tool file="lapps_stanford/tokenizer.xml"/>
+		<tool file="lapps_stanford/tagger.xml"/>
+		<tool file="lapps_stanford/stanford.tokenizer_2.0.0.xml"/>
+		<tool file="lapps_stanford/stanford.tagger_2.0.0.xml"/>
+		<tool file="lapps_stanford/stanford.splitter_2.0.0.xml"/>
+		<tool file="lapps_stanford/stanford.ner_2.0.0.xml"/>
+	</section>
+	<section id="gate" name="GATE Tools">
+		<tool file="lapps_gate/gate.coref_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.npchunker_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.splitter_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.tagger_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.tokenizer_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.vpchunker_2.0.0.xml"/>
+	</section>
+	<section id="gate.converters" name="GATE Converters">	
+		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
+		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
+	</section>
+	<section id='brandeis.tools' name='Brandeis Tools'>
+	  <tool file='lapps_brandeis/opennlp.tokenizer.xml' />
+	  <tool file='lapps_brandeis/opennlp.namedentityrecognizer.xml' />
+	  <tool file='lapps_brandeis/opennlp.splitter.xml' />
+	  <tool file='lapps_brandeis/opennlp.parser.xml' />
+	  <tool file='lapps_brandeis/stanfordnlp.tokenizer.xml' />
+	  <tool file='lapps_brandeis/stanfordnlp.postagger.xml' />
+	  <tool file='lapps_brandeis/stanfordnlp.namedentityrecognizer.xml' />
+	  <tool file='lapps_brandeis/stanfordnlp.splitter.xml' />
+	  <tool file='lapps_brandeis/stanfordnlp.parser.xml' />
+	</section>	
+</toolbox>
