@@ -1,6 +1,6 @@
 <tool id='opennlp.tokenizer' name='OpenNLP Tokenizer' version='2.0.0'>
   <description>OpenNLP Tokenizer</description>
-  <command interpreter='lsd'>invoke.lsd opennlp.OpenNLP $input $output</command>
+  <command interpreter='lsd'>invoke.lsd opennlp.tokenizer $input $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='input' />
   </inputs>

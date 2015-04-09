@@ -1,6 +1,6 @@
 <tool id='stanfordnlp.splitter' name='Stanford Splitter' version='2.0.0'>
   <description>Stanford CoreNLP Splitter</description>
-  <command interpreter='lsd'>invoke.lsd stanfordnlp.Stanford $input $output</command>
+  <command interpreter='lsd'>invoke.lsd stanfordnlp.splitter $input $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='input' />
   </inputs>

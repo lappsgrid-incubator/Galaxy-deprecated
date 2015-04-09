@@ -67,7 +67,7 @@ void generate(String provider, String name, List services) {
 			def xml = new MarkupBuilder(writer)
 			xml.tool(id:id, name:fullName, version:'2.0.0') {
 				description metadata.description
-				command(interpreter:'lsd', "../lapps_common/invoke.lsd ${id} \$input \$output")
+				command(interpreter:'lsd', "invoke.lsd ${id} \$input \$output")
 				inputs {
 					param(name:'input', type:'data', format:'lif', label:'input')
 				}

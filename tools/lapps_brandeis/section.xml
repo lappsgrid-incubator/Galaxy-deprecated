@@ -1,5 +1,6 @@
 <section id='brandeis.tools' name='Brandeis Tools'>
   <tool file='lapps_brandeis/opennlp.tokenizer.xml' />
+  <tool file='lapps_brandeis/opennlp.postagger.xml' />
   <tool file='lapps_brandeis/opennlp.namedentityrecognizer.xml' />
   <tool file='lapps_brandeis/opennlp.splitter.xml' />
   <tool file='lapps_brandeis/opennlp.parser.xml' />
