@@ -2,7 +2,7 @@
   <description>Lists all keys in MASC.</description>
   <command interpreter="lsd">list.lsd token=${token} output=${output}</command>
   <inputs>
-    <param name="token" type="text" label="OAuth Token"/>
+    <param name="token" type="text" label="OAuth Token" value="123abc"/>
   </inputs>
   <outputs>
     <data name="output" format="json" label="Output"/>
