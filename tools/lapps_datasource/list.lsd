@@ -11,6 +11,8 @@ def service = new DataSourceClient(url, server.username, server.password)
 service.setToken(token)
 
 String json = service.list()
+List<String> list = Serializer.parse(json, List)
+new File(output).withWriter { writer ->
+	list.each { writer.println(it) }
+}
 
-println "Writing ${output}"
-new File(output).text = json
