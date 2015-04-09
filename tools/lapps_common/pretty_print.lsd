@@ -4,4 +4,4 @@ import groovy.json.JsonOutput
 File input = new File(args[0])
 File output = new File(args[1])
 
-output.text = JsonOutput.prettyPring(input.text)
+output.text = JsonOutput.prettyPrint(input.text)
