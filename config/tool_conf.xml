@@ -27,6 +27,9 @@
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 	</section>
+	<section id="pretty.printers" name="Pretty Printers">
+		<tool file="lapps_common/pretty_print.xml"/>
+	</section>
 	<section id='brandeis.tools' name='Brandeis Tools'>
 	  <tool file='lapps_brandeis/opennlp.tokenizer.xml' />
 	  <tool file='lapps_brandeis/opennlp.postagger.xml' />
