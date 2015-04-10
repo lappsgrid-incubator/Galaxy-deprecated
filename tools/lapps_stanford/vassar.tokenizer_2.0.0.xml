@@ -1,5 +1,5 @@
 <tool id='stanford.tokenizer_2.0.0' name='Stanford Tokenizer v2.0.0' version='2.0.0'>
-  <description>Stanford Tokenizer</description>
+  <description>Stanford Tokenizer (Vassar)</description>
   <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd stanford.tokenizer_2.0.0 $input $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='input' />

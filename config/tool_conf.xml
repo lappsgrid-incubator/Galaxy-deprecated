@@ -3,16 +3,20 @@
 	<section id="datasource" name="Datasources">
 		<tool file="lapps_datasource/masc_list.xml"/>
 		<tool file="lapps_datasource/masc_fetch.xml"/> 
+		<tool file="lapps_datasource/gigaword.xml"/>
 	</section>
-	<section id="stanford" name="Stanford NLP Tools">
-		<tool file="lapps_stanford/tokenizer.xml"/>
-		<tool file="lapps_stanford/tagger.xml"/>
-		<tool file="lapps_stanford/stanford.tokenizer_2.0.0.xml"/>
-		<tool file="lapps_stanford/stanford.tagger_2.0.0.xml"/>
-		<tool file="lapps_stanford/stanford.splitter_2.0.0.xml"/>
-		<tool file="lapps_stanford/stanford.ner_2.0.0.xml"/>
+	<section id="stanford" name="Stanford NLP">
+		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
+		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
+		<tool file="lapps_stanford/vassar.splitter_2.0.0.xml"/>
+		<tool file="lapps_stanford/vassar.ner_2.0.0.xml"/>
+		<tool file='lapps_stanford/brandies.tokenizer.xml' />
+		<tool file='lapps_stanford/brandies.postagger.xml' />
+		<tool file='lapps_stanford/brandies.splitter.xml' />
+		<tool file='lapps_stanford/brandies.namedentityrecognizer.xml' />
+		<tool file='lapps_stanford/brandies.parser.xml' />
 	</section>
-	<section id="gate" name="GATE Tools">
+	<section id="gate" name="GATE">
 		<tool file="lapps_gate/gate.coref_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
@@ -22,24 +26,18 @@
 		<tool file="lapps_gate/gate.tagger_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.tokenizer_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.vpchunker_2.0.0.xml"/>
-	</section>
-	<section id="gate.converters" name="GATE Converters">	
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 	</section>
 	<section id="pretty.printers" name="Pretty Printers">
 		<tool file="lapps_common/pretty_print.xml"/>
+		<tool file="lapps_common/data_splitter.xml"/>
 	</section>
-	<section id='brandeis.tools' name='Brandeis Tools'>
-	  <tool file='lapps_brandeis/opennlp.tokenizer.xml' />
-	  <tool file='lapps_brandeis/opennlp.postagger.xml' />
-	  <tool file='lapps_brandeis/opennlp.splitter.xml' />
-	  <tool file='lapps_brandeis/opennlp.namedentityrecognizer.xml' />
-	  <tool file='lapps_brandeis/opennlp.parser.xml' />
-	  <tool file='lapps_brandeis/stanfordnlp.tokenizer.xml' />
-	  <tool file='lapps_brandeis/stanfordnlp.postagger.xml' />
-	  <tool file='lapps_brandeis/stanfordnlp.splitter.xml' />
-	  <tool file='lapps_brandeis/stanfordnlp.namedentityrecognizer.xml' />
-	  <tool file='lapps_brandeis/stanfordnlp.parser.xml' />
+	<section id='opennlp.tools' name='OpenNLP'>
+	  <tool file='lapps_opennlp/opennlp.tokenizer.xml' />
+	  <tool file='lapps_opennlp/opennlp.postagger.xml' />
+	  <tool file='lapps_opennlp/opennlp.splitter.xml' />
+	  <tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
+	  <tool file='lapps_opennlp/opennlp.parser.xml' />
 	</section>	
 </toolbox>
