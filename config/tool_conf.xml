@@ -29,10 +29,6 @@
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 	</section>
-	<section id="pretty.printers" name="Pretty Printers">
-		<tool file="lapps_common/pretty_print.xml"/>
-		<tool file="lapps_common/data_splitter.xml"/>
-	</section>
 	<section id='opennlp.tools' name='OpenNLP'>
 	  <tool file='lapps_opennlp/opennlp.tokenizer.xml' />
 	  <tool file='lapps_opennlp/opennlp.postagger.xml' />
@@ -40,4 +36,8 @@
 	  <tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
 	  <tool file='lapps_opennlp/opennlp.parser.xml' />
 	</section>	
+	<section id="lapps.tools" name="Tools">
+		<tool file="lapps_common/pretty_print.xml"/>
+		<tool file="lapps_common/data_splitter.xml"/>
+	</section>
 </toolbox>
