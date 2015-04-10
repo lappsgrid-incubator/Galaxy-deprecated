@@ -10,11 +10,11 @@
 		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.splitter_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.ner_2.0.0.xml"/>
-		<tool file='lapps_stanford/brandies.tokenizer.xml' />
-		<tool file='lapps_stanford/brandies.postagger.xml' />
-		<tool file='lapps_stanford/brandies.splitter.xml' />
-		<tool file='lapps_stanford/brandies.namedentityrecognizer.xml' />
-		<tool file='lapps_stanford/brandies.parser.xml' />
+		<tool file='lapps_stanford/brandeis.tokenizer.xml' />
+		<tool file='lapps_stanford/brandeis.postagger.xml' />
+		<tool file='lapps_stanford/brandeis.splitter.xml' />
+		<tool file='lapps_stanford/brandeis.namedentityrecognizer.xml' />
+		<tool file='lapps_stanford/brandeis.parser.xml' />
 	</section>
 	<section id="gate" name="GATE">
 		<tool file="lapps_gate/gate.coref_2.0.0.xml"/>
