@@ -1,6 +1,6 @@
 <tool id='opennlp.splitter' name='OpenNLP Splitter' version='2.0.0'>
   <description>OpenNLP Splitter</description>
-  <command interpreter='lsd'>invoke.lsd opennlp.splitter $input $output</command>
+  <command interpreter='lsd'>../lapps_common/invoke_bradeis.lsd opennlp.splitter $input $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='input' />
   </inputs>

@@ -39,5 +39,6 @@
 	<section id="lapps.tools" name="Tools">
 		<tool file="lapps_common/pretty_print.xml"/>
 		<tool file="lapps_common/data_splitter.xml"/>
+		<tool file="lapps_common/evaluation.xml"/>
 	</section>
 </toolbox>

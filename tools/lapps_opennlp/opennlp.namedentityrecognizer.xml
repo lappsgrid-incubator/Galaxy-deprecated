@@ -1,6 +1,6 @@
 <tool id='opennlp.namedentityrecognizer' name='OpenNLP NamedEntityRecognizer' version='2.0.0'>
   <description>OpenNLP NamedEntityRecognizer</description>
-  <command interpreter='lsd'>invoke.lsd opennlp.namedentityrecognizer $input $output</command>
+  <command interpreter='lsd'>../lapps_common/invoke_bradeis.lsd opennlp.namedentityrecognizer $input $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='input' />
   </inputs>
