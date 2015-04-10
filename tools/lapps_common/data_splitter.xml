@@ -1,9 +1,6 @@
 <tool id='data.splitter' name='Data Splitter' version='2.0.0'>
   <description>Splits and input stream</description>
-  <command interpreter='bash'>
-  	/bin/cp $input $output1
-  	/bin/cp $input $output2
-  </command>
+  <command interpreter='bash'>copy.sh $input $output1 $output2</command>
   <inputs>
     <param name='input' type='data' label='input' />
   </inputs>
