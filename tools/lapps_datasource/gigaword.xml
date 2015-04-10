@@ -1,6 +1,6 @@
 <tool id="gigaword.get" name="Gigaword (LDC)" version="2.0.0">
   <description>Retrieve a Gigaword document.</description>
-  <command interpreter="lsd">gigaword.lsd $source $token $key</command>
+  <command interpreter="lsd">gigaword.lsd $source $token $key $output</command>
   <inputs>
     <param name="token" type="text" label="OAuth Token" value="123abc"/>
     <param name="key" type="select" label="Document ID">
