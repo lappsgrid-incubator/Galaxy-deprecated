@@ -1,10 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <toolbox>
 	<section id="datasource" name="Get data">
-		<tool file="lapps_datasource/masc_list.xml"/>
 		<tool file="lapps_datasource/masc_fetch.xml"/> 
 		<tool file="lapps_datasource/gigaword.xml"/>
-		<tool file="lapps_datasource/html_source.xml"/>
 	</section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
@@ -46,6 +44,7 @@
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 	</section>
 	<section id="misc" name="Miscellaneous">
+		<tool file="lapps_datasource/masc_list.xml"/>
 		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
@@ -95,5 +94,8 @@
   <section id="plots" name="Graph/Display Data">
     <tool file="plotting/bar_chart.xml" />
     <tool file="plotting/boxplot.xml" />
+  </section>
+  <section id="debugging" name="Debugging">
+		<tool file="lapps_datasource/html_source.xml"/>
   </section>
 </toolbox>

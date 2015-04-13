@@ -1,4 +1,4 @@
-<tool id="masc.fetch" name="MASC Datasource" version="2.0.0">
+<tool id="masc.fetch" name="MASC" version="2.0.0">
   <description>Retrieves a single document from MASC.</description>
   <command interpreter="lsd">fetch.lsd key=${key} token=${token} output=${output}</command>
   <inputs>
