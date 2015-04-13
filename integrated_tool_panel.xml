@@ -16,14 +16,62 @@
     <section id="datasource" name="Datasources" version="">
         <tool id="masc.list" />
         <tool id="masc.fetch" />
+        <tool id="gigaword.get" />
+    </section>
+    <section id="tokenizers" name="Tokenizers" version="">
+        <tool id="stanford.tokenizer_2.0.0" />
+        <tool id="stanfordnlp.tokenizer" />
+        <tool id="gate.tokenizer_2.0.0" />
+        <tool id="opennlp.tokenizer" />
+    </section>
+    <section id="taggers" name="Taggers" version="">
+        <tool id="stanford.tagger_2.0.0" />
+        <tool id="stanfordnlp.postagger" />
+        <tool id="gate.tagger_2.0.0" />
+        <tool id="opennlp.postagger" />
+    </section>
+    <section id="splitters" name="Sentence Splitters" version="">
+        <tool id="stanford.splitter_2.0.0" />
+        <tool id="stanfordnlp.splitter" />
+        <tool id="gate.splitter_2.0.0" />
+        <tool id="opennlp.splitter" />
+    </section>
+    <section id="ner" name="Named Entity Recognizers" version="">
+        <tool id="stanford.ner_2.0.0" />
+        <tool id="stanfordnlp.namedentityrecognizer" />
+        <tool id="gate.ner_2.0.0" />
+        <tool id="opennlp.namedentityrecognizer" />
+    </section>
+    <section id="parsers" name="Parsers" version="">
+        <tool id="stanfordnlp.parser" />
+        <tool id="opennlp.parser" />
+    </section>
+    <section id="chunkers" name="Chunkers" version="">
+        <tool id="gate.npchunker_2.0.0" />
+        <tool id="gate.vpchunker_2.0.0" />
+    </section>
+    <section id="coref" name="Coreference" version="">
+        <tool id="convert.gate2json_2.0.0" />
+        <tool id="convert.json2gate_2.0.0" />
+        <tool id="gate.coref_2.0.0" />
     </section>
     <section id="stanford" name="Stanford NLP Tools" version="">
-        <tool id="stanford.tokenizer" />
-        <tool id="stanford.tagger" />
         <tool id="stanford.tokenizer_2.0.0" />
         <tool id="stanford.tagger_2.0.0" />
+        <tool id="stanfordnlp.tokenizer" />
+        <tool id="stanfordnlp.postagger" />
+        <tool id="stanfordnlp.splitter" />
+        <tool id="stanfordnlp.namedentityrecognizer" />
+        <tool id="stanfordnlp.parser" />
         <tool id="stanford.splitter_2.0.0" />
         <tool id="stanford.ner_2.0.0" />
+    </section>
+    <section id="misc" name="Miscellaneous" version="">
+        <tool id="gate.gazetteer_2.0.0" />
+        <tool id="gate.ortho_2.0.0" />
+        <tool id="json.prettyprinter" />
+        <tool id="data.splitter" />
+        <tool id="evaluation.simple" />
     </section>
     <section id="gate" name="GATE Tools" version="">
         <tool id="gate.coref_2.0.0" />
@@ -35,21 +83,24 @@
         <tool id="gate.tagger_2.0.0" />
         <tool id="gate.tokenizer_2.0.0" />
         <tool id="gate.vpchunker_2.0.0" />
-    </section>
-    <section id="gate.converters" name="GATE Converters" version="">
         <tool id="convert.gate2json_2.0.0" />
         <tool id="convert.json2gate_2.0.0" />
     </section>
-    <section id="brandeis.tools" name="Brandeis Tools" version="">
+    <section id="gate.converters" name="GATE Converters" version="">
+    </section>
+    <section id="opennlp.tools" name="OpenNLP" version="">
         <tool id="opennlp.tokenizer" />
-        <tool id="opennlp.namedentityrecognizer" />
+        <tool id="opennlp.postagger" />
         <tool id="opennlp.splitter" />
+        <tool id="opennlp.namedentityrecognizer" />
         <tool id="opennlp.parser" />
-        <tool id="stanfordnlp.tokenizer" />
-        <tool id="stanfordnlp.postagger" />
-        <tool id="stanfordnlp.namedentityrecognizer" />
-        <tool id="stanfordnlp.splitter" />
-        <tool id="stanfordnlp.parser" />
+    </section>
+    <section id="lapps.tools" name="Tools" version="">
+        <tool id="json.prettyprinter" />
+        <tool id="data.splitter" />
+        <tool id="evaluation.simple" />
+    </section>
+    <section id="brandeis.tools" name="Brandeis Tools" version="">
     </section>
     <section id="getext" name="Get Data" version="">
     </section>
