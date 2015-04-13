@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <toolbox>
-	<section id="datasource" name="Datasources">
+	<section id="datasource" name="Get data">
 		<tool file="lapps_datasource/masc_list.xml"/>
 		<tool file="lapps_datasource/masc_fetch.xml"/> 
 		<tool file="lapps_datasource/gigaword.xml"/>
+		<tool file="lapps_datasource/html_source.xml"/>
 	</section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
@@ -48,10 +49,7 @@
 		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
 		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
-		<tool file="lapps_common/data_splitter.xml"/>
-		<tool file="lapps_common/evaluation.xml"/>
-	</section>
-	
+	</section>	
 	<section id="stanford" name="Stanford NLP">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
@@ -76,7 +74,7 @@
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 	</section>
-	<section id='opennlp.tools' name='OpenNLP'>
+	<section id='opennlp.tools' name='Apache OpenNLP'>
 	  <tool file='lapps_opennlp/opennlp.tokenizer.xml' />
 	  <tool file='lapps_opennlp/opennlp.postagger.xml' />
 	  <tool file='lapps_opennlp/opennlp.splitter.xml' />
@@ -87,5 +85,15 @@
 		<tool file="lapps_common/pretty_print.xml"/>
 		<tool file="lapps_common/data_splitter.xml"/>
 		<tool file="lapps_common/evaluation.xml"/>
+		<tool file="lapps_common/word_count.xml"/>
 	</section>
+	<section id="converters" name="Converters">
+		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
+		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
+		<tool file="lapps_converters/gigaword2lif.xml"/>
+	</section>
+  <section id="plots" name="Graph/Display Data">
+    <tool file="plotting/bar_chart.xml" />
+    <tool file="plotting/boxplot.xml" />
+  </section>
 </toolbox>
