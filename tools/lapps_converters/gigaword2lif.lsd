@@ -1,0 +1,33 @@
+
+import static org.lappsgrid.discriminator.Discriminators.Uri
+import groovy.xml.*
+
+File file = new File(args[0])
+File output = new File(args[1])
+
+def doc = new XmlParser().parse(file)
+
+Container container = new Container()
+container.metadata.HEADLINE = doc.HEADLINE[0].value()
+container.metadata.DATELINE = doc.DATELINE[0].value()
+
+buffer = new StringBuilder()
+id = -1
+view = container.newView()
+doc.TEXT.P.each { p ->
+	Annotation a = view.newAnnotation()
+	a.id = "p${++id}"
+	a.start = buffer.length()
+	buffer.append(p.value()[0])
+	a.end = buffer.length()
+	buffer.append("\n")
+	a.type = "http://vocab.lappsgrid.org/Paragraph"
+	a.label = "Paragraph"
+}
+
+container.text = buffer.toString()
+container.language = "en"
+output.text = Serializer.toPrettyJson(container)
+
+
+

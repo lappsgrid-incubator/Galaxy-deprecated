@@ -1,0 +1,16 @@
+import groovy.xml.MarkupBuilder
+
+File outputFile = new File(args[0])
+
+outputFile.withWriter { writer ->
+	new MarkupBuilder(writer).html {
+		head {
+			title "Sample HTML"
+		}
+		body {
+			h1 "Sample HTML"
+			p "Paragraph One."
+			p "Paragraph Two."
+		}
+	}
+}
