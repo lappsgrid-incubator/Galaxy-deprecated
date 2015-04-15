@@ -1,0 +1,9 @@
+include 'Config'
+
+String key = new File(args[0]).text.trim()
+File output = new File(args[1])
+
+String url = "${server.url}/${masc.id}"
+
+def client = new DataSourceClient(url, server.username, server.password)
+output.text = client.get(key)
