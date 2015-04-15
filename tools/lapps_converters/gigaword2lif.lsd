@@ -5,7 +5,8 @@ import groovy.xml.*
 File file = new File(args[0])
 File output = new File(args[1])
 
-def doc = new XmlParser().parse(file)
+Data data = Serializer.parse(file.text, Data)
+def doc = new XmlParser().parseText(data.payload)
 
 Container container = new Container()
 container.metadata.HEADLINE = doc.HEADLINE[0].value()
@@ -14,6 +15,7 @@ container.metadata.DATELINE = doc.DATELINE[0].value()
 buffer = new StringBuilder()
 id = -1
 view = container.newView()
+view.addContains(Uri.PARAGRAPH, "gigaword2lif.lsd", "paragraph")
 doc.TEXT.P.each { p ->
 	Annotation a = view.newAnnotation()
 	a.id = "p${++id}"

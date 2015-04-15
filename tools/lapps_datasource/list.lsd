@@ -2,17 +2,28 @@
 
 include 'Config'
 
-String token = args.token
-String output = args.output
+String token = args[0]
+File report = new File(args[1])
+directory = new File(args[2])
+
+if (!directory.exists()) {
+	if (!directory.mkdirs()) {
+		throw new IOException("Unable to create directory ${directory.path}")
+	}
+}
 
 def url = "${server.url}/${masc.id}"
 
 def service = new DataSourceClient(url, server.username, server.password)
 service.setToken(token)
 
+writer = new StringWriter()
 List<String> list = service.list()
-//List<String> list = Serializer.parse(json, List)
-new File(output).withWriter { writer ->
-	list.each { writer.println(it) }
+list[0..9].eachWithIndex { id, index ->
+	File file = new File(directory, "${index}.txt")
+	file.text = id
+	writer.println id
 }
+
+report.text = writer.toString()
 

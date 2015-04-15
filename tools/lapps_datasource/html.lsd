@@ -9,8 +9,8 @@ outputFile.withWriter { writer ->
 		}
 		body {
 			h1 "Sample HTML"
-			p "Paragraph One."
-			p "Paragraph Two."
+			p(style:'color:red', "Paragraph One.")
+			p(class:'text-success', "Paragraph Two.")
 		}
 	}
 }

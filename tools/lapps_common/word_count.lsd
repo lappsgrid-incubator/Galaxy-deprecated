@@ -20,8 +20,9 @@ if (views.size() > 1) {
 }
 
 def isaWord = { it ->
-	return (it.label == Uri.TOKEN || it.type == Uri.TOKEN) && (it.features.kind == 'word')
+	return (it.label == Uri.TOKEN || it.type == Uri.TOKEN) && (it.features.tokenType == 'word')
 }
+
 List<Annotation> annotations = views[0].annotations.findAll { isaWord(it) }
 
 def counts = [:]

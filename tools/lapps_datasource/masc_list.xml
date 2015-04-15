@@ -1,11 +1,13 @@
 <tool id="masc.list" name="List MASC" version="2.0.0">
   <description>Lists all keys in MASC.</description>
-  <command interpreter="lsd">list.lsd token=${token} output=${output}</command>
+  <command interpreter="lsd">list.lsd $token $report index</command>
   <inputs>
     <param name="token" type="text" label="OAuth Token" value="123abc"/>
   </inputs>
   <outputs>
-    <data name="output" format="json" label="Output"/>
+    <data name="report" format="txt">
+      <discover_datasets pattern="__designation_and_ext__" directory="index" visible="false"/>  
+    </data>
   </outputs>
   <!--
   <tests>

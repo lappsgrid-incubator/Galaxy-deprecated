@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <toolbox>
 	<section id="datasource" name="Get data">
-		<tool file="lapps_datasource/masc_fetch.xml"/> 
+		<tool file="data_source/upload.xml"/>
 		<tool file="lapps_datasource/gigaword.xml"/>
+		<tool file="lapps_datasource/masc_fetch.xml"/> 
+		<tool file="lapps_datasource/masc_list.xml"/>
+		<tool file="lapps_datasource/masc_fetch_pipeline.xml"/> 
 	</section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
@@ -85,6 +88,7 @@
 		<tool file="lapps_common/data_splitter.xml"/>
 		<tool file="lapps_common/evaluation.xml"/>
 		<tool file="lapps_common/word_count.xml"/>
+		<tool file="lapps_common/compare_annotations.xml"/>
 	</section>
 	<section id="converters" name="Converters">
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>

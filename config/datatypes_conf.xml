@@ -10,19 +10,6 @@
     <datatype extension="toolshed.gz" type="galaxy.datatypes.binary:Binary" mimetype="multipart/x-gzip" subclass="True" />
     <datatype extension="h5" type="galaxy.datatypes.binary:Binary" mimetype="application/octet-stream" subclass="True" />
     <datatype extension="html" type="galaxy.datatypes.images:Html" mimetype="text/html"/>
-    <datatype extension="interval" type="galaxy.datatypes.interval:Interval" display_in_upload="true" description="File must start with definition line in the following format (columns may be in any order)." >
-      <converter file="interval_to_bed_converter.xml" target_datatype="bed"/>
-      <converter file="interval_to_bedstrict_converter.xml" target_datatype="bedstrict"/>
-      <converter file="interval_to_bed6_converter.xml" target_datatype="bed6"/>
-      <converter file="interval_to_bed12_converter.xml" target_datatype="bed12"/>
-      <converter file="interval_to_bgzip_converter.xml" target_datatype="bgzip"/>
-      <converter file="interval_to_tabix_converter.xml" target_datatype="tabix" depends_on="bgzip"/>
-        <converter file="interval_to_bigwig_converter.xml" target_datatype="bigwig"/>
-      <!-- <display file="ucsc/interval_as_bed.xml" inherit="True" /> -->
-      <display file="ensembl/ensembl_interval_as_bed.xml" inherit="True"/>
-      <display file="gbrowse/gbrowse_interval_as_bed.xml" inherit="True"/>
-      <display file="rviewer/bed.xml" inherit="True"/>
-    </datatype>
     <datatype extension="jpg" type="galaxy.datatypes.images:Jpg" mimetype="image/jpeg"/>
     <datatype extension="tiff" type="galaxy.datatypes.images:Tiff" mimetype="image/tiff"/>
     <datatype extension="bmp" type="galaxy.datatypes.images:Bmp" mimetype="image/bmp"/>
@@ -40,18 +27,16 @@
     <datatype extension="bgzip" type="galaxy.datatypes.binary:Binary" subclass="True" />
     <datatype extension="xls" type="galaxy.datatypes.tabular:Tabular"/>
     <datatype extension="json" type="galaxy.datatypes.text:Json" display_in_upload="True">
-    	<converter file="convert.json2gate_2.0.0.xml" target_datatype="gate"/>
+    	<converter file="lif_to_gate_converter.xml" target_datatype="gate"/>
     </datatype>
     <datatype extension="lif" type="galaxy.datatypes.text:Json" display_in_upload="True">
-    	<converter file="convert.json2gate_2.0.0.xml" target_datatype="gate"/>
+      <converter file="lif_to_gate_converter.xml" target_datatype="gate"/>
     </datatype>
     <datatype extension="gate" type="galaxy.datatypes.xml:GenericXml" mimetype="application/xml" display_in_upload="true">
-    	<converter file="convert.gate2json_2.0.0.xml" target_datatype="json"/>
-    	<converter file="convert.gate2json_2.0.0.xml" target_datatype="lif"/>
+      <converter file="gate_to_lif_converter.xml" target_datatype="lif"/>
+      <converter file="gate_to_lif_converter.xml" target_datatype="json"/>
     </datatype>
     <!-- graph datatypes -->
-    <datatype extension="xgmml" type="galaxy.datatypes.graph:Xgmml" display_in_upload="true"/>
-    <datatype extension="sif" type="galaxy.datatypes.graph:Sif" display_in_upload="true"/>
     <datatype extension="rdf" type="galaxy.datatypes.graph:Rdf" display_in_upload="true"/>
     <!-- Excel datatypes -->
     <datatype extension="xlsx" type="galaxy.datatypes.binary:Xlsx" display_in_upload="true" />
