@@ -89,6 +89,7 @@
 		<tool file="lapps_common/evaluation.xml"/>
 		<tool file="lapps_common/word_count.xml"/>
 		<tool file="lapps_common/compare_annotations.xml"/>
+		<tool file="lapps_common/oaqa_evaluation.xml"/>
 	</section>
 	<section id="converters" name="Converters">
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>

@@ -6,6 +6,9 @@ File file = new File(args[0])
 File output = new File(args[1])
 
 Data data = Serializer.parse(file.text, Data)
+
+//TODO Check that the discriminator is XML
+// Parse the payload into an XML document object (NodeList)
 def doc = new XmlParser().parseText(data.payload)
 
 Container container = new Container()

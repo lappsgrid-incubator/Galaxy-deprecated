@@ -8,6 +8,28 @@ output=args[3]
 
 failed = false
 
+View view1 = getView(input1, annotation)
+if (failed) return
+
+View view2 = getView(input2, annotation)
+if (failed) return
+
+int count1 = count(view1, annotation)
+int count2 = count(view2, annotation)
+
+Map result = [:]
+result.count1 = count1
+result.count2 = count2
+if (count1 == count2) {
+	result.status = "passed"
+}
+else {
+	result.status = "failed"
+}
+
+new File(output).text = Serializer.toPrettyJson(result)
+return
+
 void error(Data data) {
 	new File(output).text = data.asJson()
 	failed = true
@@ -48,22 +70,3 @@ int count(View view, String annotation) {
 	return result
 }
 
-View view1 = getView(input1, annotation)
-if (failed) return
-View view2 = getView(input2, annotation)
-if (failed) return
-
-int count1 = count(view1, annotation)
-int count2 = count(view2, annotation)
-
-Map result = [:]
-result.count1 = count1
-result.count2 = count2
-if (count1 == count2) {
-	result.status = "passed"
-}
-else {
-	result.status = "failed"
-}
-
-new File(output).text = Serializer.toPrettyJson(result)

@@ -1,16 +1,6 @@
 import groovy.xml.MarkupBuilder
 
-File outputFile = new File(args[0])
+File output = new File(args[0])
+File input = new File("/tmp/evaluation.html")
 
-outputFile.withWriter { writer ->
-	new MarkupBuilder(writer).html {
-		head {
-			title "Sample HTML"
-		}
-		body {
-			h1 "Sample HTML"
-			p(style:'color:red', "Paragraph One.")
-			p(class:'text-success', "Paragraph Two.")
-		}
-	}
-}
+output.text = input.text
