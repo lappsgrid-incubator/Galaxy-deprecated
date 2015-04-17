@@ -42,10 +42,6 @@
 	<section id="coref" name="Coreference">
 		<tool file="lapps_gate/gate.coref_2.0.0.xml"/>
 	</section>
-	<section id="coref" name="Converters">
-		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
-		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
-	</section>
 	<section id="misc" name="Miscellaneous">
 		<tool file="lapps_datasource/masc_list.xml"/>
 		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
@@ -83,9 +79,8 @@
 	  <tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
 	  <tool file='lapps_opennlp/opennlp.parser.xml' />
 	</section>	
-	<section id="lapps.tools" name="Tools">
+	<section id="lapps.tools" name="Evaluation">
 		<tool file="lapps_common/pretty_print.xml"/>
-		<tool file="lapps_common/data_splitter.xml"/>
 		<tool file="lapps_common/evaluation.xml"/>
 		<tool file="lapps_common/word_count.xml"/>
 		<tool file="lapps_common/compare_annotations.xml"/>
