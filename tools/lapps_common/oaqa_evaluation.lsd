@@ -3,17 +3,11 @@ import org.lappsgrid.discriminator.Discriminators.Uri
 File gold = new File(args.gold)
 File test = new File(args.test)
 String annotation = args.annotation
-String feature = args.feature
+String goldFeature = args.gf
+String testFeature = args.tf
 File output = new File(args.output)
 
-/**
-String goldAnnotationProducer = args.goldProducer
-String goldAnnotationFeature = args.goldFeature
-String testAnnotationType = args.testType
-String testAnnotationProducer = args.testProducer
-String testAnnotationFeature = args.testFeature
-**/
-
+annotation = annotation.replaceAll("__pd__", "#")
 
 class DataContainer extends Data<Container> {}
 
@@ -43,11 +37,11 @@ container.addView(testView)
 def config = [:]
 config.goldAnnotationType = annotation
 config.goldAnnotationProducer = goldProducer
-config.goldAnnotationFeature = feature
+config.goldAnnotationFeature = goldFeature
 
 config.testAnnotationType = annotation
 config.testAnnotationProducer = testProducer
-config.testAnnotationFeature = feature
+config.testAnnotationFeature = testFeature
 
 container.metadata['evaluation-configuration'] = config
 

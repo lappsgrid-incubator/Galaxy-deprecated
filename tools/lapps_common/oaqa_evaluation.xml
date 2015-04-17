@@ -1,19 +1,12 @@
-<tool id="oaqa.evaluation" name="OAQA Evaluation" version="1.0.0">
+<tool id="oaqa_evaluation" name="OAQA Evaluation" version="2.1.0">
   <description>Run the OAQA evaluation service at CMU</description>
-  <command interpreter="lsd">oaqa_evaluation.lsd -gold=$gold -test=$test -annotation=$annotation -feature=$feature -output=$output</command>
+  <command interpreter="lsd">oaqa_evaluation.lsd -gold=${gold} -test=${test} -annotation=$a -gf=$gf -tf=$tf -output=${output}</command>
   <inputs>
   	<param name="gold" type="data" format="lif" label="Gold Data"/>
   	<param name="test" type="data" format="lif" label="Test Data"/>
-  	<param name="annotation" type="text" label="Annotation Type"/>
-  	<param name="feature" type="text" label="Feature Name"/>
-  	<!--
-  	<param name="goldType" type="text" value="http://vocab.lappsgrid.org/Token" label="Gold Annotation Type"/>
-  	<param name="goldFeature" type="text" value="word" label="Gold Annotation Feature"/>
-  	<param name="goldProducer" type="text" label="Gold Producer"/>
-  	<param name="testType" type="text" value="http://vocab.lappsgrid.org/Token" label="Test Annotation Type"/>
-  	<param name="testFeature" type="text" value="word" label="Test Annotation Feature"/>
-  	<param name="testProducer" type="text" label="Test Producer"/>
-  	-->
+  	<param name="a" size="50" type="text" value="http://vocab.lappsgrid.org/" label="Annotation Type"/>
+  	<param name="gf" type="text" label="Gold Feature"/>
+  	<param name="tf" type="text" label="Test Feature"/>
   </inputs>
   <outputs>
     <data name="output" format="html" label="HTML"/>
