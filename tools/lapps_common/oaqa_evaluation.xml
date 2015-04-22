@@ -5,8 +5,8 @@
   	<param name="gold" type="data" format="lif" label="Gold Data"/>
   	<param name="test" type="data" format="lif" label="Test Data"/>
   	<param name="a" size="50" type="text" value="http://vocab.lappsgrid.org/" label="Annotation Type"/>
-  	<param name="gf" type="text" label="Gold Feature"/>
-  	<param name="tf" type="text" label="Test Feature"/>
+  	<param name="gf" type="text" size="15" label="Gold Feature"/>
+  	<param name="tf" type="text" size="15" label="Test Feature"/>
   </inputs>
   <outputs>
     <data name="output" format="html" label="HTML"/>

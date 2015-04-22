@@ -4,13 +4,6 @@ include 'Config'
 
 String token = args[0]
 File report = new File(args[1])
-directory = new File(args[2])
-
-if (!directory.exists()) {
-	if (!directory.mkdirs()) {
-		throw new IOException("Unable to create directory ${directory.path}")
-	}
-}
 
 def url = "${server.url}/${masc.id}"
 
@@ -19,9 +12,9 @@ service.setToken(token)
 
 writer = new StringWriter()
 List<String> list = service.list()
-list[0..9].eachWithIndex { id, index ->
-	File file = new File(directory, "${index}.txt")
-	file.text = id
+list.eachWithIndex { id, index ->
+	//File file = new File(directory, "${index}.txt")
+	//file.text = id
 	writer.println id
 }
 

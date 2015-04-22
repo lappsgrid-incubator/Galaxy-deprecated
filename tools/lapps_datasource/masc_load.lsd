@@ -1,0 +1,15 @@
+include 'Config'
+
+File input = new File(args[0])
+int index = args[1] as Integer
+String token = args[2]
+File output = new File(args[3])
+
+String[] lines = input.readLines()
+String key = lines[index]
+
+String url = "${server.url}/${masc.id}"
+
+def client = new DataSourceClient(url, server.username, server.password)
+client.setToken(token)
+output.text = client.get(key)

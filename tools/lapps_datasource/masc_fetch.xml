@@ -16,5 +16,8 @@
     </test>
   </tests>
   -->
-  <help>Fetches a single document from MASC 3.0.0</help>
+  <help>Retrieves a single document from MASC 3.0.0.
+  
+The document ID (key) is one of the user specified parameters.
+  </help>
 </tool>
