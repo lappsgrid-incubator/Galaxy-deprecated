@@ -120,6 +120,8 @@ class UniverseApplication( object, config.ConfiguresGalaxyMixin ):
         else:
             self.openid_providers = OpenIDProviders()
         # Start the heartbeat process if configured and available
+        from galaxy import auth
+        self.auth_manager = auth.AuthManager( self )
         if self.config.use_heartbeat:
             from galaxy.util import heartbeat
             if heartbeat.Heartbeat:
@@ -164,8 +166,11 @@ class UniverseApplication( object, config.ConfiguresGalaxyMixin ):
         if self.heartbeat:
             self.heartbeat.shutdown()
         self.update_repository_manager.shutdown()
-        if self.control_worker:
+        try:
             self.control_worker.shutdown()
+        except AttributeError:
+            # There is no control_worker
+            pass
         try:
             # If the datatypes registry was persisted, attempt to
             # remove the temporary file in which it was written.
