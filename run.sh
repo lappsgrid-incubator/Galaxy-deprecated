@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ -f integrated_tool_panel.xml ] ; then
+	rm integrated_tool_panel.xml
+fi 
+
 cd `dirname $0`
 
 # If there is a .venv/ directory, assume it contains a virtualenv that we

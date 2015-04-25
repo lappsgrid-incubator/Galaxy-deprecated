@@ -101,5 +101,9 @@
   </section>
   <section id="debugging" name="Debugging">
 		<tool file="lapps_datasource/html_source.xml"/>
+      <tool file="lapps_common/create_collection.xml"/>
+      <tool file="lapps_test/tokenizer.xml"/>
+      <tool file="lapps_test/tagger.xml"/>
+      <tool file="lapps_test/ner.xml"/>
   </section>
 </toolbox>

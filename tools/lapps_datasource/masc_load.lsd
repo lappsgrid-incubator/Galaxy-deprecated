@@ -1,9 +1,8 @@
 include 'Config'
 
-File input = new File(args[0])
-int index = args[1] as Integer
-String token = args[2]
-File output = new File(args[3])
+String token = args[0]
+File input = new File(args[1])
+File output = new File(args[2])
 
 String[] lines = input.readLines()
 String key = lines[index]

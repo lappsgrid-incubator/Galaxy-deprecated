@@ -1,0 +1,20 @@
+<tool id="test.tagger" name="Test Tagger" version="1.0.0">
+  <description>Test tagger component</description>
+  <command>cp $input $output</command>
+  <inputs>
+    <param name="input" type="data" format="txt">
+        <options option_filter_attribute="metadata.tokens">
+            <filter type="add_value" value="True"/>
+        </options>
+        <validator type="expression" message="Please run a tokenizer first.">True == False</validator>
+    </param>
+  </inputs>
+  <outputs>
+    <data name="output" format="txt" label="Output">
+        <actions>
+            <action type="metadata" name="pos" default="True" value="True">True</action>
+        </actions>
+    </data>
+  </outputs>
+  <help>A test component</help>
+</tool>
