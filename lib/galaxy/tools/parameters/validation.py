@@ -191,6 +191,26 @@ class MetadataValidator( Validator ):
                     self.message = "Metadata missing, click the pencil icon in the history item to edit / save the metadata attributes"
                 raise ValueError( self.message )
 
+class MetadataValueValidator( Validator ):
+    """
+    Validator that checks that a specific metadata value has been set.
+    """
+    def __init__( self, message = None, key = "", value = "" ):
+        self.message = message
+        self.key = key
+        self.value = value
+    @classmethod
+    def from_element( cls, param, elem ):
+        return cls( message=elem.get( 'message', None ), key=elem.get( 'key', "" ), value=elem.get( 'value', "" ) )
+    def validate( self, value, history=None ):
+        if value:
+            if not isinstance( value, model.DatasetInstance ):
+                raise ValueError( 'A non-dataset value was provided.' )
+            if value.metadata.get(self, self.key, None) != self.value:
+                if self.message is None:
+                    self.message = "Metadata property has not been set."
+                raise ValueError( self.message )
+
 class UnspecifiedBuildValidator( Validator ):
     """
     Validator that checks for dbkey not equal to '?'
@@ -329,6 +349,7 @@ validator_types = dict( expression=ExpressionValidator,
                         in_range=InRangeValidator,
                         length=LengthValidator,
                         metadata=MetadataValidator,
+                        metadata_value=MetadataValueValidator,
                         unspecified_build=UnspecifiedBuildValidator,
                         no_options=NoOptionsValidator,
                         empty_field=EmptyTextfieldValidator,

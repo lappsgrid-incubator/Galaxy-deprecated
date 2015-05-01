@@ -105,5 +105,6 @@
       <tool file="lapps_test/tokenizer.xml"/>
       <tool file="lapps_test/tagger.xml"/>
       <tool file="lapps_test/ner.xml"/>
+      <tool file="lapps_test/text.xml"/>
   </section>
 </toolbox>

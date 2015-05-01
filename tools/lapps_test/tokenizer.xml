@@ -2,12 +2,12 @@
   <description>Test tokenizer component</description>
   <command>cp $input $output</command>
   <inputs>
-    <param name="input" type="data" format="txt"/>
+    <param name="input" type="data" format="txt,json,xml"/>
   </inputs>
   <outputs>
-    <data name="output" format="txt" label="Output">
+    <data name="output" format="xml" label="Output">
         <actions>
-            <action type="metadata" name="tokens" default="True" value="True">True</action>
+            <action type="metadata" name="tokens" default="True"/>
         </actions>
     </data>
   </outputs>

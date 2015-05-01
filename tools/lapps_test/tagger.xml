@@ -2,19 +2,18 @@
   <description>Test tagger component</description>
   <command>cp $input $output</command>
   <inputs>
-    <param name="input" type="data" format="txt">
-        <options option_filter_attribute="metadata.tokens">
+    <param name="input" type="data" format="xml">
+        <options options_filter_attribute="metadata.tokens">
             <filter type="add_value" value="True"/>
         </options>
-        <validator type="expression" message="Please run a tokenizer first.">True == False</validator>
+        <validator type="expression" message="Please run a tokenizer first">value.metadata.tokens is not None</validator>
+        <!--
+        <validator type="metadata_value" message="Please run a tokenizer first." key="tokens" value="True"/>
+        -->
     </param>
   </inputs>
   <outputs>
-    <data name="output" format="txt" label="Output">
-        <actions>
-            <action type="metadata" name="pos" default="True" value="True">True</action>
-        </actions>
-    </data>
+    <data name="output" format="xml" label="Output"/>
   </outputs>
   <help>A test component</help>
 </tool>
