@@ -120,3 +120,6 @@ doc/build
 *~
 .idea
 
+# Sensitive information
+tools/lapps_common/Servers.lsd
+
