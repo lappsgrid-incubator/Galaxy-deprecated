@@ -22,11 +22,12 @@ log = logging.getLogger(__name__)
 
 class Json(Text):
     file_ext = "json"
+    blurb = "JavaScript Object Notation (JSON)"
 
     def set_peek(self, dataset, is_multi_byte=False):
         if not dataset.dataset.purged:
             dataset.peek = get_file_peek(dataset.file_name, is_multi_byte=is_multi_byte)
-            dataset.blurb = "JavaScript Object Notation (JSON)"
+            dataset.blurb = self.blurb
         else:
             dataset.peek = 'file does not exist'
             dataset.blurb = 'file purged from disc'
@@ -48,15 +49,32 @@ class Json(Text):
                 return False
         else:
             with open(filename, "r") as fh:
-                while True:
-                    line = fh.readline()
-                    line = line.strip()
-                    if line:
-                        # simple types are valid JSON as well - but would such a file
-                        # be interesting as JSON in Galaxy?
-                        return line.startswith("[") or line.startswith("{")
-            return False
+                ch = self.read(fh)
+                return ch == '{' or ch == '['
+            #     while True:
+            #         line = fh.readline()
+            #         line = line.strip()
+            #         if line:
+            #             # simple types are valid JSON as well - but would such a file
+            #             # be interesting as JSON in Galaxy?
+            #             return line.startswith("[") or line.startswith("{")
+            # return False
 
+
+    def read(self, f):
+        """
+        Reads a single character from the file handle skipping over whitespace.
+
+        :param f: an open file handle
+        :return: the next non-whitespace character in the file.
+        """
+        c = f.read(1)
+        while c.isspace():
+            c = f.read(1)
+        # end while
+        return c
+
+    # end read
     def display_peek(self, dataset):
         try:
             return dataset.peek
@@ -64,7 +82,42 @@ class Json(Text):
             return "JSON file (%s)" % ( nice_size(dataset.get_size()) )
 
 
-class Lif( Json ):
+class Lapps( Json ):
+    """
+        Lapps Container.
+
+        A Lapps container is a JSON map with exactly two entries:
+        - discriminator
+        - payload
+
+        Both the discriminator and payload are string objects, with the value
+        of the discriminator being used to determine how the payload should be
+        interpreted.
+
+        This means we can identify a LAPPS document by searching for something
+        that looks like JSON and starts with a key named "discriminator".
+    """
+    file_ext = "lapps"
+    header = '''{"discriminator":'''
+    blurb = "Lapps Data object"
+
+    def sniff(self, filename):
+        """
+        Reads the start of the file (ignoring whitespace) looking for the
+        required LIF header.
+
+        :param filename: The name of the file to be checked.
+        :return: True if filename is a LIF file, False otherwise.
+        """
+        with open(filename, "r") as fh:
+            for c in self.header:
+                if c != self.read(fh):
+                    return False
+
+        return True
+
+
+class Lif( Lapps ):
     """
         The Lapps Interchange Format.
 
@@ -74,66 +127,18 @@ class Lif( Json ):
 
     """
     file_ext = "lif"
-    handle = None
-    space_chars = [' ', '\t', '\n', '\r']
-    HEADER = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld","payload":{"@context":"http://vocab.lappsgrid.org/context-1.0.0.jsonld"'''
+    header = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld","payload":{"@context":"http://vocab.lappsgrid.org/context-1.0.0.jsonld"'''
+    blurb = "Lapps Interchange Format (LIF)"
 
 
-    def set_peek(self, dataset, is_multi_byte=False):
-        if not dataset.dataset.purged:
-            dataset.peek = get_file_peek(dataset.file_name, is_multi_byte=is_multi_byte)
-            dataset.blurb = "Lapps Interchange Format"
-        else:
-            dataset.peek = 'file does not exist'
-            dataset.blurb = 'file purged from disc'
-
-
-    def sniff(self, filename):
-        """
-        Reads the start of the file (ignoring whitespace) for the required LIF
-        header.
-
-        :param filename: The name of the file to be checked.
-        :return: True if filename is a LIF file, False otherwise.
-        """
-        with open(filename, "r") as fh:
-            for c in self.HEADER:
-                if c != self.read(fh):
-                    return False
-
-        return True
-
-    def read(self, f):
-        """
-        Reads a single character from the file handle skipping over (most) whitespace.
-
-        :param f: an open file handle
-        :return: the next non-whitespace character in the file.
-        """
-        c = f.read(1)
-        while c in self.space_chars:
-            c = f.read(1)
-        # end while
-        return c
-
-    # end read
-
-class Gate( Lif ):
+class Gate( Lapps ):
     """
         GATE/XML in a JSON wrapper.
         See: http://gate.ac.uk
     """
     file_ext = "gate"
-    HEADER = '{"discriminator":"http://vocab.lappsgrid.org/ns/media/xml#gate"'
-
-    def set_peek( self, dataset, is_multi_byte=False ):
-        if not dataset.dataset.purged:
-            dataset.peek = dataset.get_file_peek( dataset.file_name, is_multi_byte=is_multi_byte )
-            dataset.blurb = "GATE/XML in a JSON wrapper."
-        else:
-            dataset.peek = 'file does not exist'
-            dataset.blurb = 'file purged from disc'
-
+    header = '{"discriminator":"http://vocab.lappsgrid.org/ns/media/xml#gate"'
+    blurb = "Gate/XML in a Lapps Container"
 
 class Ipynb(Json):
     file_ext = "ipynb"
