@@ -127,8 +127,23 @@ class Lif( Lapps ):
 
     """
     file_ext = "lif"
-    header = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld","payload":{"@context":"http://vocab.lappsgrid.org/context-1.0.0.jsonld"'''
+    header = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld"'''
     blurb = "Lapps Interchange Format (LIF)"
+
+    def sniff(self, filename):
+        """
+        Reads the start of the file (ignoring whitespace) looking for the
+        required LIF header.
+
+        :param filename: The name of the file to be checked.
+        :return: True if filename is a LIF file, False otherwise.
+        """
+        with open(filename, "r") as fh:
+            for c in self.header:
+                if c != self.read(fh):
+                    return False
+
+        return True
 
 
 class Gate( Lapps ):
