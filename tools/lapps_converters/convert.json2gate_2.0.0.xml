@@ -3,7 +3,6 @@
   <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd convert.json2gate_2.0.0 $input $pretty $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='Input' />
-    <param name="pretty" type='boolean' value='false' label='Pretty print'/>
   </inputs>
   <outputs>
     <data name='output' format='gate' />

@@ -2,8 +2,8 @@
   <description>Converts GATE documents to the LAPPS JSON/LD format.</description>
   <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd convert.gate2json_2.0.0 $input $pretty $output</command>
   <inputs>
-    <param name='input' type='data' format='gate' label='input' />
-    <param name="pretty" type='boolean' value='false' label='Pretty print'/>
+    <param name='input' type='data' format='gate' label='Gate Input' />
+    <param name="pretty" type='boolean' checked='false' label='Pretty print'/>
   </inputs>
   <outputs>
     <data name='output' format='lif' />
