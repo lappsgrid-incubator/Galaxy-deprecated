@@ -1,8 +1,8 @@
 <tool id='gate.coref_2.0.0' name='GATE Coreferencer v2.0.0' version='2.0.0'>
   <description>Coreferencer from GATE</description>
-  <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd gate.coref_2.0.0 $input $output</command>
+  <command interpreter='lsd'>../lapps_common/invoke_gate.lsd gate.coref_2.0.0 $input $output</command>
   <inputs>
-    <param name='input' type='data' format='gate' label='input' />
+    <param name='input' type='data' format='gate,lif' label='input' />
   </inputs>
   <outputs>
     <data name='output' format='gate' />

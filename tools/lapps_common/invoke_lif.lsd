@@ -15,6 +15,7 @@ String json = new File(input).text
 Data data = Serializer.parse(json, Data)
 if (Uri.GATE == data.discriminator) {
     // Convert the GATE document to LIF
+    println "Converting GATE document."
     String url = "${base}:convert.gate2json_2.0.0"
     ServiceClient converter = new ServiceClient(url, username, password)
     json = converter.execute(json)
@@ -32,6 +33,6 @@ boolean isLif(Data data) {
             return true;
             break;
     }
-    println "Not a LIF document"
+    //println "Not a LIF document"
     return false
 }

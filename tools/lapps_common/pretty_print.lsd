@@ -1,7 +1,15 @@
 
 import groovy.json.JsonOutput
+import static org.lappsgrid.discriminator.Discriminators.Uri
 
 File input = new File(args[0])
 File output = new File(args[1])
 
-output.text = JsonOutput.prettyPrint(input.text)
+String json = input.text
+Data data = Serializer.parse(json, Data)
+if (Uri.GATE == data.discriminator) {
+    String url = "http://vassar.lappsgrid.org/invoker/anc:gate2json_2.0.0"
+    ServiceClient converter = new ServiceClient(url, "tester", "tester")
+    json = converter.execute(json)
+}
+output.text = JsonOutput.prettyPrint(json)
