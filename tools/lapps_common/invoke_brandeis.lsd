@@ -5,6 +5,9 @@
 String service = args[0]
 String input = args[1]
 String output = args[2]
+String username = "tester"
+String password = "tester"
+
 //String username = args[3] ?: servers.brandeis.username
 //String password = args[4] ?: servers.brandeis.password
 
