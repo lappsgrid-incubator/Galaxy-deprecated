@@ -8,7 +8,7 @@ File output = new File(args[1])
 String json = input.text
 Data data = Serializer.parse(json, Data)
 if (Uri.GATE == data.discriminator) {
-    String url = "http://vassar.lappsgrid.org/invoker/anc:gate2json_2.0.0"
+    String url = "http://vassar.lappsgrid.org/invoker/anc:convert.gate2json_2.0.0"
     ServiceClient converter = new ServiceClient(url, "tester", "tester")
     json = converter.execute(json)
 }
