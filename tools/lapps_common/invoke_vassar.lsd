@@ -2,7 +2,8 @@
 
 boolean useLocalhost = false
 
-String base = "http://grid.anc.org:8080/service_manager/invoker/anc"
+//String base = "http://grid.anc.org:8080/service_manager/invoker/anc"
+String base = "http://galaxy.lappsgrid.org/invoker/anc"
 String username = "tester"
 String password = "tester"
 
