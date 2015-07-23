@@ -20,7 +20,8 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class Json(Text):
+class Json( Text ):
+    edam_format = "format_3464"
     file_ext = "json"
     blurb = "JavaScript Object Notation (JSON)"
 
@@ -201,7 +202,7 @@ class Ipynb(Json):
             ofilename = ofile_handle.name
             ofile_handle.close()
             try:
-                cmd = 'ipython nbconvert --to html --template basic %s --output %s' % (dataset.file_name, ofilename)
+                cmd = 'ipython nbconvert --to html --template full %s --output %s' % (dataset.file_name, ofilename)
                 log.info("Calling command %s" % cmd)
                 subprocess.call(cmd, shell=True)
                 ofilename = '%s.html' % ofilename
@@ -223,6 +224,7 @@ class Obo(Text):
         OBO file format description
         http://www.geneontology.org/GO.format.obo-1_2.shtml
     """
+    edam_format = "format_2549"
     file_ext = "obo"
 
     def set_peek(self, dataset, is_multi_byte=False):
@@ -372,10 +374,10 @@ class SnpEffDb(Text):
     def set_meta(self, dataset, **kwd):
         Text.set_meta(self, dataset, **kwd)
         data_dir = dataset.extra_files_path
-        ## search data_dir/genome_version for files
+        # search data_dir/genome_version for files
         regulation_pattern = 'regulation_(.+).bin'
-        # annotation files that are included in snpEff by a flag
-        annotations_dict = {'nextProt.bin': '-nextprot', 'motif.bin': '-motif'}
+        #  annotation files that are included in snpEff by a flag
+        annotations_dict = {'nextProt.bin' : '-nextprot', 'motif.bin': '-motif'}
         regulations = []
         annotations = []
         if data_dir and os.path.isdir(data_dir):
@@ -429,23 +431,20 @@ class SnpSiftDbNSFP(Text):
     ## Create tabix index
     tabix -s 1 -b 2 -e 2 dbNSFP2.3.txt.gz
     """
+    def __init__( self, **kwd ):
+        Text.__init__( self, **kwd )
+        self.add_composite_file( '%s.grp', description='Group File', substitute_name_with_metadata='reference_name', is_binary=False )
+        self.add_composite_file( '%s.ti', description='', substitute_name_with_metadata='reference_name', is_binary=False )
 
-    def __init__(self, **kwd):
-        Text.__init__(self, **kwd)
-        self.add_composite_file('%s.grp', description='Group File', substitute_name_with_metadata='reference_name',
-                                is_binary=False)
-        self.add_composite_file('%s.ti', description='', substitute_name_with_metadata='reference_name',
-                                is_binary=False)
+    def init_meta( self, dataset, copy_from=None ):
+        Text.init_meta( self, dataset, copy_from=copy_from )
 
-    def init_meta(self, dataset, copy_from=None):
-        Text.init_meta(self, dataset, copy_from=copy_from)
-
-    def generate_primary_file(self, dataset=None):
+    def generate_primary_file( self, dataset=None ):
         """
         This is called only at upload to write the html file
         cannot rename the datasets here - they come with the default unfortunately
         """
-        self.regenerate_primary_file(dataset)
+        self.regenerate_primary_file( dataset )
 
     def regenerate_primary_file(self, dataset):
         """
@@ -460,7 +459,7 @@ class SnpSiftDbNSFP(Text):
         f.write(annotations)
         f.close()
 
-    def set_meta(self, dataset, overwrite=True, **kwd):
+    def set_meta( self, dataset, overwrite=True, **kwd ):
         try:
             efp = dataset.extra_files_path
             if os.path.exists(efp):
@@ -474,13 +473,12 @@ class SnpSiftDbNSFP(Text):
                             lines = buf.splitlines()
                             headers = lines[0].split('\t')
                             dataset.metadata.annotation = headers[4:]
-                        except Exception, e:
+                        except Exception as e:
                             log.warn("set_meta fname: %s  %s" % (fname, str(e)))
                         finally:
                             fh.close()
                     if fname.endswith('.tbi'):
                         dataset.metadata.index = fname
             self.regenerate_primary_file(dataset)
-        except Exception, e:
-            log.warn(
-                "set_meta fname: %s  %s" % (dataset.file_name if dataset and dataset.file_name else 'Unkwown', str(e)))
+        except Exception as e:
+            log.warn("set_meta fname: %s  %s" % (dataset.file_name if dataset and dataset.file_name else 'Unkwown', str(e)))

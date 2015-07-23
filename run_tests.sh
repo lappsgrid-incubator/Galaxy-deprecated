@@ -17,6 +17,7 @@ cat <<EOF
 '${0##*/} -api (test_path)'         for running all the test scripts in the ./test/api directory
 '${0##*/} -toolshed (test_path)'    for running all the test scripts in the ./test/tool_shed/functional directory
 '${0##*/} -workflow test.xml'       for running a workflow test case as defined by supplied workflow xml test file (experimental)
+'${0##*/} -installed'               for running tests of Tool Shed installed tools
 '${0##*/} -framework'               for running through example tool tests testing framework features in test/functional/tools"
 '${0##*/} -framework -id toolid'    for testing one framework tool (in test/functional/tools/) with id 'toolid'
 '${0##*/} -data_managers -id data_manager_id'    for testing one Data Manager with id 'data_manager_id'
@@ -33,7 +34,7 @@ Run all TestUserInfo functional tests:
     ./run_tests.sh test/functional/test_user_info.py:TestUserInfo
 
 Run a specific API test requiring the framework test tools:
-    ./run_tests.sh -api -with_framework_test_tools test/api/test_tools.py:ToolsTestCase.test_map_over_with_output_format_actions
+    ./run_tests.sh -with_framework_test_tools -api test/api/test_tools.py:ToolsTestCase.test_map_over_with_output_format_actions
 
 
 Extra options:

@@ -48,7 +48,7 @@ class ToolTestBuilder( object ):
         self.name = name
         self.maxseconds = maxseconds
         self.required_files = []
-        self.inputs = []
+        self.inputs = {}
         self.outputs = []
         # By default do not making assertions on number of outputs - but to
         # test filtering allow explicitly state number of outputs.
@@ -134,6 +134,7 @@ class ToolTestBuilder( object ):
             self.expect_failure = test_dict.get("expect_failure", False)
             self.md5 = test_dict.get("md5", None)
         except Exception, e:
+            self.inputs = {}
             self.error = True
             self.exception = e
 
@@ -252,7 +253,9 @@ def _process_simple_value( param, param_value ):
 
 def _process_bool_param_value( param, param_value ):
     assert isinstance( param, galaxy.tools.parameters.basic.BooleanToolParameter )
+    was_list = False
     if isinstance( param_value, list ):
+        was_list = True
         param_value = param_value[0]
     if param.truevalue == param_value:
         processed_value = True
@@ -260,7 +263,7 @@ def _process_bool_param_value( param, param_value ):
         processed_value = False
     else:
         processed_value = string_as_bool( param_value )
-    return processed_value
+    return [ processed_value ] if was_list else processed_value
 
 
 @nottest
