@@ -6,7 +6,7 @@
     <param name="token" type="text" label="OAuth Token" value="123abc"/>
   </inputs>
   <outputs>
-    <data name="output" format="json" label="Output"/>
+    <data name="output" format="json" label="MASC Document"/>
   </outputs>
   <!--
   <tests>

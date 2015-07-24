@@ -2,7 +2,7 @@
   <description>ANNIE Tokeniser from GATE.</description>
   <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd gate.tokenizer_2.0.0 $input $output</command>
   <inputs>
-    <param name='input' type='data' label='input' />
+    <param name='input' type='data' format="txt,gate,xml" label='input' />
   </inputs>
   <outputs>
     <data name='output' format='gate' />
