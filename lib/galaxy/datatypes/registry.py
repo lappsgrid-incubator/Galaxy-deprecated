@@ -248,6 +248,7 @@ class Registry( object ):
                                             self.converter_deps[ extension ] = {}
                                         self.converter_deps[ extension ][ target_datatype ] = depends_on.split( ',' )
                                     if converter_config and target_datatype:
+                                        self.log.info("Adding converter for %s -> %s", extension, target_datatype)
                                         if proprietary_converter_path:
                                             self.proprietary_converters.append( ( converter_config, extension, target_datatype ) )
                                         else:
@@ -779,6 +780,7 @@ class Registry( object ):
 
     def get_converter_by_target_type( self, source_ext, target_ext ):
         """Returns a converter based on source and target datatypes"""
+
         converters = self.get_converters_by_datatype( source_ext )
         if target_ext in converters.keys():
             return converters[ target_ext ]

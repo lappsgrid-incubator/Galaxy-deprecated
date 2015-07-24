@@ -496,6 +496,7 @@ class Data( object ):
 
     def get_converter_types(self, original_dataset, datatypes_registry):
         """Returns available converters by type for this dataset"""
+        log.info("Getting converter for %s", original_dataset.ext)
         return datatypes_registry.get_converters_by_datatype(original_dataset.ext)
 
     def find_conversion_destination( self, dataset, accepted_formats, datatypes_registry, **kwd ):

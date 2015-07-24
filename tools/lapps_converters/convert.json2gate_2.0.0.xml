@@ -2,7 +2,7 @@
     <!--
   <command interpreter='lsd'>../lapps_common/invoke_vassar.lsd convert.json2gate_2.0.0 $input false $output</command>
   -->
-  <command interpreter='lsd'>invoke.lsd convert.json2gate_2.0.0 $input false $output</command>
+  <command interpreter='lsd'>./invoke.lsd convert.json2gate_2.0.0 $input false $output</command>
   <inputs>
     <param name='input' type='data' format='lif' label='Input' />
   </inputs>
