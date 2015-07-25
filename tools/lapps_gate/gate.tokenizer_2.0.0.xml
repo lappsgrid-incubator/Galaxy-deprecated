@@ -5,7 +5,7 @@
     <param name='input' type='data' format="txt,gate,xml" label='input' />
   </inputs>
   <outputs>
-    <data name='output' format='gate' />
+    <data name='output' format='gate' label="Tokenized (GATE)" />
   </outputs>
   <help>ANNIE Tokeniser from GATE.</help>
 </tool>

@@ -37,6 +37,7 @@ class Json( Text ):
         """
             Try to load the string with the json module. If successful it's a json file.
         """
+        log.info("JSON sniffing %s", filename)
         return self._looks_like_json(filename)
 
     def _looks_like_json(self, filename):
@@ -110,11 +111,13 @@ class Lapps( Json ):
         :param filename: The name of the file to be checked.
         :return: True if filename is a LIF file, False otherwise.
         """
+        log.info("LAPPS sniffing %s", filename)
         with open(filename, "r") as fh:
             for c in self.header:
                 if c != self.read(fh):
                     return False
 
+        log.info("Sniffed a LAPPS file.")
         return True
 
 
@@ -139,11 +142,13 @@ class Lif( Lapps ):
         :param filename: The name of the file to be checked.
         :return: True if filename is a LIF file, False otherwise.
         """
+        log.info("LIF: Sniffing %s", filename)
         with open(filename, "r") as fh:
             for c in self.header:
                 if c != self.read(fh):
                     return False
 
+        log.info("Found a LIF file.")
         return True
 
 
@@ -155,6 +160,24 @@ class Gate( Lapps ):
     file_ext = "gate"
     header = '{"discriminator":"http://vocab.lappsgrid.org/ns/media/xml#gate"'
     blurb = "Gate/XML in a Lapps Container"
+
+    def sniff(self, filename):
+        """
+        Reads the start of the file (ignoring whitespace) looking for the
+        required GATE header.
+
+        :param filename: The name of the file to be checked.
+        :return: True if filename is a GATE file, False otherwise.
+        """
+        log.info("GATE: Sniffing %s", filename)
+        with open(filename, "r") as fh:
+            for c in self.header:
+                if c != self.read(fh):
+                    return False
+
+        log.info("Found a GATE file.")
+        return True
+
 
 class Ipynb(Json):
     file_ext = "ipynb"

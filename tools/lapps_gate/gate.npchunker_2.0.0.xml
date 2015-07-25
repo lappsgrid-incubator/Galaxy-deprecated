@@ -5,7 +5,7 @@
     <param name='input' type='data' format='gate' label='input' />
   </inputs>
   <outputs>
-    <data name='output' format='gate' />
+    <data name='output' format='gate' label="Noun Chunks (GATE)"/>
   </outputs>
   <help>GATE Noun Phrase Chunker</help>
 </tool>
