@@ -9,6 +9,7 @@ String testFeature = args.tf
 File output = new File(args.output)
 
 annotation = annotation.replaceAll("__pd__", "#")
+testAnnotation = testAnnotation.replaceAll("__pd__", "#")
 
 class DataContainer extends Data<Container> {}
 
