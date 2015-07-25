@@ -1,0 +1,42 @@
+import static org.lappsgrid.discriminator.Discriminators.Uri
+
+File input = new File(args[0])
+File output = new File(args[1])
+
+String json = input.text
+DataContainer data = Serializer.parse(json, DataContainer)
+if (data.discriminator == Uri.ERROR) {
+    output.text = json
+    return
+}
+
+Container container = data.payload
+View view = container.views[-1]
+View newView = container.newView()
+int id = -1;
+view.annotations.each { Annotation a ->
+    if (isNamedEntity(a)) {
+        Annotation newA = newView.newAnnotation();
+        newA.id = "ner" + (++id)
+        newA.label = Uri.NAMED_ENTITY
+        newA.features.type = a.label
+        newA.start = a.start
+        newA.end = a.end
+}
+
+data = new DataContainer(container)
+output.text = data.asJson()
+return
+
+boolean isNamedEntity(Annotation a) {
+    boolean result = false
+    switch (a.label) {
+        Uri.PERSON:
+        Uri.LOCATION:
+        Uri.ORGANIZATION:
+        Uri.DATE:
+            result = true
+            break
+    }
+    return result
+}

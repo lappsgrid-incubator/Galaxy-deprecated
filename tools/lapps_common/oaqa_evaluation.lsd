@@ -1,4 +1,4 @@
-import org.lappsgrid.discriminator.Discriminators.Uri
+import static org.lappsgrid.discriminator.Discriminators.Uri
 
 File gold = new File(args.gold)
 File test = new File(args.test)
