@@ -104,6 +104,7 @@
   </section>
   <section id="debugging" name="Debugging">
       <tool file="lapps_test/nerfix.xml"/>
+      <tool file="lapps_test/nerAddLabel.xml"/>
       <tool file="lapps_test/consolidate.xml"/>
       <tool file="lapps_datasource/html_source.xml"/>
       <tool file="lapps_common/create_collection.xml"/>
