@@ -22,7 +22,7 @@ view.annotations.each { Annotation a ->
     if (type) {
         Annotation newA = newView.newAnnotation();
         newA.id = "ner" + (++id)
-        newA.label = Uri.NAMED_ENTITY
+        newA.label = Uri.NE
         newA.features.category = type
         newA.start = a.start
         newA.end = a.end

@@ -13,8 +13,8 @@ if (data.discriminator == Uri.ERROR) {
 Container container = new Container(data.payload)
 View view = container.views[-1]
 view.annotations.each { Annotation a ->
-    if (a.type == Uri.NAMED_ENTITY) {
-        a.label = Uri.NAMED_ENTITY
+    if (a.type == Uri.NE) {
+        a.label = Uri.NE
         a.features.category = a.features.categore.toLowerCase()
     }
 }
