@@ -4,6 +4,5 @@ File output = new File(args[2])
 
 String url = "http://grid.ldc.upenn.edu:8080/doc_service/services/GW${lang}DemoDataSource"
 DataSource source = new DataSourceClient(url)
-String json = source.get(key)
-Data data = Serializer.parse(json, Data)
+output.text = source.get(key)
 

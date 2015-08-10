@@ -2,16 +2,10 @@
 
 include 'Config'
 
-String key = args.key
-String token = args.token
-String output = args.output
+String key = args[0]
+String output = args[1]
 
 def url = "${server.url}/${masc.id}"
 
 def service = new DataSourceClient(url, server.username, server.password)
-service.setToken(token)
-
-String json = service.get(key)
-
-println "Writing ${output}"
-new File(output).text = json
+new File(output).text = service.get(key)

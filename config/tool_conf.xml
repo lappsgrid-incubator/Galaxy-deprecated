@@ -9,6 +9,7 @@
 	</section>
     <section id="ldc" name="Linguistic Data Consortium">
         <tool file="lapps_datasource/ldc_list.xml"/>
+        <tool file="lapps_datasource/ldc_list_restricted.xml"/>
         <tool file="lapps_datasource/ldc_demo.xml"/>
         <tool file="lapps_datasource/ldc_restricted.xml"/>
     </section>

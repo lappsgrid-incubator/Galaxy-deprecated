@@ -1,4 +1,4 @@
-<tool id='ldc.list' name='List LDC Corpus' version='1.0.0'>
+<tool id='ldc.list' name='LDC List (Demo)' version='1.0.0'>
     <description>Obtain a list of document ID values available from an LDC Datasource.</description>
     <command interpreter='lsd'>ldc_list.lsd $source $output</command>
     <inputs>
