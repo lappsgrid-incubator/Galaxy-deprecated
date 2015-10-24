@@ -3,8 +3,6 @@ import os
 from datetime import datetime, timedelta
 from string import punctuation as PUNCTUATION
 
-from galaxy import eggs
-eggs.require('SQLAlchemy')
 from sqlalchemy import and_, false, func, or_
 
 import galaxy.queue_worker
@@ -1122,6 +1120,25 @@ class Admin( object ):
         return trans.fill_template( '/webapps/reports/job_info.mako',
                                     job=job,
                                     message="<a href='jobs'>Back</a>" )
+
+    @web.expose
+    @web.require_admin
+    def sanitize_whitelist( self, trans, submit_whitelist=False, tools_to_whitelist=[]):
+        if submit_whitelist:
+            # write the configured sanitize_whitelist_file with new whitelist
+            # and update in-memory list.
+            with open(trans.app.config.sanitize_whitelist_file, 'wt') as f:
+                if isinstance(tools_to_whitelist, basestring):
+                    tools_to_whitelist = [tools_to_whitelist]
+                new_whitelist = sorted([tid for tid in tools_to_whitelist if tid in trans.app.toolbox.tools_by_id])
+                f.write("\n".join(new_whitelist))
+            trans.app.config.sanitize_whitelist = new_whitelist
+            galaxy.queue_worker.send_control_task(trans.app, 'reload_sanitize_whitelist', noop_self=True)
+            # dispatch a message to reload list for other processes
+        return trans.fill_template( '/webapps/galaxy/admin/sanitize_whitelist.mako',
+                                    sanitize_all=trans.app.config.sanitize_all_html,
+                                    tools=trans.app.toolbox.tools_by_id )
+
 
 # ---- Utility methods -------------------------------------------------------
 

@@ -6,8 +6,6 @@ import unittest
 test_utils = imp.load_source( 'test_utils',
     os.path.join( os.path.dirname( __file__), '../unittest_utils/utility.py' ) )
 
-from galaxy import eggs
-eggs.require( 'SQLAlchemy >= 0.4' )
 import sqlalchemy
 
 from galaxy import model
@@ -111,7 +109,7 @@ class HDAManagerTestCase( HDATestCase ):
         tags_to_set = [ u'tag-one', u'tag-two' ]
         self.hda_manager.set_tags( hda1, tags_to_set, user=owner )
         tag_str_array = self.hda_manager.get_tags( hda1 )
-        self.assertEqual( tags_to_set, tag_str_array )
+        self.assertEqual( sorted( tags_to_set ), sorted( tag_str_array ) )
 
     def test_hda_annotation( self ):
         owner = self.user_manager.create( **user2_data )
@@ -146,7 +144,7 @@ class HDAManagerTestCase( HDATestCase ):
 
         hda2 = self.hda_manager.copy( tagged, history=history1 )
         tag_str_array = self.hda_manager.get_tags( hda2 )
-        self.assertEqual( tags_to_set, tag_str_array )
+        self.assertEqual( sorted( tags_to_set ), sorted( tag_str_array ) )
 
         self.log( "annotations should be copied between HDAs" )
         annotated = self.hda_manager.create( history=history1, dataset=self.dataset_manager.create() )
@@ -419,7 +417,7 @@ class HDASerializerTestCase( HDATestCase ):
     def test_serializers( self ):
         hda = self._create_vanilla_hda()
         all_keys = list( self.hda_serializer.serializable_keyset )
-        serialized = self.hda_serializer.serialize( hda, all_keys )
+        serialized = self.hda_serializer.serialize( hda, all_keys, user=hda.history.user )
 
         self.log( 'everything serialized should be of the proper type' )
         # base
@@ -433,7 +431,6 @@ class HDASerializerTestCase( HDATestCase ):
         self.assertUUID( serialized[ 'uuid' ] )
         self.assertIsInstance( serialized[ 'file_name' ], basestring )
         self.assertIsInstance( serialized[ 'extra_files_path' ], basestring )
-        self.assertIsInstance( serialized[ 'permissions' ], dict )
         self.assertIsInstance( serialized[ 'size' ], int )
         self.assertIsInstance( serialized[ 'file_size' ], int )
         self.assertIsInstance( serialized[ 'nice_size' ], basestring )

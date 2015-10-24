@@ -5,10 +5,7 @@ import string
 import tarfile
 import tempfile
 
-from galaxy import eggs
-eggs.require( "SQLAlchemy >= 0.4" )
 from sqlalchemy import and_
-eggs.require( "MarkupSafe" )
 from markupsafe import escape
 
 from galaxy.model.item_attrs import Dictifiable
@@ -740,6 +737,10 @@ class AbstractToolBox( object, Dictifiable, ManagesIntegratedToolPanelMixin ):
             # to monitor such a large directory.
             self._tool_watcher.watch_file( config_file, tool.id )
         return tool
+
+    def load_hidden_lib_tool( self, path ):
+        tool_xml = os.path.join( os.getcwd(), "lib", path )
+        return self.load_hidden_tool( tool_xml )
 
     def load_hidden_tool( self, config_file, **kwds ):
         """ Load a hidden tool (in this context meaning one that does not

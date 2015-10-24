@@ -10,18 +10,11 @@ import string
 import time
 from Cookie import CookieError
 
-from galaxy import eggs
-eggs.require( "Cheetah" )
 from Cheetah.Template import Template
-eggs.require( "Mako" )
 import mako.runtime
 import mako.lookup
-# pytz is used by Babel.
-eggs.require( "pytz" )
-eggs.require( "Babel" )
 from babel.support import Translations
 from babel import Locale
-eggs.require( "SQLAlchemy >= 0.4" )
 from sqlalchemy import and_, true
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import joinedload
@@ -465,6 +458,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
                 url_for( controller='user', action='manage_user_info' ),
                 url_for( controller='user', action='set_default_permissions' ),
                 url_for( controller='user', action='reset_password' ),
+                url_for( controller='user', action='change_password' ),
                 url_for( controller='user', action='openid_auth' ),
                 url_for( controller='user', action='openid_process' ),
                 url_for( controller='user', action='openid_associate' ),
@@ -491,7 +485,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
                 except IndexError:
                     pass
             if self.request.path not in allowed_paths:
-                self.response.send_redirect( url_for( controller='root', action='index' ) )
+                self.response.send_redirect( url_for( controller='user', action='login' ) )
 
     def __create_new_session( self, prev_galaxy_session=None, user_for_new_session=None ):
         """
@@ -602,7 +596,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
                     if prev_galaxy_session.user is None:
                         # Increase the user's disk usage by the amount of the previous history's datasets if they didn't already own it.
                         for hda in history.datasets:
-                            user.total_disk_usage += hda.quota_amount( user )
+                            user.adjust_total_disk_usage(hda.quota_amount(user))
             elif self.galaxy_session.current_history:
                 history = self.galaxy_session.current_history
             if (not history and users_last_session and
