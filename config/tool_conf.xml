@@ -4,7 +4,8 @@
 		<tool file="data_source/upload.xml"/>
 		<tool file="lapps_datasource/masc_get.xml"/> 
 		<tool file="lapps_datasource/masc_list.xml"/>
-		<tool file="lapps_datasource/masc_load.xml"/> 
+		<tool file="lapps_datasource/masc_load.xml"/>
+        <tool file="lapps_datasource/masc_query.xml"/>
         <tool file="lapps_datasource/create_collection.xml"/>
         <tool file="lapps_datasource/query_collection.xml"/>
 	</section>
