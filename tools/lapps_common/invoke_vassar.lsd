@@ -2,31 +2,18 @@
 
 boolean useLocalhost = false
 
-String base = "http://grid.anc.org:8080/service_manager/invoker/anc"
-String username = "tester"
-String password = "tester"
+//String base = "http://grid.anc.org:8080/service_manager/invoker/anc"
+//String base = "http://manager:8080/service_manager/invoker/vassar"
+String base = "http://vassar.lappsgrid.org/invoker/anc"
+
+String username = "operator"
+String password = "operator"
 
 if (useLocalhost) {
 	base = "http://localhost:8080/service_manager/invoker/picard"
 	username = "operator"
 	password = "operator"
 }
-
-/*
-String defaultUsername
-String defaultPassword
-
-if (localhost) {
-	base = "http://localhost:8080/service_manager/invoker/picard"
-	defaultUsername = "operator"
-	defaultPassword = "operator"
-}
-else {
-	base = "http://grid.anc.org:8080/service_manager/invoker/anc"
-	defaultUserName = "tester"
-	defaultPassword = "tester"
-}
-*/
 
 String service = args[0]
 String input = args[1]
