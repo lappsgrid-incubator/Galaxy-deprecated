@@ -22,7 +22,7 @@ view.annotations.each { Annotation a ->
     if (type) {
         Annotation newA = newView.newAnnotation();
         newA.id = "ner" + (++id)
-        newA.label = Uri.NE
+        newA.'@type' = Uri.NE
         newA.features.category = type
         newA.start = a.start
         newA.end = a.end
@@ -34,19 +34,32 @@ output.text = data.asJson()
 return
 
 String isNamedEntity(Annotation a) {
-    String result = null
-    switch (a.label) {
+    String type = a.'@type'
+    switch (type) {
         Uri.PERSON:
-            result = "person"
+        Uri.LOCATION:
+        Uri.ORGANIZATION:
+        Uri.DATE:
+        	return type
+        	break
+    }
+    return null
+}
+
+String old_isNamedEntity(Annotation a) {
+    String result = null
+    switch (a.'@type') {
+        Uri.PERSON:
+            result = "Person"
             break
         Uri.LOCATION:
-            result = "location"
+            result = "Location"
             break;
         Uri.ORGANIZATION:
-            result = "organization"
+            result = "Organization"
             break
         Uri.DATE:
-            result = "date"
+            result = "Date"
             break
     }
     return result
