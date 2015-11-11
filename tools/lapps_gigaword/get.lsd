@@ -2,7 +2,8 @@ include 'Config'
 
 String token = args[0]
 String key = args[1]
-File output = new File(args[2])
+String service = args[2]
+File output = new File(args[3])
 
-DataSource service = createService(token)
+DataSource service = createService(service, token)
 output.text = service.get(key)

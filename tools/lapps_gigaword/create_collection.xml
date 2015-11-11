@@ -1,12 +1,11 @@
 <tool id="gigaword.collection" name="Create Gigaword Collection" version="1.0.0">
-  <command interpreter="lsd">create_collection.lsd $token $input $start $end</command>
+  <command interpreter="lsd">create_collection.lsd $token $start $end $service</command>
 
   <inputs>
       <param name="token" type="text" label="OAuth Token"/>
-      <param name="input" type="data" format="txt" label="Index List" help="List of Gigaword document ID values." />
       <param name="start" type="integer" value="0" min="0"/>
       <param name="end" type="integer" value="392" max="392"/>
-      <param name="language" type="select" label="Language">
+      <param name="service" type="select" label="Language">
           <option value="GWENDataSource">English</option>
           <option value="GWZHDataSource">Chinese</option>
           <option value="GWESDataSource">Spanish</option>
@@ -20,4 +19,20 @@
   </outputs>
   <tests>
   </tests>
+    <help><![CDATA[
+
+Creates a Data Collection of documents drawn from Gigaword.
+
+.. class:: infomark
+
+To obtain documents from Gigaword you **must**:
+
+1. Be an LDC member
+2. `Obtain an OAuth Token <http://grid.anc.org:9080/ldc-authorize/>`_
+
+To obtain an OAuth token visit the link above and log in with your LDC id and password. Then paste
+the OAuth token into the above field.
+
+]]>
+    </help>
 </tool>

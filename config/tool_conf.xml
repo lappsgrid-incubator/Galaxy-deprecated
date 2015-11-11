@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <toolbox>
-	<section id="datasource" name="MASC">
+    <section id="local.data" name="Local Data">
 		<tool file="data_source/upload.xml"/>
-		<tool file="lapps_datasource/masc_get.xml"/> 
-		<tool file="lapps_datasource/masc_list.xml"/>
-		<tool file="lapps_datasource/masc_load.xml"/>
-        <tool file="lapps_datasource/masc_query.xml"/>
-        <tool file="lapps_datasource/create_collection.xml"/>
-        <tool file="lapps_datasource/query_collection.xml"/>
+    </section>
+	<section id="datasource" name="MASC">
+		<tool file="lapps_masc/get.xml"/>
+		<tool file="lapps_masc/list.xml"/>
+        <tool file="lapps_masc/query.xml"/>
+        <tool file="lapps_masc/create_collection.xml"/>
+        <tool file="lapps_masc/query_collection.xml"/>
 	</section>
-    <section id="ldc" name="English Gigaword">
+    <section id="ldc" name="Gigaword">
         <tool file="lapps_gigaword/list.xml"/>
         <tool file="lapps_gigaword/get.xml"/>
-		<tool file="lapps_gigaword/load.xml"/> 
         <tool file="lapps_gigaword/create_collection.xml"/>
     </section>
 	<section id="tokenizers" name="Tokenizers">
@@ -128,7 +128,7 @@
       <tool file="lapps_test/nerfix.xml"/>
       <tool file="lapps_test/nerAddLabel.xml"/>
       <tool file="lapps_test/consolidate.xml"/>
-      <tool file="lapps_datasource/html_source.xml"/>
+      <tool file="lapps_masc/html_source.xml"/>
       <tool file="lapps_test/tokenizer.xml"/>
       <tool file="lapps_test/tagger.xml"/>
       <tool file="lapps_test/ner.xml"/>

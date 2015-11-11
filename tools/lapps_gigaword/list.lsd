@@ -4,12 +4,11 @@ include 'Config'
 String token = args[0]
 int start = args[1] as Integer
 int end = args[2] as Integer
-File output = new File(args[3])
+String service = args[3]
+File output = new File(args[4])
 
-//String url = "http://gigaword:8080/GigawordDataSource/services/GigawordDataSource"
-//DataSourceClient service = new DataSourceClient(url)
-DataSource service = createService(token)
-String json = service.execute(new ListRequest(start, end).asJson())
+DataSource client = createService(service, token)
+String json = client.execute(new ListRequest(start, end).asJson())
 Data data = Serializer.parse(json, Data)
 if (Uri.ERROR == data.discriminator) {
     output.text = json

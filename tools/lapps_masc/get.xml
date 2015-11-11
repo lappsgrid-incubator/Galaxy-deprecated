@@ -1,6 +1,6 @@
-<tool id="masc.fetch" name="MASC" version="2.0.0">
+<tool id="masc.get" name="MASC" version="2.0.0">
   <description>Retrieves a single document from MASC.</description>
-  <command interpreter="lsd">masc_fetch.lsd $key $output</command>
+  <command interpreter="lsd">get.lsd $key $output</command>
   <inputs>
     <param name="key" type="text" label="Key" value="MASC3-0203"/>
   </inputs>
@@ -17,6 +17,6 @@
   -->
   <help>Retrieves a single document from MASC 3.0.0.
   
-The document ID (key) is one of the user specified parameters.
+Use the *List MASC* tool to obtain a list of valid document ID values.
   </help>
 </tool>

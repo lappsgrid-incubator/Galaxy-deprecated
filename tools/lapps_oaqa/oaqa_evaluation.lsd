@@ -46,7 +46,7 @@ config.testAnnotationProducer = testProducer
 config.testAnnotationFeature = testFeature
 
 container.metadata['evaluation-configuration'] = config
-String url = "http://evaluation:8080/EvaluationServices/services/AnnotationEvaluator"
+//String url = "http://evaluation:8080/EvaluationServices/services/AnnotationEvaluator"
 def eval = new ServiceClient(url, null, null)
 
 DataContainer data = new DataContainer()

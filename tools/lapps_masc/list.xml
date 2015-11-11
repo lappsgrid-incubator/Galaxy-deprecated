@@ -1,9 +1,6 @@
 <tool id="masc.list" name="List MASC" version="2.0.0">
   <description>Lists all keys in MASC.</description>
-  <command interpreter="lsd">masc_list.lsd $token $output</command>
-  <inputs>
-    <param name="token" type="text" label="OAuth Token" value="123abc"/>
-  </inputs>
+  <command interpreter="lsd">list.lsd $output</command>
   <outputs>
     <data name="output" format="txt"/>
   </outputs>
@@ -15,5 +12,5 @@
     </test>
   </tests>
   -->
-  <help>Tokenizes the input file and writes the result to the output file.</help>
+  <help>Obtains a list of ID values for all documents in MASC.</help>
 </tool>

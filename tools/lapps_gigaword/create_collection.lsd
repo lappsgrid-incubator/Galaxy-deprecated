@@ -1,9 +1,9 @@
 include 'Config'
 
-File input = new File(args[0])
-String token = args[1]
-int start = args[2] as int
-int end = args[3] as int
+String token = args[0]
+int start = args[1] as int
+int end = args[2] as int
+String service = args[3]
 
 dir = new File("outputs")
 
@@ -13,7 +13,7 @@ if (!dir.exists()) {
     }
 }
 
-DataSourceClient datasource = createService(token)
+DataSourceClient datasource = createService(service, token)
 
 String[] lines = input.readLines()
 lines[start..end].each { line ->
