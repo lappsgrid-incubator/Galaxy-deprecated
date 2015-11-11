@@ -1,0 +1,5 @@
+createService = { String token ->
+    DataSourceClient client = new DataSourceClient("http://gigaword:8080/GigawordDataSource/services/GigawordDataSource")
+    client.setToken(token)
+    return client
+}

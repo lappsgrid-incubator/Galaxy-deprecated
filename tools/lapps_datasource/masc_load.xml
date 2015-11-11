@@ -3,6 +3,7 @@
   <command interpreter="lsd">masc_load.lsd $token $input $output</command>
   <inputs>
     <param name="input" type="data" format="txt"/>
+    <param name="token" type="text" label="OAuth Token" value="123abc"/>
   </inputs>
   <outputs>
     <data name="output" format="lif" label="Output"/>

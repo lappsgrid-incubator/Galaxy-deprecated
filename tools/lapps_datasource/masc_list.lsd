@@ -2,21 +2,15 @@
 
 include 'Config'
 
-int start = args[0] as int
-int end = args[1] as int
-File output = new File(args[2])
-
-if (end < start) {
-	int tmp = start
-	start = end
-	end = tmp
-}
+String token = args[0]
+File output = new File(args[1])
 
 def url = "${server.url}/${masc.id}"
 
 // Call the service to get a list of document ID values.
 def service = new DataSourceClient(url, server.username, server.password)
-list = service.list(start, end)
+service.setToken(token)
+list = service.list()
 
 // Write the ID values to the output file.
 output.withWriter { out ->

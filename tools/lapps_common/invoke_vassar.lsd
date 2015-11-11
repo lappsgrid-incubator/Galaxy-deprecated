@@ -6,8 +6,8 @@ boolean useLocalhost = false
 //String base = "http://manager:8080/service_manager/invoker/vassar"
 String base = "http://vassar.lappsgrid.org/invoker/anc"
 
-String username = "tester"
-String password = "tester"
+String username = "operator"
+String password = "operator"
 
 if (useLocalhost) {
 	base = "http://localhost:8080/service_manager/invoker/picard"

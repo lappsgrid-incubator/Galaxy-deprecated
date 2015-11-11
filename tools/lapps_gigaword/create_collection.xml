@@ -1,8 +1,9 @@
 <tool id="gigaword.collection" name="Create Gigaword Collection" version="1.0.0">
-  <command interpreter="lsd">create_collection.lsd $input $start $end</command>
+  <command interpreter="lsd">create_collection.lsd $token $input $start $end</command>
 
   <inputs>
-    <param name="input" type="data" format="txt" label="Index List" help="List of Gigaword document ID values." />
+      <param name="token" type="text" label="OAuth Token"/>
+      <param name="input" type="data" format="txt" label="Index List" help="List of Gigaword document ID values." />
       <param name="start" type="integer" value="0" min="0"/>
       <param name="end" type="integer" value="392" max="392"/>
   </inputs>

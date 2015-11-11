@@ -1,6 +1,8 @@
-String key = args[0]
-File output = new File(args[1])
+include 'Config'
 
-String url = "http://gigaword:8080/GigawordDataSource/services/GigawordDataSource"
-DataSource service = new DataSourceClient(url)
+String token = args[0]
+String key = args[1]
+File output = new File(args[2])
+
+DataSource service = createService(token)
 output.text = service.get(key)
