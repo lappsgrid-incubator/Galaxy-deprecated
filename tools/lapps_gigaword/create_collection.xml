@@ -6,6 +6,12 @@
       <param name="input" type="data" format="txt" label="Index List" help="List of Gigaword document ID values." />
       <param name="start" type="integer" value="0" min="0"/>
       <param name="end" type="integer" value="392" max="392"/>
+      <param name="language" type="select" label="Language">
+          <option value="GWENDataSource">English</option>
+          <option value="GWZHDataSource">Chinese</option>
+          <option value="GWESDataSource">Spanish</option>
+          <option value="GWARDataSource">Arabic</option>
+      </param>
   </inputs>
   <outputs>
     <collection name="list_output" type="list" label="Output List" format="ldc">
