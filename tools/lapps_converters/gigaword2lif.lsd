@@ -7,7 +7,7 @@ File output = new File(args[1])
 
 Data data = Serializer.parse(file.text, Data)
 
-//TODO Check that the discriminator is XML
+//TODO Check that the discriminator is LDC/XML
 // Parse the payload into an XML document object (NodeList)
 def doc = new XmlParser().parseText(data.payload)
 

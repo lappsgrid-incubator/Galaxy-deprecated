@@ -1,3 +1,4 @@
+/*
 server = [
 	url:'http://manager:8080/service_manager/invoker',
 	username:'operator',
@@ -6,3 +7,13 @@ server = [
 masc = [
 	id:'vassar:masc.text_2.0.0'
 ]
+*/
+server = [
+    url: 'http://vassar.lappsgrid.org/invoker',
+    username: 'tester',
+    password: 'tester'
+]
+masc = [
+    id: 'anc:masc.text_2.0.0'
+]
+
