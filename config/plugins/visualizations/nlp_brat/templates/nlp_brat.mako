@@ -9,11 +9,11 @@ lappsjson = hda.get_raw_data()
 lappsjsonfil = hda.dataset.file_name
 lsdpath = os.path.join(os.getcwd(),'config/plugins/visualizations/nlp_brat/json2json.lsd')
 bratjson = """{
-    "text" : "Loading ..."
+    "text" : "Unknown Text ..."
 }"""
 output = subprocess.Popen([lsdpath, lappsjsonfil], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 outputjson = output.stdout.read()
-if not "http://vocab.lappsgrid.org/ns/error" in outputjson:
+if ("payload" in outputjson) and ("targets" in outputjson) and (not "http://vocab.lappsgrid.org/ns/error" in outputjson):
     bratjson = json.loads(outputjson)["payload"]["targets"][0]
 json2jsonexp = output.stderr
 %>
@@ -223,6 +223,7 @@ root = h.url_for( '/' )
                     $.extend({}, jQuery.parseJSON(docData.trim())), webFontURLs);
                 renderDotDisplay(dotDisplayId, inputId);
                 console.info("Finished: liveDispatch");
+                $("#preload").fadeOut(4000, function(){});
             }catch(e) {
                 console.error("ERROR: "+e+" ;doc="+docData+"; coll="+collData);
             }
@@ -289,8 +290,8 @@ root = h.url_for( '/' )
 
 ## ----------------------------------------------------------------------------
 <body>
-<h2  align="center">Online Visualization of LappsGrid</h2>
-<p style="text-align:center;font-size: 12pt;">
+<!--h2  align="center">Online Visualization of LappsGrid</h2>
+<p style="text-align:center;font-size: 12pt;"-->
     LappsGrid, <var>Version 0.3.0</var>,  May 2015</p>
 
 
@@ -301,7 +302,9 @@ root = h.url_for( '/' )
 
     <table align="center" class="table table-bordered table-striped responsive-utilities" align="center" style="width:800px;">
         <tr><th> Display </th></tr>
-        <tr><td height="100px"><div id="instantbratdisplay"></div></td></tr>
+        <tr><td height="100px"><div id="preload" style="width:100px;height:100px;position:fixed;top:50%;left:50%;" ondblclick="$('#preload').hide();">
+            <img src="${root}plugins/visualizations/nlp_brat/static/img/KUJoe.gif" /></div>
+            <div id="instantbratdisplay"></div></td></tr>
         <tr><td><div id="instantdotdisplay" style="display:none">Loading ...</div></td></tr>
     </table>
 

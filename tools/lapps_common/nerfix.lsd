@@ -10,7 +10,7 @@ if (data.discriminator == Uri.ERROR) {
     return
 }
 
-println "Creating the container"
+//println "Creating the container"
 Container container = data.payload
 View view = container.views[-1]
 View newView = container.newView()
@@ -20,7 +20,7 @@ int id = -1;
 newView.metadata.contains = [:]
 newView.metadata.contains[Uri.NE] = getContains(view)
 
-println "Adding annotations to the new view."
+//println "Adding annotations to the new view."
 
 view.annotations.each { Annotation a ->
     String type = isNamedEntity(a)

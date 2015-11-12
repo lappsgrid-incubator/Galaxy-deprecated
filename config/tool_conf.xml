@@ -38,6 +38,7 @@
 		<tool file='lapps_stanford/brandeis.namedentityrecognizer.xml' />
 		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
+        <tool file="lapps_common/nerfix.xml"/>
 	</section>
 	<section id="parsers" name="Parsers">
 		<tool file='lapps_stanford/brandeis.parser.xml' />
@@ -53,12 +54,6 @@
 		<tool file="lapps_gate/gate.coref_2.0.0.xml"/>
 	</section>
 	-->
-	<section id="misc" name="Miscellaneous">
-		<tool file="lapps_datasource/masc_list.xml"/>
-		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
-		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
-		<tool file="lapps_common/pretty_print.xml"/>
-	</section>	
 	<section id="stanford" name="Stanford NLP">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.splitter_2.0.0.xml"/>
@@ -116,6 +111,12 @@
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 		<tool file="lapps_converters/gigaword2lif.xml"/>
+	</section>
+	<section id="misc" name="Miscellaneous">
+		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
+		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
+		<tool file="lapps_common/pretty_print.xml"/>
+        <tool file="lapps_common/nerfix.xml"/>
 	</section>
 	<section id="lapps.tools">
 		<tool file="lapps_common/rename.xml"/>
