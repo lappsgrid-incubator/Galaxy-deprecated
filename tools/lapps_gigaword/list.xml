@@ -24,7 +24,7 @@ Fetches a list of document ID values from Gigaword.
 To obtain documents from Gigaword you **must**:
 
 1. Be an LDC member
-2. `Obtain an OAuth Token <http://grid.anc.org:9080/ldc-authorize/>`_
+2. `Obtain an OAuth Token <https://grid.anc.org:9443/ldc-authorize/>`_
 
 To obtain an OAuth token visit the link above and log in with your LDC id and password. Then paste
 the OAuth token into the above field.
