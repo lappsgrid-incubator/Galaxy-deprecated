@@ -113,8 +113,6 @@
 		<tool file="lapps_converters/gigaword2lif.xml"/>
 	</section>
 	<section id="misc" name="Miscellaneous">
-		<tool file="lapps_gate/gate.gazetteer_2.0.0.xml"/>
-		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
 		<tool file="lapps_common/rename.xml"/>
