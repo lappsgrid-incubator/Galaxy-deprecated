@@ -117,8 +117,6 @@
 		<tool file="lapps_gate/gate.ortho_2.0.0.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
-	</section>
-	<section id="lapps.tools">
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
 		<tool file="lapps_common/filter.xml"/>
@@ -128,17 +126,4 @@
     <tool file="plotting/bar_chart.xml" />
     <tool file="plotting/boxplot.xml" />
   </section>
-  <!--
-  <section id="debugging" name="Debugging">
-      <tool file="lapps_test/nerfix.xml"/>
-      <tool file="lapps_test/nerAddLabel.xml"/>
-      <tool file="lapps_test/consolidate.xml"/>
-      <tool file="lapps_masc/html_source.xml"/>
-      <tool file="lapps_test/tokenizer.xml"/>
-      <tool file="lapps_test/tagger.xml"/>
-      <tool file="lapps_test/ner.xml"/>
-      <tool file="lapps_test/transform.xml"/>
-      <tool file="lapps_test/brat.xml"/>
-  </section>
-  -->
 </toolbox>
