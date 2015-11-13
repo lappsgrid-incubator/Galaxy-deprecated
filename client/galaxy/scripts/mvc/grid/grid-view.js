@@ -457,7 +457,7 @@ return Backbone.View.extend({
         if (operation && !confirmation_text){
             confirmation_text = operation.confirm || '';
         }
-
+        
         // collect ids
         var item_ids = [];
         this.$el.find('input[name=id]:checked').each(function() {
