@@ -3,8 +3,9 @@ import static org.lappsgrid.discriminator.Discriminators.Uri
 include 'Config'
 
 String pattern = args[0]
-int start = args[1] as int
-int end = args[2] as int
+String type = args[1]
+int start = args[2] as int
+int end = args[3] as int
 if (end < start) {
 	int tmp = start
 	start = end
@@ -19,7 +20,7 @@ if (!dir.exists()) {
     }
 }
 
-String url = "${server.url}/${masc.id}"
+String url = "${server.url}/${type}"
 datasource = new ServiceClient(url, server.username, server.password)
 
 int size = end - start

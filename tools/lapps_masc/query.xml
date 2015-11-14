@@ -1,8 +1,12 @@
 <tool id="masc.query" name="Query" version="1.0.0">
   <description>Lists all keys that match the query.</description>
-  <command interpreter="lsd">query.lsd $query $output</command>
+  <command interpreter="lsd">query.lsd $query $type $output</command>
     <inputs>
         <param name="query" type="text" label="Query"/>
+      <param name="type" type="select">
+          <option value="anc:masc.text_2.1.0">Text</option>
+          <option value="anc:masc.json_2.1.0">Gold Annotations</option>
+      </param>
     </inputs>
   <outputs>
     <data name="output" format="txt"/>

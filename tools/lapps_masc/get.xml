@@ -1,8 +1,12 @@
 <tool id="masc.get" name="Get Document" version="2.0.0">
   <description>Retrieves a single document from MASC.</description>
-  <command interpreter="lsd">get.lsd $key $output</command>
+  <command interpreter="lsd">get.lsd $key $type $output</command>
   <inputs>
     <param name="key" type="text" label="Key" value="MASC3-0203"/>
+      <param name="type" type="select">
+          <option value="anc:masc.text_2.1.0">Text</option>
+          <option value="anc:masc.json_2.1.0">Gold Annotations</option>
+      </param>
   </inputs>
   <outputs>
     <data name="output" format="json" label="MASC Document"/>

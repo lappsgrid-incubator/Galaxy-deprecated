@@ -95,6 +95,7 @@
 		<tool file="lapps_common/pretty_print.xml"/>
 		<tool file="lapps_common/word_count.xml"/>
 		<tool file="lapps_oaqa/oaqa_evaluation.xml"/>
+		<tool file="lapps_oaqa/simple_oaqa.xml"/>
 		<!--
 		<tool file="lapps_common/evaluation.xml"/>
 		<tool file="lapps_common/compare_annotations.xml"/>
@@ -118,6 +119,7 @@
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
 		<tool file="lapps_common/filter.xml"/>
+        <tool file="lapps_common/select.xml"/>
 	</section>
   <section id="plots" name="Graph/Display Data">
 		<tool file="lapps_common/pretty_print.xml"/>

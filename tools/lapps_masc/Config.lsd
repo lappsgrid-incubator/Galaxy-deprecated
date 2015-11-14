@@ -6,5 +6,6 @@ server = [
 	password:'tester'
 ]
 masc = [
-	id:'anc:masc.text_2.1.0'
+	id:'anc:masc.text_2.1.0',
+	gold:'anc:masc.json_2.1.0'
 ]

@@ -1,5 +1,5 @@
 <tool id="masc.query.collection" name="Query Data Collection" version="1.0.0">
-  <command interpreter="lsd">query_collection.lsd $query $start $end</command>
+  <command interpreter="lsd">query_collection.lsd $query $type $start $end</command>
     <description>Create a data collection from documents that match the query.</description>
   <inputs>
   <!--
@@ -8,6 +8,10 @@
   	  <param name="query" type="text" label="Query"/>
       <param name="start" type="integer" value="0" min="0"/>
       <param name="end" type="integer" value="392" max="392"/>
+      <param name="type" type="select">
+          <option value="anc:masc.text_2.1.0">Text</option>
+          <option value="anc:masc.json_2.1.0">Gold Annotations</option>
+      </param>
   </inputs>
   <outputs>
     <collection name="list_output" type="list" label="Output List" format="lif">
