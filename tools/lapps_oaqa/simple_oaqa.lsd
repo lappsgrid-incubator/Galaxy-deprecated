@@ -29,17 +29,27 @@ else {
 }
 
 
-class DataContainer extends Data<Container> {}
+//class DataContainer extends Data<Container> {}
 
-DataContainer goldData = Serializer.parse(gold.text, DataContainer)
-Container goldContainer = goldData.payload
+Data goldData = Serializer.parse(gold.text, Data)
+
+Container goldContainer = null
+if (goldData.payload instanceof String) {
+    println "Payload is a string."
+    goldContainer = Serializer.parse(goldData.payload.toString(), Container)
+}
+else {
+    println "Gold container payload is a ${goldData.payload.class}"
+    goldContainer = new Container(goldData.payload)
+}
+//Container goldContainer = new Container(goldData.payload)
 View goldView = goldContainer.views[-1]
 String goldProducer = goldView.metadata.contains[annotation]?.producer
 
 //View goldView = findView(goldContainer.payload, goldAnnotationType, goldAnnotationProducer)
 
-DataContainer testData = Serializer.parse(test.text, DataContainer)
-Container testContainer = testData.payload
+Data testData = Serializer.parse(test.text, Data)
+Container testContainer = new Container(testData.payload)
 View testView = testContainer.views[-1]
 String testProducer = testView.metadata.contains[annotation]?.producer
 //View testView = findView(testContainer.payload, testAnnotationType, testAnnotationProducer)

@@ -101,25 +101,21 @@
 		<tool file="lapps_common/compare_annotations.xml"/>
 		-->
 	</section>
-	<!--
-	<section id="converters" name="Datatype Converters">
-		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
-		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
-		<tool file="lapps_converters/gigaword2lif.xml"/>
-	</section>
-	-->
 	<section id="local.converters" name="Manual Conversion">
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
 		<tool file="lapps_converters/gigaword2lif.xml"/>
+        <tool file="lapps_common/select.xml"/>
+		<tool file="lapps_common/filter.xml"/>
 	</section>
 	<section id="misc" name="Miscellaneous">
+        <tool file="lapps_common/select.xml"/>
+		<tool file="lapps_common/filter.xml"/>
+		<tool file="lapps_common/simple_filter.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
-		<tool file="lapps_common/filter.xml"/>
-        <tool file="lapps_common/select.xml"/>
 	</section>
   <section id="plots" name="Graph/Display Data">
 		<tool file="lapps_common/pretty_print.xml"/>
