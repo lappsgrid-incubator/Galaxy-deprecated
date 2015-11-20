@@ -16,6 +16,6 @@
     <outputs>
         <data name='output' format='lif'/>
     </outputs>
-    <help>Renames the annotations in the last view in the document.
+    <help>Copies the view(s) with the selected annotation types to the end of the list of views.
     </help>
 </tool>
