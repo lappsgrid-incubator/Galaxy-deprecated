@@ -178,6 +178,33 @@ class Gate( Lapps ):
         return True
 
 
+class LDC( Lapps ):
+    """
+        LDC/XML in a JSON wrapper.
+
+    """
+    file_ext = "ldc"
+    header = '{"discriminator":"http://vocab.lappsgrid.org/ns/media/xml#ldc"'
+    blurb = "LDC/XML in a Lapps Container"
+
+    def sniff(self, filename):
+        """
+        Reads the start of the file (ignoring whitespace) looking for the
+        required GATE header.
+
+        :param filename: The name of the file to be checked.
+        :return: True if filename is a GATE file, False otherwise.
+        """
+        log.info("LDC: Sniffing %s", filename)
+        with open(filename, "r") as fh:
+            for c in self.header:
+                if c != self.read(fh):
+                    return False
+
+        log.info("Found a LDC file.")
+        return True
+
+
 class Ipynb(Json):
     file_ext = "ipynb"
 

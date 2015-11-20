@@ -26,10 +26,14 @@
     <datatype extension="xml" type="galaxy.datatypes.xml:GenericXml" mimetype="application/xml" display_in_upload="true"/>
     <datatype extension="bgzip" type="galaxy.datatypes.binary:Binary" subclass="True" />
     <datatype extension="xls" type="galaxy.datatypes.tabular:Tabular"/>
+    <datatype extension="oauth" type="galaxy.datatypes.data:Text" display_in_upload="true" description="An OAuth2 token"/>
     <datatype extension="gate" type="galaxy.datatypes.text:Gate" display_in_upload="true">
       <converter file="gate_to_lif_converter.xml" target_datatype="lif"/>
       <converter file="gate_to_lif_converter.xml" target_datatype="lapps"/>
       <!-- <converter file="gate_to_lif_converter.xml" target_datatype="json"/> -->
+    </datatype>
+    <datatype extension="ldc" type="galaxy.datatypes.text:LDC" display_in_upload="True">
+      <converter file="gigaword2lif.xml" target_datatype="lif"/>
     </datatype>
     <datatype extension="lif" type="galaxy.datatypes.text:Lif" display_in_upload="True">
       <converter file="lif_to_gate_converter.xml" target_datatype="gate"/>

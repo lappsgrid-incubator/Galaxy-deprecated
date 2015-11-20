@@ -2,7 +2,7 @@
   <command interpreter="lsd">create_collection.lsd $token $start $end $service</command>
 
   <inputs>
-      <param name="token" type="text" label="OAuth Token"/>
+      <param name="token" type="data" format="oauth" label="OAuth Token"/>
       <param name="start" type="integer" value="0" min="0"/>
       <param name="end" type="integer" value="392" max="392"/>
       <param name="service" type="select" label="Language">

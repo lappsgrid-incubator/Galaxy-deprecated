@@ -1,4 +1,4 @@
-String token = args[0]
+String token = new File(args[0]).text
 File input = new File(args[1])
 File output = new File(args[2])
 

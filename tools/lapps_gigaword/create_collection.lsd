@@ -1,6 +1,6 @@
 include 'Config'
 
-String token = args[0]
+String token = new File(args[0]).text
 int start = args[1] as int
 int end = args[2] as int
 String service = args[3]

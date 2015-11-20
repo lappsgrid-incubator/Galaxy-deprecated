@@ -2,7 +2,7 @@
     <description>Retreive a single document from the Gigaword Datasource.</description>
     <command interpreter='lsd'>get.lsd $token $key $service $output</command>
     <inputs>
-        <param name="token" type="text" label="OAuth Token"/>
+      <param name="token" type="data" format="oauth" label="OAuth Token"/>
         <param name="key" type="text" label="Document ID" value="NYT_ENG_20050622.0308"/>
         <param name="service" type="select" label="Language">
             <option value="GWENDataSource">English</option>
