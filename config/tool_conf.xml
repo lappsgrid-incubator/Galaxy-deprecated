@@ -20,24 +20,30 @@
 		<tool file='lapps_stanford/brandeis.tokenizer.xml' />
 		<tool file="lapps_gate/gate.tokenizer_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.tokenizer.xml' />
-	</section>
-	<section id="taggers" name="Taggers">
-		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
-		<tool file='lapps_stanford/brandeis.postagger.xml' />
-		<tool file="lapps_gate/gate.tagger_2.0.0.xml"/>
-		<tool file='lapps_opennlp/opennlp.postagger.xml' />
+		<tool file="lapps_lingpipe/vassar.tokenizer_1.0.0.xml"/>
 	</section>
 	<section id="splitters" name="Sentence Splitters">
 		<tool file="lapps_stanford/vassar.splitter_2.0.0.xml"/>
 		<tool file='lapps_stanford/brandeis.splitter.xml' />
 		<tool file="lapps_gate/gate.splitter_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.splitter.xml' />
+		<tool file="lapps_lingpipe/vassar.splitter_1.0.0.xml"/>
+	</section>
+	<section id="taggers" name="Taggers">
+		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
+		<tool file='lapps_stanford/brandeis.postagger.xml' />
+		<tool file="lapps_gate/gate.tagger_2.0.0.xml"/>
+		<tool file='lapps_opennlp/opennlp.postagger.xml' />
+		<tool file="lapps_lingpipe/vassar.tagger_1.0.0.xml"/>
 	</section>
 	<section id="ner" name="Named Entity Recognizers">
 		<tool file="lapps_stanford/vassar.ner_2.0.0.xml"/>
+		<tool file="lapps_stanford/vassar.ner2_2.0.0.xml"/>
 		<tool file='lapps_stanford/brandeis.namedentityrecognizer.xml' />
 		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
+		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
+        <tool file="lapps_dbpedia/spotlight.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
 	</section>
 	<section id="parsers" name="Parsers">
@@ -59,6 +65,7 @@
 		<tool file="lapps_stanford/vassar.splitter_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.tagger_2.0.0.xml"/>
 		<tool file="lapps_stanford/vassar.ner_2.0.0.xml"/>
+		<tool file="lapps_stanford/vassar.ner2_2.0.0.xml"/>
 		<tool file='lapps_stanford/brandeis.tokenizer.xml' />
 		<tool file='lapps_stanford/brandeis.splitter.xml' />
 		<tool file='lapps_stanford/brandeis.postagger.xml' />
@@ -85,7 +92,16 @@
 	  <tool file='lapps_opennlp/opennlp.postagger.xml' />
 	  <tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
 	  <tool file='lapps_opennlp/opennlp.parser.xml' />
-	</section>	
+	</section>
+    <section id="lingpipe.tools" name="Lingpipe">
+		<tool file="lapps_lingpipe/vassar.tokenizer_1.0.0.xml"/>
+		<tool file="lapps_lingpipe/vassar.splitter_1.0.0.xml"/>
+		<tool file="lapps_lingpipe/vassar.tagger_1.0.0.xml"/>
+		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
+    </section>
+    <section id="dbpedia" name="DBpedia">
+        <tool file="lapps_dbpedia/spotlight.xml"/>
+    </section>
 	<!--
 	<section id="kyoto.grid" name="Kyoto Node">
 		<tool file='lapps_kyoto/opennlp_postagger.xml'/>
@@ -109,8 +125,7 @@
 		<tool file="lapps_common/filter.xml"/>
 	</section>
 	<section id="misc" name="Miscellaneous">
-        <tool file="lapps_common/select.xml"/>
-		<tool file="lapps_common/filter.xml"/>
+		<!-- <tool file="lapps_common/filter.xml"/> -->
 		<tool file="lapps_common/simple_filter.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>

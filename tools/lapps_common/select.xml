@@ -2,7 +2,7 @@
   <description>Move select annotations to the last view</description>
   <command interpreter='lsd'>select.lsd $input $type $output</command>
   <inputs>
-      <param name="input" type="json,lif" label="Input"/>
+      <param name="input" type="data" format="lif,json" label="Input"/>
       <param name="type" type="text" label="Annotations"/>
       <!--
           <option value="http://vocab.lappsgrid.org/Token">Tokens</option>

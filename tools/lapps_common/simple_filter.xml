@@ -1,15 +1,15 @@
 <tool id='lapps.tools.simple_filter' name='Filter Annotations by type' version='1.0.0'>
     <description>Select views with the specified annotation type.</description>
-    <command interpreter='lsd'>filter.lsd $input $output "$type" $pretty</command>
+    <command interpreter='lsd'>simple_filter.lsd $input $output $type $pretty</command>
     <inputs>
         <param name='input' type='data' format='json,lif' label='Input'/>
         <param name="type" type="select" label="Annotations">
-           <option value="http://vocab.lappsgrid.org/Token">Tokens</option>
-           <option value="http://vocab.lappsgrid.org/Token#pos">Tokens+POS</option>
-           <option value="http://vocab.lappsgrid.org/Sentence">Sentences</option>
-           <option value="http://vocab.lappsgrid.org/NamedEntity">Named Entities</option>
-           <option value="http://vocab.lappsgrid.org/NounChunk">Noun Chunks</option>
-           <option value="http://vocab.lappsgrid.org/VerbChunk">Verb Chunks</option>
+           <option value="tok">Tokens</option>
+           <option value="pos">Tokens+POS</option>
+           <option value="s">Sentences</option>
+           <option value="ne">Named Entities</option>
+           <option value="nc">Noun Chunks</option>
+           <option value="vc">Verb Chunks</option>
         </param>
         <param name="pretty" type="boolean" label="Pretty print result"/>
     </inputs>

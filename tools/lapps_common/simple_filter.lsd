@@ -2,13 +2,21 @@ import static org.lappsgrid.discriminator.Discriminators.Uri
 
 File input = new File(args[0])
 File output = new File(args[1])
-String type = args[2]
+type = args[2]
 boolean prettyPrint = args[3] as Boolean
 
+if (type == 'tok') type = Uri.TOKEN
+else if (type == 'pos') type = Uri.POS
+else if (type == 's') type = Uri.SENTENCE
+else if (type == 'ne') type = Uri.NE
+else if (type == 'nc') type = Uri.NCHUNK
+else if (type == 'vc') type = Uri.VCHUNK
 
 def shell = new GroovyShell()
-def test = shell.evaluate("{ it.metadata.contains[${type}] }")
+String condition = "view.metadata.contains['$type']"
+def test = shell.evaluate("{ view -> $condition }")
 
+println "Condition : $condition"
 Data data = Serializer.parse(input.text, Data)
 Container container = new Container(data.payload)
 Container copy = new Container()
@@ -27,5 +35,6 @@ if (prettyPrint) {
 else {
 	output.text = data.asJson()
 }
+
 
 

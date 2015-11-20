@@ -29,6 +29,9 @@ view.annotations.each { Annotation a ->
         newA.id = "ner" + (++id)
         newA.atType = Uri.NE
         newA.features.category = type
+        a.features.each { name,value ->
+            newA.features[name] = value
+        }
         newA.start = a.start
         newA.end = a.end
     }
@@ -52,7 +55,7 @@ Map getContains(View view) {
 	if (contains[Uri.LOCATION]) {
 		return contains[Uri.LOCATION]
 	}
-	if (contains[Uri.ORGANZIATION]) {
+	if (contains[Uri.ORGANIZATION]) {
 		return contains[Uri.ORGANIZATION]
 	}
 	return [producer: "Unknown", type:"ner:unknown"]
@@ -62,10 +65,16 @@ String isNamedEntity(Annotation a) {
     String type = a.atType
     switch (type) {
         case Uri.PERSON:
+            return 'PERSON'
+            break
         case Uri.LOCATION:
+            return 'LOCATION'
+            break
         case Uri.ORGANIZATION:
+            return 'ORGANIZATION'
+            break
         case Uri.DATE:
-        	return type
+        	return 'DATE'
         	break
     }
     return null
