@@ -1,0 +1,11 @@
+<tool id="wrap.text" name="Wrap input as LIF Text" version="1.0.0">
+  <description>Wraps input in a LIF container.</description>
+  <command interpreter="lsd">wrap_text.lsd $input $output</command>
+  <inputs>
+    <param name="input" type="data" format="txt"/>
+  </inputs>
+  <outputs>
+    <data name="output" format="lif" label="Output"/>
+  </outputs>
+  <help>Wraps input text in a LIF container.</help>
+</tool>

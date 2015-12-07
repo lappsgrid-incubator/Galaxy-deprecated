@@ -1,10 +1,14 @@
+include '../Config'
 
 String service = args[0]
 File input = new File(args[1])
 File output = new File(args[2])
 
-String url = "http://grid.anc.org:9080/LingpipeServices/1.0.0-SNAPSHOT/services/$service"
+def server = Servers.vassar
+//String url = "http://grid.anc.org:9080/LingpipeServices/1.0.0-SNAPSHOT/services/$service"
+String url = "${server.url}:$service"
 
-WebService client = new ServiceClient(url, null, null)
+
+WebService client = new ServiceClient(url, server.username, server.password)
 output.text = client.execute(input.text)
 

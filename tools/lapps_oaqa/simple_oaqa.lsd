@@ -39,7 +39,7 @@ if (goldData.payload instanceof String) {
     goldContainer = Serializer.parse(goldData.payload.toString(), Container)
 }
 else {
-    println "Gold container payload is a ${goldData.payload.class}"
+    println "Gold container payload is a ${goldData.payload}"
     goldContainer = new Container(goldData.payload)
 }
 //Container goldContainer = new Container(goldData.payload)

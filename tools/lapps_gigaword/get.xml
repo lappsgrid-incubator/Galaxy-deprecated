@@ -3,7 +3,7 @@
     <command interpreter='lsd'>get.lsd $token $key $service $output</command>
     <inputs>
       <param name="token" type="data" format="oauth" label="OAuth Token"/>
-        <param name="key" type="text" label="Document ID" value="NYT_ENG_20050622.0308"/>
+        <param name="key" type="text" label="Document ID" value="AFP_ENG_19940512.0001"/>
         <param name="service" type="select" label="Language">
             <option value="GWENDataSource">English</option>
             <option value="GWZHDataSource">Chinese</option>
@@ -23,7 +23,7 @@ document ID values.
 
 To obtain documents from Gigaword you **must**:
 
-1. Be an LDC member
+1. Be an LDC licensee
 2. `Obtain an OAuth Token <https://grid.anc.org:9443/ldc-authorize/>`_
 
 To obtain an OAuth token visit the link above and log in with your LDC id and password. Then paste
