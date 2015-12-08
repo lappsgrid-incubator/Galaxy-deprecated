@@ -2,7 +2,7 @@
 <toolbox>
     <section id="local.data" name="Local Data">
 		<tool file="data_source/upload.xml"/>
-		<tool file="lapps_wrappers/wrap_text.xml"/>
+		<tool file="lapps_common/wrap.xml"/>
     </section>
 	<section id="datasource" name="MASC">
 		<tool file="lapps_masc/get.xml"/>

@@ -1,7 +1,7 @@
 import static org.lappsgrid.discriminator.Discriminators.Uri
 
-File input = new File(args[0])
-String format = args[1]
+String format = args[0]
+File input = new File(args[1])
 File output = new File(args[2])
 
 String type = Uri.TEXT
