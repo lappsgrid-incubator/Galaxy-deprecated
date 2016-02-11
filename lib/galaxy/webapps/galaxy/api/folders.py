@@ -2,7 +2,6 @@
 API operations on library folders.
 """
 from galaxy import util
-from galaxy import web
 from galaxy import exceptions
 from galaxy.managers import folders
 from galaxy.web import _future_expose_api as expose_api
@@ -82,7 +81,7 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
         parent_folder = self.folder_manager.get( trans, decoded_parent_folder_id )
         new_folder = self.folder_manager.create( trans, parent_folder.id, name, description )
         return self.folder_manager.get_folder_dict( trans, new_folder )
-        
+
     @expose_api
     def get_permissions( self, trans, encoded_folder_id, **kwd ):
         """
@@ -141,18 +140,18 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
             *POST /api/folders/{encoded_folder_id}/permissions
 
         :param  encoded_folder_id:      the encoded id of the folder to set the permissions of
-        :type   encoded_folder_id:      an encoded id string      
+        :type   encoded_folder_id:      an encoded id string
 
         :param  action:     (required) describes what action should be performed
                             available actions: set_permissions
-        :type   action:     string        
+        :type   action:     string
 
         :param  add_ids[]:         list of Role.id defining roles that should have add item permission on the folder
-        :type   add_ids[]:         string or list  
+        :type   add_ids[]:         string or list
         :param  manage_ids[]:      list of Role.id defining roles that should have manage permission on the folder
-        :type   manage_ids[]:      string or list  
+        :type   manage_ids[]:      string or list
         :param  modify_ids[]:      list of Role.id defining roles that should have modify permission on the folder
-        :type   modify_ids[]:      string or list          
+        :type   modify_ids[]:      string or list
 
         :rtype:     dictionary
         :returns:   dict of current roles for all available permission types.
@@ -189,8 +188,8 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
                 else:
                     invalid_add_roles_names.append( role_id )
             if len( invalid_add_roles_names ) > 0:
-                log.warning( "The following roles could not be added to the add library item permission: " + str( invalid_add_roles_names ) ) 
-            
+                log.warning( "The following roles could not be added to the add library item permission: " + str( invalid_add_roles_names ) )
+
             # MANAGE FOLDER ROLES
             valid_manage_roles = []
             invalid_manage_roles_names = []
@@ -203,8 +202,8 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
                 else:
                     invalid_manage_roles_names.append( role_id )
             if len( invalid_manage_roles_names ) > 0:
-                log.warning( "The following roles could not be added to the manage folder permission: " + str( invalid_manage_roles_names ) ) 
-            
+                log.warning( "The following roles could not be added to the manage folder permission: " + str( invalid_manage_roles_names ) )
+
             # MODIFY FOLDER ROLES
             valid_modify_roles = []
             invalid_modify_roles_names = []
@@ -217,29 +216,29 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
                 else:
                     invalid_modify_roles_names.append( role_id )
             if len( invalid_modify_roles_names ) > 0:
-                log.warning( "The following roles could not be added to the modify folder permission: " + str( invalid_modify_roles_names ) )                
+                log.warning( "The following roles could not be added to the modify folder permission: " + str( invalid_modify_roles_names ) )
 
-            permissions = { trans.app.security_agent.permitted_actions.LIBRARY_ADD : valid_add_roles }
-            permissions.update( { trans.app.security_agent.permitted_actions.LIBRARY_MANAGE : valid_manage_roles } )
-            permissions.update( { trans.app.security_agent.permitted_actions.LIBRARY_MODIFY : valid_modify_roles } )
+            permissions = { trans.app.security_agent.permitted_actions.LIBRARY_ADD: valid_add_roles }
+            permissions.update( { trans.app.security_agent.permitted_actions.LIBRARY_MANAGE: valid_manage_roles } )
+            permissions.update( { trans.app.security_agent.permitted_actions.LIBRARY_MODIFY: valid_modify_roles } )
 
             trans.app.security_agent.set_all_library_permissions( trans, folder, permissions )
         else:
-            raise exceptions.RequestParameterInvalidException( 'The mandatory parameter "action" has an invalid value.' 
-                                'Allowed values are: "set_permissions"' )
+            raise exceptions.RequestParameterInvalidException( 'The mandatory parameter "action" has an invalid value.'
+                                                               'Allowed values are: "set_permissions"' )
         return self.folder_manager.get_current_roles( trans, folder )
 
     @expose_api
-    def delete( self, trans, id, **kwd ):
+    def delete( self, trans, encoded_folder_id, **kwd ):
         """
-        delete( self, trans, id, **kwd )
-        * DELETE /api/folders/{id}
-            marks the folder with the given ``id`` as `deleted` (or removes the `deleted` mark if the `undelete` param is true)
+        delete( self, trans, encoded_folder_id, **kwd )
+        * DELETE /api/folders/{encoded_folder_id}
+            marks the folder with the given ``encoded_folder_id`` as `deleted` (or removes the `deleted` mark if the `undelete` param is true)
 
         .. note:: Currently, only admin users can un/delete folders.
 
-        :param  id:     the encoded id of the folder to un/delete
-        :type   id:     an encoded id string
+        :param  encoded_folder_id:     the encoded id of the folder to un/delete
+        :type   encoded_folder_id:     an encoded id string
 
         :param  undelete:    (optional) flag specifying whether the item should be deleted or undeleted, defaults to false:
         :type   undelete:    bool
@@ -247,21 +246,47 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
         :returns:   detailed folder information
         :rtype:     dictionary
 
-        :raises: ItemAccessibilityException, MalformedId, ObjectNotFound
         """
-        folder = self.folder_manager.get( trans, self.folder_manager.cut_and_decode( trans, id ), True )
+        folder = self.folder_manager.get( trans, self.folder_manager.cut_and_decode( trans, encoded_folder_id ), True )
         undelete = util.string_as_bool( kwd.get( 'undelete', False ) )
         folder = self.folder_manager.delete( trans, folder, undelete )
         folder_dict = self.folder_manager.get_folder_dict( trans, folder )
         return folder_dict
 
     @expose_api
-    def update( self, trans, id,  library_id, payload, **kwd ):
+    def update( self, trans, encoded_folder_id, **kwd ):
         """
-        PUT /api/folders/{encoded_folder_id}
+        * PATCH /api/folders/{encoded_folder_id}
+           Updates the folder defined by an ``encoded_folder_id`` with the data in the payload.
 
+       .. note:: Currently, only admin users can update library folders. Also the folder must not be `deleted`.
+
+        :param  id:      the encoded id of the folder
+        :type   id:      an encoded id string
+
+        :param  payload: (required) dictionary structure containing::
+            'name':         new folder's name, cannot be empty
+            'description':  new folder's description
+        :type   payload: dict
+
+        :returns:   detailed folder information
+        :rtype:     dict
+
+        :raises: RequestParameterMissingException
         """
-        raise exceptions.NotImplemented( 'Updating folder through this endpoint is not implemented yet.' )
+        decoded_folder_id = self.folder_manager.cut_and_decode( trans, encoded_folder_id )
+        folder = self.folder_manager.get( trans, decoded_folder_id )
+        payload = kwd.get( 'payload', None )
+        if payload:
+            name = payload.get( 'name', None )
+            if not name:
+                raise exceptions.RequestParameterMissingException( "Parameter 'name' of library folder is required. You cannot remove it." )
+            description = payload.get( 'description', None )
+        else:
+            raise exceptions.RequestParameterMissingException( "You did not specify any payload." )
+        updated_folder = self.folder_manager.update( trans, folder, name, description )
+        folder_dict = self.folder_manager.get_folder_dict( trans, updated_folder )
+        return folder_dict
 
     # TODO move to Role manager
     def _load_role( self, trans, role_name ):
@@ -269,7 +294,7 @@ class FoldersController( BaseAPIController, UsesLibraryMixin, UsesLibraryMixinIt
         Method loads the role from the DB based on the given role name.
 
         :param  role_name:      name of the role to load from the DB
-        :type   role_name:      string 
+        :type   role_name:      string
 
         :rtype:     Role
         :returns:   the loaded Role object

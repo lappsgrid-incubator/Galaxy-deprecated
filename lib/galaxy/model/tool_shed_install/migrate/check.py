@@ -10,7 +10,11 @@ eggs.require( "decorator" )  # Required by sqlalchemy-migrate
 eggs.require( "Tempita " )  # Required by sqlalchemy-migrate
 eggs.require( "sqlalchemy-migrate" )
 
-from sqlalchemy import *
+# from sqlalchemy import *
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+
 from sqlalchemy.exc import NoSuchTableError
 from migrate.versioning import repository, schema
 
@@ -19,7 +23,7 @@ from galaxy.model.orm import dialect_to_egg
 log = logging.getLogger( __name__ )
 
 # path relative to galaxy
-migrate_repository_directory = os.path.dirname( __file__ ).replace( os.getcwd() + os.path.sep, '', 1 )
+migrate_repository_directory = os.path.abspath(os.path.dirname( __file__ )).replace( os.getcwd() + os.path.sep, '', 1 )
 migrate_repository = repository.Repository( migrate_repository_directory )
 
 

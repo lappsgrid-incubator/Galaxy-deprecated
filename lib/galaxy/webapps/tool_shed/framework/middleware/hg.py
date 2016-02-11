@@ -5,6 +5,7 @@ import os
 import sqlalchemy
 import sys
 import tempfile
+import urlparse
 from paste.auth.basic import AuthBasicAuthenticator
 from paste.httpheaders import AUTH_TYPE
 from paste.httpheaders import REMOTE_USER
@@ -12,6 +13,7 @@ from paste.httpheaders import REMOTE_USER
 from galaxy.util import asbool
 from galaxy.util.hash_util import new_secure_hash
 from tool_shed.util import hg_util
+from tool_shed.util import commit_util
 import tool_shed.repository_types.util as rt_util
 
 from galaxy import eggs
@@ -50,11 +52,11 @@ class Hg( object ):
         # a clone or a pull.  However, we do not want to increment the times_downloaded count if we're only setting repository
         # metadata.
         if cmd == 'getbundle' and not self.setting_repository_metadata:
-            common, _ = environ[ 'HTTP_X_HGARG_1' ].split( '&' )
+            hg_args = urlparse.parse_qs( environ[ 'HTTP_X_HGARG_1' ] )
             # The 'common' parameter indicates the full sha-1 hash of the changeset the client currently has checked out. If
             # this is 0000000000000000000000000000000000000000, then the client is performing a fresh checkout. If it has any
             # other value, the client is getting updates to an existing checkout.
-            if common == 'common=0000000000000000000000000000000000000000':
+            if 'common' in hg_args and hg_args[ 'common' ][-1] == '0000000000000000000000000000000000000000':
                 # Increment the value of the times_downloaded column in the repository table for the cloned repository.
                 if 'PATH_INFO' in environ:
                     # Instantiate a database connection
@@ -204,7 +206,6 @@ class Hg( object ):
         result_set = connection.execute( "select email, password from galaxy_user where username = '%s'" % username.lower() )
         for row in result_set:
             # Should only be 1 row...
-            db_email = row[ 'email' ]
             db_password = row[ 'password' ]
         connection.close()
         if db_password:
@@ -220,14 +221,12 @@ class Hg( object ):
         """
         db_username = None
         ru_email = environ[ 'HTTP_REMOTE_USER' ].lower()
-        ## Instantiate a database connection...
+        # Instantiate a database connection...
         engine = sqlalchemy.create_engine( self.db_url )
         connection = engine.connect()
         result_set = connection.execute( "select email, username, password from galaxy_user where email = '%s'" % ru_email )
         for row in result_set:
             # Should only be 1 row...
-            db_email = row[ 'email' ]
-            db_password = row[ 'password' ]
             db_username = row[ 'username' ]
         connection.close()
         if db_username:
@@ -291,7 +290,7 @@ class Hg( object ):
                 error_msg += 'the Tool Shed upload utility.  '
                 return False, error_msg
         return True, ''
-    
+
     def repository_tags_are_valid( self, filename, change_list ):
         """
         Make sure the any complex repository dependency definitions contain valid <repository> tags when pushing
@@ -299,9 +298,9 @@ class Hg( object ):
         """
         tag = '<repository'
         for change_dict in change_list:
-            lines = get_change_lines_in_file_for_tag( tag, change_dict )
+            lines = commit_util.get_change_lines_in_file_for_tag( tag, change_dict )
             for line in lines:
-                is_valid, error_msg = repository_tag_is_valid( filename, line )
+                is_valid, error_msg = self.repository_tag_is_valid( filename, line )
                 if not is_valid:
                     return False, error_msg
         return True, ''

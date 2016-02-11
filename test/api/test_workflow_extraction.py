@@ -4,9 +4,7 @@ from json import dumps, loads
 import operator
 
 from .helpers import skip_without_tool
-from .helpers import wait_on_state
 from .test_workflows import BaseWorkflowsApiTestCase
-import yaml
 
 
 class WorkflowExtractionApiTestCase( BaseWorkflowsApiTestCase ):
@@ -144,6 +142,7 @@ test_data:
         collection_step_state = loads( collection_step[ "tool_state" ] )
         self.assertEquals( collection_step_state[ "collection_type" ], u"paired" )
 
+    @skip_without_tool( "cat_collection" )
     def test_subcollection_mapping( self ):
         jobs_summary = self._run_jobs("""
 steps:
@@ -182,6 +181,7 @@ test_data:
         collection_step_state = loads( collection_step[ "tool_state" ] )
         self.assertEquals( collection_step_state[ "collection_type" ], u"list:paired" )
 
+    @skip_without_tool( "collection_split_on_column" )
     def test_extract_workflow_with_output_collections( self ):
         jobs_summary = self._run_jobs("""
 steps:
@@ -225,6 +225,7 @@ test_data:
             tool_ids=tool_ids,
         )
 
+    @skip_without_tool( "collection_creates_pair" )
     def test_extract_with_mapped_output_collections( self ):
         jobs_summary = self._run_jobs("""
 steps:
@@ -356,7 +357,7 @@ test_data:
         run_workflow_response = self._post( "workflows", data=workflow_request )
         self._assert_status_code_is( run_workflow_response, 200 )
 
-        self.dataset_populator.wait_for_history( history_id, assert_ok=True, timeout=10 )
+        self.dataset_populator.wait_for_history( history_id, assert_ok=True )
         return self.__cat_job_id( history_id )
 
     def _assert_first_step_is_paired_input( self, downloaded_workflow ):

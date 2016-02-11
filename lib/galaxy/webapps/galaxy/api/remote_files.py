@@ -4,15 +4,15 @@ API operations on remote files.
 import os
 import time
 import hashlib
-from galaxy import web
 from galaxy import exceptions
 from galaxy.web import _future_expose_api as expose_api
 from galaxy.util import jstree
-from galaxy.web.base.controller import BaseAPIController, url_for
+from galaxy.web.base.controller import BaseAPIController
 from operator import itemgetter
 
 import logging
 log = logging.getLogger( __name__ )
+
 
 class RemoteFilesAPIController( BaseAPIController ):
 
@@ -24,7 +24,7 @@ class RemoteFilesAPIController( BaseAPIController ):
         Displays remote files.
 
         :param  target:      target to load available datasets from, defaults to ftp
-            possible values: ftp, userdir
+            possible values: ftp, userdir, importdir
         :type   target:      str
 
         :param  format:      requested format of data, defaults to flat
@@ -109,9 +109,9 @@ class RemoteFilesAPIController( BaseAPIController ):
                 for filename in filenames:
                     path = os.path.relpath( os.path.join( dirpath, filename ), directory )
                     statinfo = os.lstat( os.path.join( dirpath, filename ) )
-                    response.append( dict(  path    = path,
-                                            size    = statinfo.st_size,
-                                            ctime   = time.strftime( "%m/%d/%Y %I:%M:%S %p", time.localtime( statinfo.st_ctime ) ) ) )
+                    response.append( dict( path=path,
+                                           size=statinfo.st_size,
+                                           ctime=time.strftime( "%m/%d/%Y %I:%M:%S %p", time.localtime( statinfo.st_ctime ) ) ) )
         else:
             raise exceptions.ConfigDoesNotAllowException( 'The given directory does not exist.' )
         # sort by path
@@ -131,13 +131,13 @@ class RemoteFilesAPIController( BaseAPIController ):
 
                 for dirname in dirnames:
                     dir_path = os.path.relpath( os.path.join( dirpath, dirname ), directory )
-                    dir_path_hash = hashlib.sha1( dir_path ).hexdigest()
+                    dir_path_hash = hashlib.sha1( dir_path.encode('utf-8') ).hexdigest()
                     disabled = True if disable == 'folders' else False
                     jstree_paths.append( jstree.Path( dir_path, dir_path_hash, { 'type': 'folder', 'state': { 'disabled': disabled }, 'li_attr': { 'full_path': dir_path } } ) )
 
                 for filename in filenames:
                     file_path = os.path.relpath( os.path.join( dirpath, filename ), directory )
-                    file_path_hash = hashlib.sha1( file_path ).hexdigest()
+                    file_path_hash = hashlib.sha1( file_path.encode('utf-8') ).hexdigest()
                     disabled = True if disable == 'files' else False
                     jstree_paths.append( jstree.Path( file_path, file_path_hash, { 'type': 'file', 'state': { 'disabled': disabled }, 'li_attr': { 'full_path': file_path } } ) )
         else:

@@ -22,7 +22,7 @@ eggs.require( "Babel" )
 from babel.support import Translations
 from babel import Locale
 eggs.require( "SQLAlchemy >= 0.4" )
-from sqlalchemy import and_
+from sqlalchemy import and_, true
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import joinedload
 
@@ -379,8 +379,8 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
             if session_key:
                 # Retrieve the galaxy_session id via the unique session_key
                 galaxy_session = self.sa_session.query( self.app.model.GalaxySession ) \
-                                                .filter( and_( self.app.model.GalaxySession.table.c.session_key==session_key, #noqa
-                                                               self.app.model.GalaxySession.table.c.is_valid==True ) ).options( joinedload( "user" ) ).first() #noqa
+                                                .filter( and_( self.app.model.GalaxySession.table.c.session_key == session_key,
+                                                               self.app.model.GalaxySession.table.c.is_valid == true() ) ).options( joinedload( "user" ) ).first()
         # If remote user is in use it can invalidate the session and in some
         # cases won't have a cookie set above, so we need to to check some
         # things now.
@@ -397,9 +397,10 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
                     # No user, associate
                     galaxy_session.user = self.get_or_create_remote_user( remote_user_email )
                     galaxy_session_requires_flush = True
-                elif ((galaxy_session.user.email != remote_user_email) and
+                elif (not remote_user_email.startswith('(null)') and  # Apache does this, see remoteuser.py
+                      (galaxy_session.user.email != remote_user_email) and
                       ((not self.app.config.allow_user_impersonation) or
-                      (remote_user_email not in self.app.config.admin_users_list))):
+                       (remote_user_email not in self.app.config.admin_users_list))):
                     # Session exists but is not associated with the correct
                     # remote user, and the currently set remote_user is not a
                     # potentially impersonating admin.
@@ -465,6 +466,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
                 url_for( controller='user', action='manage_user_info' ),
                 url_for( controller='user', action='set_default_permissions' ),
                 url_for( controller='user', action='reset_password' ),
+                url_for( controller='user', action='change_password' ),
                 url_for( controller='user', action='openid_auth' ),
                 url_for( controller='user', action='openid_process' ),
                 url_for( controller='user', action='openid_associate' ),
@@ -484,14 +486,14 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
             if self.request.path.startswith( external_display_path ):
                 request_path_split = self.request.path.split( '/' )
                 try:
-                    if (self.app.datatypes_registry.display_applications.get( request_path_split[-5] )
-                            and request_path_split[-4] in self.app.datatypes_registry.display_applications.get( request_path_split[-5] ).links
-                            and request_path_split[-3] != 'None'):
+                    if (self.app.datatypes_registry.display_applications.get( request_path_split[-5] ) and
+                            request_path_split[-4] in self.app.datatypes_registry.display_applications.get( request_path_split[-5] ).links and
+                            request_path_split[-3] != 'None'):
                         return
                 except IndexError:
                     pass
             if self.request.path not in allowed_paths:
-                self.response.send_redirect( url_for( controller='root', action='index' ) )
+                self.response.send_redirect( url_for( controller='user', action='login' ) )
 
     def __create_new_session( self, prev_galaxy_session=None, user_for_new_session=None ):
         """
@@ -524,8 +526,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
             return None
         if getattr( self.app.config, "normalize_remote_user_email", False ):
             remote_user_email = remote_user_email.lower()
-        user = self.sa_session.query( self.app.model.User
-                ).filter( self.app.model.User.table.c.email==remote_user_email ).first() #noqa
+        user = self.sa_session.query( self.app.model.User).filter( self.app.model.User.table.c.email == remote_user_email ).first()
         if user:
             # GVK: June 29, 2009 - This is to correct the behavior of a previous bug where a private
             # role and default user / history permissions were not set for remote users.  When a
@@ -640,10 +641,10 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
         self.sa_session.add_all( ( prev_galaxy_session, self.galaxy_session ) )
         galaxy_user_id = prev_galaxy_session.user_id
         if logout_all and galaxy_user_id is not None:
-            for other_galaxy_session in self.sa_session.query( self.app.model.GalaxySession
-                    ).filter( and_( self.app.model.GalaxySession.table.c.user_id==galaxy_user_id, #noqa
-                                    self.app.model.GalaxySession.table.c.is_valid==True, #noqa
-                                    self.app.model.GalaxySession.table.c.id!=prev_galaxy_session.id ) ): #noqa
+            for other_galaxy_session in ( self.sa_session.query(self.app.model.GalaxySession)
+                                          .filter( and_( self.app.model.GalaxySession.table.c.user_id == galaxy_user_id,
+                                                         self.app.model.GalaxySession.table.c.is_valid == true(),
+                                                         self.app.model.GalaxySession.table.c.id != prev_galaxy_session.id ) ) ):
                 other_galaxy_session.is_valid = False
                 self.sa_session.add( other_galaxy_session )
         self.sa_session.flush()
@@ -668,7 +669,8 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
         """
         history = None
         if self.galaxy_session:
-            history = self.galaxy_session.current_history
+            if hasattr( self.galaxy_session, 'current_history' ):
+                history = self.galaxy_session.current_history
         if not history and util.string_as_bool( create ):
             history = self.new_history()
         return history
@@ -817,8 +819,7 @@ class GalaxyWebTransaction( base.DefaultWebTransaction,
         template = template_lookup.get_template( filename )
         template.output_encoding = 'utf-8'
 
-        data = dict( caller=self, t=self, trans=self, h=helpers, util=util,
-                     request=self.request, response=self.response, app=self.app )
+        data = dict( caller=self, t=self, trans=self, h=helpers, util=util, request=self.request, response=self.response, app=self.app )
         data.update( self.template_context )
         data.update( kwargs )
         return template.render( **data )

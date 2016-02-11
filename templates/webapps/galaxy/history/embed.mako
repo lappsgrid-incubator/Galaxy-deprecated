@@ -49,7 +49,7 @@
 
     require.config({
         baseUrl : "${h.url_for( '/static/scripts' )}",
-        urlArgs: 'v=${int(app.server_starttime)}'
+        urlArgs: 'v=${app.server_starttime}'
     });
     require([ 'mvc/history/history-panel-annotated' ], function( panelMod ){
 
@@ -68,7 +68,7 @@
                     el      : $embeddedHistory.find( ".history-panel" ),
                     model   : new historyModel.History(
                         ${h.dumps( history_dict )},
-                        ${h.dumps( hda_dicts )}
+                        ${h.dumps( content_dicts )}
                     )
                 }).render();
 
