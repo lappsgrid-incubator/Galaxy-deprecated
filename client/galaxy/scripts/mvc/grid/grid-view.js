@@ -83,6 +83,7 @@ return Backbone.View.extend({
         this.init_grid_controls();
 
         // attach global event handler
+        // TODO: redundant (the onload/standard page handlers do this) - but needed because these are constructed after page ready
         init_refresh_on_change();
     },
 
@@ -457,7 +458,7 @@ return Backbone.View.extend({
         if (operation && !confirmation_text){
             confirmation_text = operation.confirm || '';
         }
-        
+
         // collect ids
         var item_ids = [];
         this.$el.find('input[name=id]:checked').each(function() {

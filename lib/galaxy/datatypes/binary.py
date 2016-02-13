@@ -16,7 +16,7 @@ from bx.seq.twobit import TWOBIT_MAGIC_NUMBER, TWOBIT_MAGIC_NUMBER_SWAP, TWOBIT_
 
 from galaxy.datatypes.metadata import MetadataElement, MetadataParameter, ListParameter, DictParameter
 from galaxy.datatypes import metadata
-from galaxy.util import nice_size, sqlite
+from galaxy.util import nice_size, sqlite, which
 from . import data, dataproviders
 
 
@@ -173,6 +173,11 @@ class Bam( Binary ):
         # Determine the version of samtools being used.  Wouldn't it be nice if
         # samtools provided a version flag to make this much simpler?
         version = '0.0.0'
+        samtools_exec = which('samtools')
+        if not samtools_exec:
+            message = 'Attempting to use functionality requiring samtools, but it cannot be located on Galaxy\'s PATH.'
+            raise Exception(message)
+
         output = subprocess.Popen( [ 'samtools' ], stderr=subprocess.PIPE, stdout=subprocess.PIPE ).communicate()[1]
         lines = output.split( '\n' )
         for line in lines:
@@ -334,7 +339,7 @@ class Bam( Binary ):
         os.unlink( stderr_name )
         # Now use pysam with BAI index to determine additional metadata
         try:
-            bam_file = pysam.AlignmentFile( filename=dataset.file_name, mode='rb', index_filename=index_file.file_name )
+            bam_file = pysam.AlignmentFile( dataset.file_name, mode='rb', index_filename=index_file.file_name )
             dataset.metadata.reference_names = list( bam_file.references )
             dataset.metadata.reference_lengths = list( bam_file.lengths )
             dataset.metadata.bam_header = bam_file.header
@@ -456,6 +461,76 @@ class Bam( Binary ):
 Binary.register_sniffable_binary_format("bam", "bam", Bam)
 
 
+class CRAM( Binary ):
+    file_ext = "cram"
+    edam_format = "format_3462"
+
+    MetadataElement( name="cram_version", default=None, desc="CRAM Version", param=MetadataParameter, readonly=True, visible=False, optional=False, no_value=None )
+    MetadataElement( name="cram_index", desc="CRAM Index File", param=metadata.FileParameter, file_ext="crai", readonly=True, no_value=None, visible=False, optional=True )
+
+    def set_meta( self, dataset, overwrite=True, **kwd ):
+        major_version, minor_version = self.get_cram_version( dataset.file_name )
+        if major_version != -1:
+            dataset.metadata.cram_version = str(major_version) + "." + str(minor_version)
+
+        if not dataset.metadata.cram_index:
+            index_file = dataset.metadata.spec['cram_index'].param.new_file( dataset=dataset )
+            if self.set_index_file(dataset, index_file):
+                dataset.metadata.cram_index = index_file
+
+    def get_cram_version( self, filename):
+        try:
+            with open( filename , "r") as fh:
+                header = fh.read(6)
+                return ord( header[4] ), ord( header[5] )
+        except Exception as exc:
+            log.warn( '%s, get_cram_version Exception: %s', self, exc )
+            return -1, -1
+
+    def set_index_file(self, dataset, index_file):
+        try:
+            # @todo when pysam 1.2.1 or pysam 1.3.0 gets released and becomes
+            # a dependency of galaxy, use pysam.index(alignment, target_idx)
+            # This currently gives coredump in the current release but is
+            # fixed in the dev branch:
+            # xref: https://github.com/samtools/samtools/issues/199
+
+            dataset_symlink = os.path.join( os.path.dirname( index_file.file_name ), '__dataset_%d_%s' % ( dataset.id, os.path.basename( index_file.file_name ) ) )
+            os.symlink( dataset.file_name, dataset_symlink )
+            pysam.index( dataset_symlink )
+
+            tmp_index = dataset_symlink + ".crai"
+            if os.path.isfile( tmp_index ):
+                shutil.move( tmp_index, index_file.file_name )
+                return index_file.file_name
+            else:
+                os.unlink( dataset_symlink )
+                log.warn( '%s, expected crai index not created for: %s', self, dataset.file_name )
+                return False
+        except Exception as exc:
+            log.warn( '%s, set_index_file Exception: %s', self, exc )
+            return False
+
+    def set_peek( self, dataset, is_multi_byte=False ):
+        if not dataset.dataset.purged:
+            dataset.peek = 'CRAM binary alignment file'
+            dataset.blurb = 'binary data'
+        else:
+            dataset.peek = 'file does not exist'
+            dataset.blurb = 'file purged from disk'
+
+    def sniff( self, filename ):
+        try:
+            header = open( filename ).read(4)
+            if header[0:4] == "CRAM":
+                return True
+            return False
+        except:
+            return False
+
+Binary.register_sniffable_binary_format('cram', 'cram', CRAM)
+
+
 class Bcf( Binary):
     """Class describing a BCF file"""
     edam_format = "format_3020"
@@ -506,12 +581,36 @@ Binary.register_sniffable_binary_format("bcf", "bcf", Bcf)
 
 
 class H5( Binary ):
-    """Class describing an HDF5 file"""
+    """
+    Class describing an HDF5 file
+
+    >>> from galaxy.datatypes.sniff import get_test_fname
+    >>> fname = get_test_fname( 'test.mz5' )
+    >>> H5().sniff( fname )
+    True
+    >>> fname = get_test_fname( 'interval.interval' )
+    >>> H5().sniff( fname )
+    False
+    """
     file_ext = "h5"
+
+    def __init__( self, **kwd ):
+        Binary.__init__( self, **kwd )
+        self._magic = binascii.unhexlify("894844460d0a1a0a")
+
+    def sniff( self, filename ):
+        # The first 8 bytes of any hdf5 file are 0x894844460d0a1a0a
+        try:
+            header = open( filename ).read(8)
+            if header == self._magic:
+                return True
+            return False
+        except:
+            return False
 
     def set_peek( self, dataset, is_multi_byte=False ):
         if not dataset.dataset.purged:
-            dataset.peek = "Binary h5 file"
+            dataset.peek = "Binary HDF5 file"
             dataset.blurb = nice_size( dataset.get_size() )
         else:
             dataset.peek = 'file does not exist'
@@ -521,9 +620,9 @@ class H5( Binary ):
         try:
             return dataset.peek
         except:
-            return "Binary h5 sequence file (%s)" % ( nice_size( dataset.get_size() ) )
+            return "Binary HDF5 file (%s)" % ( nice_size( dataset.get_size() ) )
 
-Binary.register_unsniffable_binary_ext("h5")
+Binary.register_sniffable_binary_format("h5", "h5", H5)
 
 
 class Scf( Binary ):
@@ -813,8 +912,84 @@ class GeminiSQLite( SQlite ):
         except:
             return "Gemini SQLite Database, version %s" % ( dataset.metadata.gemini_version or 'unknown' )
 
+
+class MzSQlite( SQlite ):
+    """Class describing a Proteomics Sqlite database """
+    file_ext = "mz.sqlite"
+
+    def set_meta( self, dataset, overwrite=True, **kwd ):
+        super( MzSQlite, self ).set_meta( dataset, overwrite=overwrite, **kwd )
+
+    def sniff( self, filename ):
+        if super( MzSQlite, self ).sniff( filename ):
+            mz_table_names = ["DBSequence", "Modification", "Peaks", "Peptide", "PeptideEvidence", "Score", "SearchDatabase", "Source", "SpectraData", "Spectrum", "SpectrumIdentification"]
+            try:
+                conn = sqlite.connect( filename )
+                c = conn.cursor()
+                tables_query = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+                result = c.execute( tables_query ).fetchall()
+                result = map( lambda x: x[0], result )
+                for table_name in mz_table_names:
+                    if table_name not in result:
+                        return False
+                return True
+            except Exception, e:
+                log.warn( '%s, sniff Exception: %s', self, e )
+        return False
+
+
+class IdpDB( SQlite ):
+    """
+    Class describing an IDPicker 3 idpDB (sqlite) database
+
+    >>> from galaxy.datatypes.sniff import get_test_fname
+    >>> fname = get_test_fname( 'test.idpDB' )
+    >>> IdpDB().sniff( fname )
+    True
+    >>> fname = get_test_fname( 'interval.interval' )
+    >>> IdpDB().sniff( fname )
+    False
+    """
+    file_ext = "idpdb"
+
+    def set_meta( self, dataset, overwrite=True, **kwd ):
+        super( IdpDB, self ).set_meta( dataset, overwrite=overwrite, **kwd )
+
+    def sniff( self, filename ):
+        if super( IdpDB, self ).sniff( filename ):
+            mz_table_names = ["About", "Analysis", "AnalysisParameter", "PeptideSpectrumMatch", "Spectrum", "SpectrumSource"]
+            try:
+                conn = sqlite.connect( filename )
+                c = conn.cursor()
+                tables_query = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+                result = c.execute( tables_query ).fetchall()
+                result = map( lambda x: x[0], result )
+                for table_name in mz_table_names:
+                    if table_name not in result:
+                        return False
+                return True
+            except Exception, e:
+                log.warn( '%s, sniff Exception: %s', self, e )
+        return False
+
+    def set_peek( self, dataset, is_multi_byte=False ):
+        if not dataset.dataset.purged:
+            dataset.peek = "IDPickerDB SQLite file"
+            dataset.blurb = nice_size( dataset.get_size() )
+        else:
+            dataset.peek = 'file does not exist'
+            dataset.blurb = 'file purged from disk'
+
+    def display_peek( self, dataset ):
+        try:
+            return dataset.peek
+        except:
+            return "IDPickerDB SQLite file (%s)" % ( nice_size( dataset.get_size() ) )
+
 Binary.register_sniffable_binary_format( "gemini.sqlite", "gemini.sqlite", GeminiSQLite )
-# FIXME: We need to register gemini.sqlite before sqlite, since register_sniffable_binary_format and is_sniffable_binary called in upload.py
+Binary.register_sniffable_binary_format( "idpdb", "idpdb", IdpDB )
+Binary.register_sniffable_binary_format( "mz.sqlite", "mz.sqlite", MzSQlite )
+# FIXME: We need to register specialized sqlite formats before sqlite, since register_sniffable_binary_format and is_sniffable_binary called in upload.py
 # ignores sniff order declared in datatypes_conf.xml
 Binary.register_sniffable_binary_format("sqlite", "sqlite", SQlite)
 

@@ -6,14 +6,21 @@
 // dependencies
 define([], function() {
 
+/** Builds a basic iframe
+*/
+function iframe( src ) {
+    return '<iframe src="' + src + '" frameborder="0" style="width: 100%; height: 100%;"/>';
+}
+
 /** Traverse through json
 */
-function deepeach(dict, callback) {
-    for (var i in dict) {
-        var d = dict[i];
-        if (d && typeof(d) == "object") {
-            callback(d);
-            deepeach(d, callback);
+function deepeach( dict, callback ) {
+    for( var i in dict ) {
+        var d = dict[ i ];
+        if( _.isObject( d ) ) {
+            var new_dict = callback( d );
+            new_dict && ( dict[ i ] = new_dict );
+            deepeach( d, callback );
         }
     }
 }
@@ -133,8 +140,7 @@ function request (options) {
     }
 
     // make request
-    $.ajax(ajaxConfig)
-    .done(function(response) {
+    $.ajax(ajaxConfig).done(function(response) {
         if (typeof response === 'string') {
             try {
                 response = response.replace('Infinity,', '"Infinity",');
@@ -144,8 +150,7 @@ function request (options) {
             }
         }
         options.success && options.success(response);
-    })
-    .fail(function(response) {
+    }).fail(function(response) {
         var response_text = null;
         try {
             response_text = jQuery.parseJSON(response.responseText);
@@ -153,6 +158,8 @@ function request (options) {
             response_text = response.responseText;
         }
         options.error && options.error(response_text, response);
+    }).always(function() {
+        options.complete && options.complete();
     });
 };
 
@@ -175,7 +182,7 @@ function cssGetAttribute (classname, name) {
  */
 function cssLoadFile (url) {
     if (!$('link[href^="' + url + '"]').length) {
-        $('<link href="' + galaxy_config.root + url + '" rel="stylesheet">').appendTo('head');
+        $('<link href="' + Galaxy.root + url + '" rel="stylesheet">').appendTo('head');
     }
 };
 
@@ -262,6 +269,7 @@ return {
     cssGetAttribute: cssGetAttribute,
     get: get,
     merge: merge,
+    iframe: iframe,
     bytesToString: bytesToString,
     uid: uid,
     time: time,

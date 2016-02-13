@@ -13,7 +13,7 @@ import tempfile
 from galaxy.datatypes.data import get_file_peek, Text
 from galaxy.datatypes.metadata import MetadataElement
 from galaxy.datatypes.metadata import ListParameter
-
+from galaxy.datatypes.metadata import MetadataParameter
 from galaxy.util import nice_size, string_as_bool
 
 import logging

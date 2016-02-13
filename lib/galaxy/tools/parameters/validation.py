@@ -20,6 +20,7 @@ class Validator( object ):
     """
     A validator checks that a value meets some conditions OR raises ValueError
     """
+    requires_dataset_metadata = False
 
     @classmethod
     def from_element( cls, param, elem ):
@@ -236,6 +237,7 @@ class MetadataValidator( Validator ):
     """
     Validator that checks for missing metadata
     """
+    requires_dataset_metadata = True
 
     def __init__( self, message=None, check="", skip="" ):
         self.message = message
@@ -259,6 +261,7 @@ class UnspecifiedBuildValidator( Validator ):
     """
     Validator that checks for dbkey not equal to '?'
     """
+    requires_dataset_metadata = True
 
     def __init__( self, message=None ):
         if message is None:
@@ -318,6 +321,7 @@ class MetadataInFileColumnValidator( Validator ):
     """
     Validator that checks if the value for a dataset's metadata item exists in a file.
     """
+    requires_dataset_metadata = True
 
     @classmethod
     def from_element( cls, param, elem ):
@@ -357,6 +361,7 @@ class MetadataInDataTableColumnValidator( Validator ):
     """
     Validator that checks if the value for a dataset's metadata item exists in a file.
     """
+    requires_dataset_metadata = True
 
     @classmethod
     def from_element( cls, param, elem ):

@@ -8,7 +8,7 @@ String type = Uri.TEXT
 if (format == 'txt') {
     type = Uri.TEXT
 }
-else if (format == 'xml' {
+else if (format == 'xml') {
     type = Uri.XML
 }
 else if (format == 'gate') {

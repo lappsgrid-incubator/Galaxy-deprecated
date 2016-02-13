@@ -12,7 +12,7 @@ import logging
 import threading
 from xml.etree import ElementTree
 
-from galaxy.util import umask_fix_perms, force_symlink
+from galaxy.util import umask_fix_perms, force_symlink, safe_makedirs
 from galaxy.exceptions import ObjectInvalid, ObjectNotFound
 from galaxy.util.sleeper import Sleeper
 from galaxy.util.directory_hash import directory_hash_id
@@ -207,7 +207,7 @@ class DiskObjectStore(ObjectStore):
     >>> import tempfile
     >>> file_path=tempfile.mkdtemp()
     >>> obj = Bunch(id=1)
-    >>> s = DiskObjectStore(Bunch(umask=077, job_working_directory=file_path, new_file_path=file_path, object_store_check_old_style=False), file_path=file_path)
+    >>> s = DiskObjectStore(Bunch(umask=0o077, job_working_directory=file_path, new_file_path=file_path, object_store_check_old_style=False), file_path=file_path)
     >>> s.create(obj)
     >>> s.exists(obj)
     True
@@ -331,12 +331,11 @@ class DiskObjectStore(ObjectStore):
             dir_only = kwargs.get('dir_only', False)
             # Create directory if it does not exist
             dir = path if dir_only else os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
+            safe_makedirs(dir)
             # Create the file if it does not exist
             if not dir_only:
                 open(path, 'w').close()  # Should be rb?
-                umask_fix_perms(path, self.config.umask, 0666)
+                umask_fix_perms(path, self.config.umask, 0o666)
 
     def empty(self, obj, **kwargs):
         """Override `ObjectStore`'s stub by checking file size on disk."""
@@ -367,7 +366,7 @@ class DiskObjectStore(ObjectStore):
             if self.exists(obj, **kwargs):
                 os.remove(path)
                 return True
-        except OSError, ex:
+        except OSError as ex:
             log.critical('%s delete error %s' % (self._get_filename(obj, **kwargs), ex))
         return False
 
@@ -408,7 +407,7 @@ class DiskObjectStore(ObjectStore):
                     force_symlink( os.readlink( file_name ), self.get_filename( obj, **kwargs ) )
                 else:
                     shutil.copy( file_name, self.get_filename( obj, **kwargs ) )
-            except IOError, ex:
+            except IOError as ex:
                 log.critical('Error copying %s to %s: %s' % (file_name, self._get_filename(obj, **kwargs), ex))
                 raise ex
 

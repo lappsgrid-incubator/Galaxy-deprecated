@@ -41,9 +41,16 @@ reports_webapp.log
 reports_webapp.pid
 
 # Config files
+<<<<<<< HEAD
 #universe_wsgi.ini
 #reports_wsgi.ini
 #tool_shed_wsgi.ini
+=======
+universe_wsgi.ini
+reports_wsgi.ini
+reports.ini
+tool_shed_wsgi.ini
+>>>>>>> 65d9ec9cab2b6e46fa7a067948bba69e3255c1ff
 
 # Config files.
 #datatypes_conf.xml
@@ -83,9 +90,13 @@ tool-data/shared/ucsc/ucsc_build_sites.txt
 tool-data/*.loc
 tool-data/genome/*
 tool-data/*.sample
+tool-data/testtoolshed.g2.bx.psu.edu/
+tool-data/toolshed.g2.bx.psu.edu/
+
 
 # Test output
 test-data-cache
+run_framework_tests.html
 run_functional_tests.html
 run_api_tests.html
 test/tool_shed/tmp/*
@@ -107,7 +118,8 @@ tool-data/shared/jars/
 # CSS build artifacts.
 sprite-*.less
 
-# Local node_modules and bower_components directories
+# JS, Local node_modules, and bower_components directories
+static/scripts/bundled
 node_modules
 bower_components
 
@@ -119,8 +131,11 @@ doc/build
 .DS_Store
 *.rej
 *~
+<<<<<<< HEAD
 .idea
 
 # Sensitive information
 tools/lapps_common/Servers.lsd
 
+=======
+>>>>>>> 65d9ec9cab2b6e46fa7a067948bba69e3255c1ff
