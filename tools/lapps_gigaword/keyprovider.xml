@@ -19,7 +19,9 @@ To obtain documents from Gigaword you **must**:
 2. `Obtain an OAuth Token <https://grid.anc.org:9443/ldc-authorize/>`_
 
 To obtain an OAuth token visit the link above and log in with your LDC id and password. Then paste
-the OAuth token into the above field.
+the OAuth token into the above field and click `execute`.  This will add an item to your
+history that can be used to supply the OAuth token to other Gigaword services that 
+require it.
 
 ]]>
     </help>

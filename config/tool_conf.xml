@@ -17,6 +17,7 @@
         <tool file="lapps_gigaword/list.xml"/>
         <tool file="lapps_gigaword/get.xml"/>
         <tool file="lapps_gigaword/create_collection.xml"/>
+        <tool file="lapps_gigaword/query.xml"/>
     </section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
@@ -134,6 +135,7 @@
         <tool file="lapps_common/nerfix.xml"/>
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
+		<tool file="lapps_common/wrap.xml"/>
 	</section>
   <section id="plots" name="Graph/Display Data">
 		<tool file="lapps_common/pretty_print.xml"/>
