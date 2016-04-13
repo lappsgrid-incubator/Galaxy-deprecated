@@ -1,6 +1,6 @@
 <tool id="gigaword.load" name="Query" version="1.0.0">
   <description>Retrieves documents from Gigaword based on a Solr query.</description>
-  <command interpreter="lsd">query.lsd $token $query $size $service $output</command>
+  <command interpreter="lsd">query.lsd $token "$query" $size $service $output</command>
     <inputs>
         <param name="token" type="data" format="oauth" label="OAuth Token"/>
         <param name="query" type="text" label="Query" value="text:clinton OR title:trump"/>

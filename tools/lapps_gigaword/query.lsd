@@ -1,12 +1,10 @@
 import static org.lappsgrid.discriminator.Discriminators.Uri
 
-String token = new File(args[0]).text
+File tokenFile = new File(args[0])
 String query = args[1]
 String size = args[2]
 String service = args[3]
 File output = new File(args[4])
-
-println "Token is \"$token\""
 
 try {
 	size = size as Integer
@@ -16,7 +14,15 @@ catch (Exception e) {
 	size = 10
 }
 
-query = 'q=' + query.replaceAll(" ", '+') + "&wt=json&indent=on&start=1&rows=$size"
+query = 'q=' + query.replaceAll('  *', '+') + "&wt=json&indent=on&start=1&rows=$size"
+
+String token = tokenFile.text
+
+println "File: ${tokenFile.path}"
+println "Token: $token"
+println "Query: $query"
+println "Size: $size"
+println "Service: $service"
 
 parser = new XmlParser()
 
