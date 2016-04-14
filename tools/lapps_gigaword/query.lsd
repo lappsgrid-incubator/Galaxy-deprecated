@@ -4,7 +4,7 @@ File tokenFile = new File(args[0])
 String query = args[1]
 String size = args[2]
 String service = args[3]
-File output = new File(args[4])
+//File output = new File(args[4])
 
 try {
 	size = size as Integer
@@ -18,11 +18,25 @@ query = 'q=' + query.replaceAll('  *', '+') + "&wt=json&indent=on&start=1&rows=$
 
 String token = tokenFile.text
 
+println "Token: $token"
+println "Query: $query"
+println "Size: $size"
+println "Service: $service"
+
+/*
 println "File: ${tokenFile.path}"
 println "Token: $token"
 println "Query: $query"
 println "Size: $size"
 println "Service: $service"
+*/
+
+dir = new File("outputs")
+if (!dir.exists()) {
+    if (!dir.mkdirs()) {
+        throw new IOException("Unable to create directory ${dir.path}")
+    }
+}
 
 parser = new XmlParser()
 
@@ -41,7 +55,9 @@ map.response.docs.each { Map doc ->
 	['docid', 'type', 'headline', 'source', 'date', 'updated'].each { field ->
 		md[field] = doc[field]
 	}
-	println data.asPrettyJson()	
+	File outfile = new File(dir, "${doc.docid}.lif")
+	outfile.text = data.asPrettyJson()
+	println "Wrote ${outfile.path}"
 }
 
 Data convert(Data gigaword)

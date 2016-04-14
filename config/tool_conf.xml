@@ -116,6 +116,8 @@
 		<tool file="lapps_common/word_count.xml"/>
 		<tool file="lapps_oaqa/oaqa_evaluation.xml"/>
 		<tool file="lapps_oaqa/simple_oaqa.xml"/>
+		<tool file="lapps_ranking/svm_rank_learn.xml"/>
+        <tool file="lapps_ranking/svm_rank_classify.xml"/>
 		<!--
 		<tool file="lapps_common/evaluation.xml"/>
 		<tool file="lapps_common/compare_annotations.xml"/>

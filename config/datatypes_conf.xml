@@ -42,7 +42,7 @@
     </datatype>
     <datatype extension="json" type="galaxy.datatypes.text:Json" display_in_upload="True"/>
     <!-- graph datatypes -->
-    <datatype extension="rdf" type="galaxy.datatypes.graph:Rdf" display_in_upload="true"/>
+    <datatype extension="rdf" type="galaxy.datatypes.triples:Rdf" display_in_upload="true"/>
     <!-- Excel datatypes -->
     <datatype extension="xlsx" type="galaxy.datatypes.binary:Xlsx" display_in_upload="true" />
   </registration>
