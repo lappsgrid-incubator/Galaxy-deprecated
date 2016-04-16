@@ -2,11 +2,11 @@
     <description>SVM classify</description>
     <command>svm_rank_classify $example $model $output</command>
     <inputs>
-        <param name="example" type="data" format="text" label="Example file"/>
-        <param name="model" type="data" format="text" label="Model"/>
+        <param name="example" type="data" format="txt" label="Test data"/>
+        <param name="model" type="data" format="txt" label="Model"/>
     </inputs>
     <outputs>
-        <data name="output" format="txt" label="Output"/>
+        <data name="output" format="txt" label="Predictions"/>
     </outputs>
     <help>SVM Classification</help>
 </tool>
