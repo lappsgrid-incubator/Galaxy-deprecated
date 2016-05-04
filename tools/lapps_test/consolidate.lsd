@@ -13,7 +13,7 @@ if (data.discriminator == Uri.ERROR) {
 Container inputContainer = new Container(data.payload)
 Container outputContainer = new Container()
 outputContainer.text = inputContainer.text
-outputContainer.language = inputContainer.text
+outputContainer.language = inputContainer.language
 outputContainer.metadata = inputContainer.metadata
 
 View outputView = outputContainer.newView()

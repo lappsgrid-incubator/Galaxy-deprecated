@@ -1,0 +1,17 @@
+import groovy.io.FileType
+
+String list = args[0]
+File output = new File(args[1])
+
+Data data = new Data()
+data.discriminator = "http://vocab.lappsgrid.org/ns/media/jsonld#lif-array"
+
+List payload = []
+
+list.split(',').each { path ->
+    println "parsing ${path}"
+    payload << Serializer.parse(new File(path).text, Data)
+}
+
+data.payload = payload
+output.text = data.asPrettyJson()

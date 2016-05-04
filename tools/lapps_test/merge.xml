@@ -1,0 +1,13 @@
+<tool id="merge" name="Merge documents" version="1.0.0">
+  <description>combine multiple documents into a document.</description>
+  <command interpreter="lsd">merge.lsd ${input} ${output}</command>
+  <inputs>
+    <param name="input" type="data" multiple="true" label="Input"/>
+  </inputs>
+  <outputs>
+    <data name="output" format="lif" label="Output"/>
+  </outputs>
+  <help>Combines multiple documents, i.e. a data set collection, into a single JSON document
+  containing an array of LIF containers.
+  </help>
+</tool>

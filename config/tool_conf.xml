@@ -137,6 +137,7 @@
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
 		<tool file="lapps_common/wrap.xml"/>
+		<tool file="lapps_test/merge.xml"/>
 	</section>
   <section id="plots" name="Graph/Display Data">
 		<tool file="lapps_common/pretty_print.xml"/>

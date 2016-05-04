@@ -8,7 +8,8 @@ String goldFeature = args.gf
 String testFeature = args.tf
 File output = new File(args.output)
 
-String url = "http://grid.anc.org:9080/EvaluationServices/services/AnnotationEvaluator"
+//String url = "http://grid.anc.org:9080/EvaluationServices/services/AnnotationEvaluator"
+String url = "http://gold.lti.cs.cmu.edu:4040/services/AnnotationEvaluator"
 
 annotation = annotation.replaceAll("__pd__", "#")
 testAnnotation = testAnnotation.replaceAll("__pd__", "#")
