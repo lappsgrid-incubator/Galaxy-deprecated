@@ -4,12 +4,13 @@
   <inputs>
     <param name="key" type="text" label="Key" value="MASC3-0203"/>
       <param name="type" type="select">
-          <option value="anc:masc.text_2.1.0">Text</option>
-          <option value="anc:masc.json_2.1.0">Gold Annotations</option>
+          <option value="anc:masc.text_2.2.0">Text</option>
+          <option value="anc:masc.lif_2.2.0">LIF</option>
+          <option value="anc:masc.json_2.2.0">Gold Annotations</option>
       </param>
   </inputs>
   <outputs>
-    <data name="output" format="json" label="MASC Document"/>
+    <data name="output" format="lif" label="MASC Document"/>
   </outputs>
   <!--
   <tests>
