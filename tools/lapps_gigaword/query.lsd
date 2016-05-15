@@ -2,27 +2,24 @@ import static org.lappsgrid.discriminator.Discriminators.Uri
 
 File tokenFile = new File(args[0])
 String query = args[1]
-String size = args[2]
+String sizeArg = args[2]
 String service = args[3]
 //File output = new File(args[4])
 
+int size
 try {
-	size = size as Integer
+	size = sizeArg as Integer
 	if (size > 100) size = 100
 }
 catch (Exception e) {
     e.printStackTrace()
-	size = 10
+	size = 11
 }
 
 query = 'q=' + query.replaceAll('  *', '+') + "&wt=json&indent=on&start=1&rows=$size"
+//query = 'g=' + java.net.URLEncoder.encode(query)
 
 String token = tokenFile.text
-
-println "Token: $token"
-println "Query: $query"
-println "Size: $size"
-println "Service: $service"
 
 /*
 println "File: ${tokenFile.path}"
