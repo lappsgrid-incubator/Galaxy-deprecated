@@ -63,8 +63,8 @@
     <sniffer type="galaxy.datatypes.interval:Interval"/>
     <sniffer type="galaxy.datatypes.text:LDC"/>
     <sniffer type="galaxy.datatypes.text:Gate"/>
-    <sniffer type="galaxy.datatypes.text:Lapps"/>
     <sniffer type="galaxy.datatypes.text:Lif"/>
+    <sniffer type="galaxy.datatypes.text:Lapps"/>
     <sniffer type="galaxy.datatypes.text:Json"/>
     <sniffer type="galaxy.datatypes.images:Jpg"/>
     <sniffer type="galaxy.datatypes.images:Png"/>
