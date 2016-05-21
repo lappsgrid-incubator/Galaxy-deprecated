@@ -141,7 +141,7 @@ class Lif( Lapps ):
 
     """
     file_ext = "lif"
-    header = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld"'''
+    header = '''{"discriminator":"http://vocab.lappsgrid.org/ns/media/jsonld'''
     blurb = "Lapps Interchange Format (LIF)"
 
     # def __init__(self, **kwd):
