@@ -4,6 +4,7 @@
 		<tool file="data_source/upload.xml"/>
 		<tool file="lapps_common/wrap.xml"/>
 		<tool file="lapps_common/data_splitter.xml"/>
+		<tool file="lapps_common/lif2text.xml"/>
     </section>
 	<section id="datasource" name="MASC">
 		<tool file="lapps_masc/get.xml"/>

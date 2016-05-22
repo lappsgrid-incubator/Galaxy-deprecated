@@ -1,0 +1,11 @@
+<tool id="lif2text" name="Lif to Text" version="1.0.0">
+    <description>Extract text from a LIF container.</description>
+    <command interpreter="lsd">lif2text.lsd $input $output</command>
+    <inputs>
+        <param name="input" type="data" format="lif,lapps"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="txt" label="Output"/>
+    </outputs>
+    <help>Extract the text from a LIF container in to a LIF text document</help>
+</tool>
