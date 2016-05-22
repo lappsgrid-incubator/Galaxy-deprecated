@@ -1,6 +1,6 @@
 <tool id='data.splitter' name='History Item' version='2.0.0'>
   <description>Provides an existing history item for multiple tools</description>
-  <command interpreter='bash'>/bin/cp $input $output</command>
+  <command interpreter='bash'>copy.sh $input $output</command>
   <inputs>
     <param name='input' type='data' label='input' />
   </inputs>
