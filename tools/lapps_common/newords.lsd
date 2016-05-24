@@ -1,0 +1,12 @@
+File input = new File(args[0])
+File output = new File(args[1])
+
+DataContainer data = Serializer.parse(input.text, DataContainer)
+Container container = data.payload
+
+View view = container.views.find { it.metadata.contains[Uri.NE] }
+view.annotations.each { a ->
+    a.features.word = container.text.substring((int)a.start, (int)a.end)
+}
+
+output.text = data.asPrettyJson()

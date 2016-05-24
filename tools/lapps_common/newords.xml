@@ -1,0 +1,12 @@
+<tool id="newords" name="Named Entity Words" version="1.0.0">
+  <description>Adds a word feature to each named entity annotation.</description>
+  <command interpreter="lsd">newords.lsd $input $output</command>
+  <inputs>
+    <param name="input" type="data" format="lif"/>
+  </inputs>
+  <outputs>
+    <data name="output" format="lif" label="NE with word features"/>
+  </outputs>
+  <help>The MASC Gold standard annotations do not contain a word feature.  This tool
+  iterates through the annotations and adds a word feature to each one.</help>
+</tool>
