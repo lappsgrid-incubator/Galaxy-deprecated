@@ -1,0 +1,13 @@
+<tool id='lapps.tools.reverb' name='ReVerb' version='1.0.0'>
+  <description>Relation extraction</description>
+  <command interpreter='lsd'>invoke_brandeis.lsd reverb.relationextractor_1.0.0 $input $output</command>
+  <inputs>
+    <param name='input' type='data' format='txt,lif' label='Input' />
+  </inputs>
+  <outputs>
+    <data name='output' format='lif' label="Relations"/>
+  </outputs>
+  <help>Extracts relations in the input document.
+  </help>
+</tool>
+

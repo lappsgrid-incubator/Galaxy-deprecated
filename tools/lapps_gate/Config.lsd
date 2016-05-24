@@ -9,7 +9,8 @@ masc = [
 ]
 */
 server = [
-    url: 'http://vassar.lappsgrid.org/invoker',
+    //url: 'http://vassar.lappsgrid.org/invoker',
+    url: 'http://grid.anc.org:9080/GateServices/2.0.0/services'
     username: 'tester',
     password: 'tester'
 ]

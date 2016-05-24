@@ -1,0 +1,15 @@
+File input = new File(args[0])
+File output = new File(args[1])
+
+DataContainer data = Serializer.parse(input.text, DataContainer)
+Container container = data.payload
+View view = container.views.find { it.metadata.contains[Uri.TOKEN] }
+container.views.remove(view)
+View nv = container.newView()
+view.annotations.each { a ->
+    if (a.atType == Uri.TOKEN) {
+        nv.add(a)
+    }
+}
+output.text = Serializer.asPrettyJson(data)
+

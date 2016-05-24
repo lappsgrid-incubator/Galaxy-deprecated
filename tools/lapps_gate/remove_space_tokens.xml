@@ -1,0 +1,21 @@
+<tool id="gate.cleanup_1.0.0" name="Remove GATE SpaceToken v1.0.0" version="1.0.0">
+	<description>
+		Removes SpaceToken annotations from the input.
+	</description>
+	<command interpreter="lsd">
+		RemoveSpaceTokens.lsd $input $output
+	</command>
+	<inputs>
+		<param name="input" type="data" format="lif,lapps" label="input"/>
+	</inputs>
+	<outputs>
+		<data name="output" format="lif" label="GATE Tokens (-SpaceToken)"/>
+	</outputs>
+	<help>
+		Some (non-GATE) processors get confused by GATE's SpaceToken annotations.
+        This tool can be used to remove the SpaceToken annotations before processing.
+
+        **NOTE** This tools works on LIF containers, so be sure to convert the GATE XML
+        to a LIF container before running this tool.
+	</help>
+</tool>

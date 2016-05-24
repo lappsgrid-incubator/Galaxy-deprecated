@@ -120,6 +120,9 @@
     <section id="dbpedia" name="DBpedia">
         <tool file="lapps_dbpedia/spotlight.xml"/>
     </section>
+	<section id="relation.extraction" name="Relation Extraction">
+		<tool file="lapps_common/reverb.xml"/>
+	</section>
 	<!--
 	<section id="kyoto.grid" name="Kyoto Node">
 		<tool file='lapps_kyoto/opennlp_postagger.xml'/>
