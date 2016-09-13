@@ -12,4 +12,10 @@ data.parameters.from = from
 data.parameters.to = to
 data.parameters.id = nodeset
 
-output.text = service.execute(data.asJson())
+String result = service.execute(data.asJson())
+if (to == 'json') {
+    output.text = groovy.json.JsonOutput.prettyPrint(result)
+}
+else {
+    output.text = result
+}
