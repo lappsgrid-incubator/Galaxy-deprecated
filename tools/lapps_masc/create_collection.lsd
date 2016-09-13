@@ -19,6 +19,7 @@ int size = end - start
 if (size > 100) {
 	end = start + 100
 }
+
 String[] lines = datasource.list(start, end)
 lines.each { line ->
     String id = line.trim()

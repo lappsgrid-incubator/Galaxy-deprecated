@@ -3,9 +3,13 @@
     <section id="local.data" name="Local Data">
 		<tool file="data_source/upload.xml"/>
 		<tool file="lapps_common/wrap.xml"/>
-		<tool file="lapps_common/data_splitter.xml"/>
-		<tool file="lapps_common/lif2text.xml"/>
     </section>
+	<section id="discovery" name="Discovery 2020">
+		<tool file="discovery/passage_extractor.xml"/>
+		<tool file="discovery/scoring.xml"/>
+		<tool file="discovery/get.xml"/>
+		<tool file="lapps_gigaword/kidnap_collection.xml"/>
+	</section>
 	<section id="datasource" name="MASC">
 		<tool file="lapps_masc/get.xml"/>
 		<tool file="lapps_masc/list.xml"/>
@@ -20,15 +24,6 @@
         <tool file="lapps_gigaword/create_collection.xml"/>
         <tool file="lapps_gigaword/query.xml"/>
     </section>
-	<section id="discovery" name="Discovery 2020">
-		<tool file="discovery/multi_annotator.xml"/>
-		<tool file="discovery/multi_annotator2.xml"/>
-		<tool file="discovery/ner_span_annotator.xml"/>
-		<tool file="discovery/ner_span_annotator2.xml"/>
-		<tool file="discovery/passage_extractor.xml"/>
-		<tool file="discovery/scoring.xml"/>
-		<tool file="discovery/summarize.xml"/>
-	</section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
 		<tool file='lapps_stanford/brandeis.tokenizer.xml' />
@@ -56,7 +51,6 @@
 		<tool file='lapps_stanford/brandeis.namedentityrecognizer.xml' />
 		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
-		<tool file="lapps_lingpipe/cmu.dictionaryNER_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
         <tool file="lapps_dbpedia/spotlight.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
@@ -113,27 +107,10 @@
 		<tool file="lapps_lingpipe/vassar.splitter_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.tagger_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
-		<tool file="lapps_lingpipe/cmu.dictionaryNER_1.0.0.xml"/>
     </section>
-	<section id='dkpro.tools' name='DKPro Core'>
-		<tool file='lapps_dkpro/dkpro.stanford.splitter.xml' />
-		<tool file='lapps_dkpro/dkpro.stanford.tokenizer.xml' />
-		<tool file='lapps_dkpro/dkpro.stanford.postagger.xml' />
-		<tool file='lapps_dkpro/dkpro.stanford.parser.xml' />
-		<tool file='lapps_dkpro/dkpro.stanford.namedentityrecognizer.xml' />
-		<tool file='lapps_dkpro/dkpro.stanford.coref.xml' />
-		<tool file='lapps_dkpro/dkpro.opennlp.splitter.xml' />
-		<tool file='lapps_dkpro/dkpro.opennlp.tokenizer.xml' />
-		<tool file='lapps_dkpro/dkpro.opennlp.postagger.xml' />
-		<tool file='lapps_dkpro/dkpro.opennlp.parser.xml' />
-		<tool file='lapps_dkpro/dkpro.opennlp.namedentityrecognizer.xml' />
-	</section>
     <section id="dbpedia" name="DBpedia">
         <tool file="lapps_dbpedia/spotlight.xml"/>
     </section>
-	<section id="relation.extraction" name="Relation Extraction">
-		<tool file="lapps_common/reverb.xml"/>
-	</section>
 	<!--
 	<section id="kyoto.grid" name="Kyoto Node">
 		<tool file='lapps_kyoto/opennlp_postagger.xml'/>
@@ -151,9 +128,6 @@
 		<tool file="lapps_common/compare_annotations.xml"/>
 		-->
 	</section>
-	<section id="arg.tech" name="Argument Structure">
-		<tool file="args/translate.xml"/>
-	</section>
 	<section id="local.converters" name="Manual Conversion">
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
@@ -164,14 +138,11 @@
 	<section id="misc" name="Miscellaneous">
 		<!-- <tool file="lapps_common/filter.xml"/> -->
 		<tool file="lapps_common/simple_filter.xml"/>
-		<tool file="lapps_common/freeform_filter.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
-		<tool file="lapps_common/newords.xml"/>
 		<tool file="lapps_common/rename.xml"/>
 		<tool file="lapps_common/rename_features.xml"/>
 		<tool file="lapps_common/wrap.xml"/>
-		<tool file="lapps_test/merge.xml"/>
 	</section>
   <section id="plots" name="Graph/Display Data">
 		<tool file="lapps_common/pretty_print.xml"/>
