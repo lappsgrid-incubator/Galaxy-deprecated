@@ -18,6 +18,15 @@
         <tool file="lapps_gigaword/create_collection.xml"/>
         <tool file="lapps_gigaword/query.xml"/>
     </section>
+	<section id="discovery" name="Discovery 2020">
+		<tool file="discovery/multi_annotator.xml"/>
+		<tool file="discovery/multi_annotator2.xml"/>
+		<tool file="discovery/ner_span_annotator.xml"/>
+		<tool file="discovery/ner_span_annotator2.xml"/>
+		<tool file="discovery/passage_extractor.xml"/>
+		<tool file="discovery/scoring.xml"/>
+		<tool file="discovery/summarize.xml"/>
+	</section>
 	<section id="tokenizers" name="Tokenizers">
 		<tool file="lapps_stanford/vassar.tokenizer_2.0.0.xml"/>
 		<tool file='lapps_stanford/brandeis.tokenizer.xml' />
@@ -45,6 +54,7 @@
 		<tool file='lapps_stanford/brandeis.namedentityrecognizer.xml' />
 		<tool file="lapps_gate/gate.ner_2.0.0.xml"/>
 		<tool file='lapps_opennlp/opennlp.namedentityrecognizer.xml' />
+		<tool file="lapps_lingpipe/cmu.dictionaryNER_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
         <tool file="lapps_dbpedia/spotlight.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
@@ -101,6 +111,7 @@
 		<tool file="lapps_lingpipe/vassar.splitter_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.tagger_1.0.0.xml"/>
 		<tool file="lapps_lingpipe/vassar.ner_1.0.0.xml"/>
+		<tool file="lapps_lingpipe/cmu.dictionaryNER_1.0.0.xml"/>
     </section>
     <section id="dbpedia" name="DBpedia">
         <tool file="lapps_dbpedia/spotlight.xml"/>
@@ -122,6 +133,9 @@
 		<tool file="lapps_common/compare_annotations.xml"/>
 		-->
 	</section>
+	<section id="arg.tech" name="Argument Structure">
+		<tool file="args/translate.xml"/>
+	</section>
 	<section id="local.converters" name="Manual Conversion">
 		<tool file="lapps_converters/convert.gate2json_2.0.0.xml"/>
 		<tool file="lapps_converters/convert.json2gate_2.0.0.xml"/>
@@ -132,6 +146,7 @@
 	<section id="misc" name="Miscellaneous">
 		<!-- <tool file="lapps_common/filter.xml"/> -->
 		<tool file="lapps_common/simple_filter.xml"/>
+		<tool file="lapps_common/freeform_filter.xml"/>
 		<tool file="lapps_common/pretty_print.xml"/>
         <tool file="lapps_common/nerfix.xml"/>
 		<tool file="lapps_common/rename.xml"/>
