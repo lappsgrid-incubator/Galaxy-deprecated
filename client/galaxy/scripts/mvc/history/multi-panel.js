@@ -1,12 +1,16 @@
 define([
     "mvc/history/history-model",
-    "mvc/history/history-panel-edit",
+    "mvc/history/history-view-edit",
     "mvc/history/copy-dialog",
     "mvc/base-mvc",
     "utils/ajax-queue",
     "ui/mode-button",
     "ui/search-input"
-], function( HISTORY_MODEL, HPANEL_EDIT, historyCopyDialog, baseMVC, ajaxQueue ){
+], function( HISTORY_MODEL, HISTORY_VIEW_EDIT, historyCopyDialog, baseMVC, ajaxQueue ){
+
+'use strict';
+
+var logNamespace = 'history';
 /* ==============================================================================
 TODO:
     rendering/delayed rendering is a mess
@@ -39,10 +43,9 @@ TODO:
 ============================================================================== */
 /** @class A container for a history panel that renders controls for that history (delete, copy, etc.)
  */
-var HistoryPanelColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
+var HistoryViewColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
 //TODO: extend from panel? (instead of aggregating)
-
-    //logger : console,
+    _logNamespace : logNamespace,
 
     tagName     : 'div',
     className   : 'history-column flex-column flex-row-container',
@@ -72,7 +75,7 @@ var HistoryPanelColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
         }, panelOptions );
         //this.log( 'panelOptions:', panelOptions );
 //TODO: use current-history-panel for current
-        var panel = new HPANEL_EDIT.HistoryPanelEdit( panelOptions );
+        var panel = new HISTORY_VIEW_EDIT.HistoryViewEdit( panelOptions );
         panel._renderEmptyMessage = this.__patch_renderEmptyMessage;
         return panel;
     },
@@ -130,6 +133,12 @@ var HistoryPanelColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
             // assumes panel will take the longest to render
             'rendered': function(){
                 column.trigger( 'rendered', column );
+            },
+            // when a panel's view expands turn off the click handler on the rerun button so that it uses it's href
+            // this allows the button to open the tool rerun form in a new tab (instead of erroring)
+            // TODO: hack
+            'view:expanded view:rendered': function( view ){
+                view.$( '.rerun-btn' ).off();
             }
         }, this );
     },
@@ -298,7 +307,7 @@ var HistoryPanelColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
     // ------------------------------------------------------------------------ misc
     /** String rep */
     toString : function(){
-        return 'HistoryPanelColumn(' + ( this.panel? this.panel : '' ) + ')';
+        return 'HistoryViewColumn(' + ( this.panel? this.panel : '' ) + ')';
     }
 });
 
@@ -307,8 +316,8 @@ var HistoryPanelColumn = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
 /** @class A view of a HistoryCollection and displays histories similarly to the current history panel.
  */
 var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
+    _logNamespace : logNamespace,
 
-    //logger : console,
     className : 'multi-panel-history',
 
     // ------------------------------------------------------------------------ set up
@@ -450,7 +459,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
     handleDeletedHistory : function handleDeletedHistory( history ){
         if( history.get( 'deleted' ) || history.get( 'purged' ) ){
             this.log( 'handleDeletedHistory', this.collection.includeDeleted, history );
-            var multipanel = this;
+            var multipanel = this,
                 column = multipanel.columnMap[ history.id ];
             if( !column ){ return; }
 
@@ -504,7 +513,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
             model       : history,
             purgeAllowed: Galaxy.config.allow_user_dataset_purge
         });
-        var column = new HistoryPanelColumn( options );
+        var column = new HistoryViewColumn( options );
         if( history.id === this.collection.currentHistoryId ){ column.currentHistory = true; }
         this.setUpColumnListeners( column );
         if( this.datasetSearch ){
@@ -589,7 +598,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
 
                 var queue = new ajaxQueue.NamedAjaxQueue();
                 // need to reverse to better match expected order
-                // TODO: reconsider order in list-panel._setUpItemViewListeners, dragstart (instead of here)
+                // TODO: reconsider order in list-view._setUpItemViewListeners, dragstart (instead of here)
                 toCopy.reverse().forEach( function( content ){
                     queue.add({
                         name : 'copy-' + content.id,
@@ -720,7 +729,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
             var xhrData = {},
                 ids = _.values( column.panel.storage.get( 'expandedIds' ) ).join();
             if( ids ){
-                xhrData.dataset_details = ids;
+                xhrData.details = ids;
             }
             // this uses a 'named' queue so that duplicate requests are ignored
             this.hdaQueue.add({
@@ -778,13 +787,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
 
     close : function( ev ){
         //TODO: switch to pushState/router
-        var destination = '/';
-        if( Galaxy && Galaxy.options && Galaxy.options.root ){
-            destination = Galaxy.options.root;
-        } else if( galaxy_config && galaxy_config.root ){
-            destination = galaxy_config.root;
-        }
-        window.location = destination;
+        window.location = Galaxy.root;
     },
 
     _clickToggleDeletedHistories : function( ev ){
@@ -794,9 +797,9 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
     /** Include deleted histories in the collection */
     toggleDeletedHistories : function( show ){
         if( show ){
-            window.location = Galaxy.options.root + 'history/view_multiple?include_deleted_histories=True';
+            window.location = Galaxy.root + 'history/view_multiple?include_deleted_histories=True';
         } else {
-            window.location = Galaxy.options.root + 'history/view_multiple';
+            window.location = Galaxy.root + 'history/view_multiple';
         }
     },
 
@@ -1017,7 +1020,7 @@ var MultiPanelColumns = Backbone.View.extend( baseMVC.LoggableMixin ).extend({
     currentColumnDropTargetOff : function(){
         var currentColumn = this.columnMap[ this.collection.currentHistoryId ];
         if( !currentColumn ){ return; }
-        currentColumn.panel.dataDropped = HPANEL_EDIT.HistoryPanelEdit.prototype.dataDrop;
+        currentColumn.panel.dataDropped = HISTORY_VIEW_EDIT.HistoryViewEdit.prototype.dataDrop;
         // slight override of dropTargetOff to not erase drop-target-help
         currentColumn.panel.dropTarget = false;
         currentColumn.panel.$( '.history-drop-target' ).remove();

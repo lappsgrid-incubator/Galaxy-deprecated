@@ -1,16 +1,14 @@
 """
 Migration script to create tables task management.
 """
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from migrate import *
-from migrate.changeset import *
+from __future__ import print_function
 
 import datetime
-
 import logging
-log = logging.getLogger( __name__ )
 
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, MetaData, String, Table, TEXT
+
+log = logging.getLogger( __name__ )
 metadata = MetaData()
 now = datetime.datetime.utcnow
 
@@ -33,15 +31,17 @@ Task_table = Table( "task", metadata,
 
 tables = [Task_table]
 
+
 def upgrade(migrate_engine):
     metadata.bind = migrate_engine
-    print __doc__
+    print(__doc__)
     metadata.reflect()
     for table in tables:
         try:
             table.create()
         except:
-            log.warn( "Failed to create table '%s', ignoring (might result in wrong schema)" % table.name )
+            log.warning( "Failed to create table '%s', ignoring (might result in wrong schema)" % table.name )
+
 
 def downgrade(migrate_engine):
     metadata.bind = migrate_engine

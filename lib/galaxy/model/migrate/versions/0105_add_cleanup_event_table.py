@@ -1,16 +1,17 @@
 """
 Migration script to add the cleanup_event* tables.
 """
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from migrate import *
-from migrate.changeset import *
-import sys, logging
-from galaxy.model.custom_types import *
-from sqlalchemy.exc import *
-import datetime
-now = datetime.datetime.utcnow
+from __future__ import print_function
 
+import datetime
+import logging
+import sys
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, MetaData, Table
+
+from galaxy.model.custom_types import TrimmedString
+
+now = datetime.datetime.utcnow
 log = logging.getLogger( __name__ )
 log.setLevel( logging.DEBUG )
 handler = logging.StreamHandler( sys.stdout )
@@ -81,9 +82,10 @@ CleanupEventImplicitlyConvertedDatasetAssociationAssociation_table = Table( "cle
                                                                             Column( "cleanup_event_id", Integer, ForeignKey( "cleanup_event.id" ), index=True, nullable=True ),
                                                                             Column( "icda_id", Integer, ForeignKey( "implicitly_converted_dataset_association.id" ), index=True ) )
 
+
 def upgrade(migrate_engine):
     metadata.bind = migrate_engine
-    print __doc__
+    print(__doc__)
     metadata.reflect()
     try:
         CleanupEvent_table.create()
@@ -96,8 +98,9 @@ def upgrade(migrate_engine):
         CleanupEventLibraryDatasetAssociation_table.create()
         CleanupEventLibraryDatasetDatasetAssociationAssociation_table.create()
         CleanupEventImplicitlyConvertedDatasetAssociationAssociation_table.create()
-    except Exception, e:
+    except Exception as e:
         log.debug( "Creating table failed: %s" % str( e ) )
+
 
 def downgrade(migrate_engine):
     metadata.bind = migrate_engine
@@ -113,5 +116,5 @@ def downgrade(migrate_engine):
         CleanupEventMetadataFileAssociation_table.drop()
         CleanupEventDatasetAssociation_table.drop()
         CleanupEvent_table.drop()
-    except Exception, e:
+    except Exception as e:
         log.debug( "Dropping table failed: %s" % str( e ) )

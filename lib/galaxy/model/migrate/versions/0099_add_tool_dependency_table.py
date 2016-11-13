@@ -1,16 +1,17 @@
 """
 Migration script to add the tool_dependency table.
 """
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from migrate import *
-from migrate.changeset import *
-import sys, logging
-from galaxy.model.custom_types import *
-from sqlalchemy.exc import *
-import datetime
-now = datetime.datetime.utcnow
+from __future__ import print_function
 
+import datetime
+import logging
+import sys
+
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, MetaData, Table
+
+from galaxy.model.custom_types import TrimmedString
+
+now = datetime.datetime.utcnow
 log = logging.getLogger( __name__ )
 log.setLevel( logging.DEBUG )
 handler = logging.StreamHandler( sys.stdout )
@@ -33,19 +34,21 @@ ToolDependency_table = Table( "tool_dependency", metadata,
                               Column( "type", TrimmedString( 40 ) ),
                               Column( "uninstalled", Boolean, default=False ) )
 
+
 def upgrade(migrate_engine):
     metadata.bind = migrate_engine
-    print __doc__
+    print(__doc__)
     metadata.reflect()
     try:
         ToolDependency_table.create()
-    except Exception, e:
+    except Exception as e:
         log.debug( "Creating tool_dependency table failed: %s" % str( e ) )
+
 
 def downgrade(migrate_engine):
     metadata.bind = migrate_engine
     metadata.reflect()
     try:
         ToolDependency_table.drop()
-    except Exception, e:
+    except Exception as e:
         log.debug( "Dropping tool_dependency table failed: %s" % str( e ) )

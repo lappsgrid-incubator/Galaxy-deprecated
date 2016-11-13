@@ -2,10 +2,7 @@ from __future__ import absolute_import
 
 import logging
 
-from galaxy import eggs
-eggs.require('SQLAlchemy')
 from sqlalchemy import false
-eggs.require( "MarkupSafe" )
 from markupsafe import escape
 
 from galaxy import model, util

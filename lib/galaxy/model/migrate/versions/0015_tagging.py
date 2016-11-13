@@ -9,32 +9,33 @@ history_dataset_association_tag_association table failed:  (OperationalError)
 (1059, "Identifier name 'ix_history_dataset_association_tag_association_history_dataset_association_id'
 is too long)
 """
-
-from sqlalchemy import *
-from migrate import *
+from __future__ import print_function
 
 import datetime
-now = datetime.datetime.utcnow
+import logging
+
+from migrate import UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, MetaData, Table
 
 # Need our custom types, but don't import anything else from model
-from galaxy.model.custom_types import *
+from galaxy.model.custom_types import TrimmedString
 
-import logging
+now = datetime.datetime.utcnow
 log = logging.getLogger( __name__ )
-
 metadata = MetaData()
 
+
 def display_migration_details():
-    print ""
-    print "This migration script adds the tables necessary to support tagging of histories,"
-    print "datasets, and history-dataset associations (user views of datasets)."
-    print ""
-    print "If using mysql, this script will display the following error, which is "
-    print "corrected in the next migration script:"
-    print "history_dataset_association_tag_association table failed:  "
-    print "(OperationalError) (1059, 'Identifier name "
-    print "'ix_history_dataset_association_tag_association_history_dataset_association_id'"
-    print "is too long)"
+    print("")
+    print("This migration script adds the tables necessary to support tagging of histories,")
+    print("datasets, and history-dataset associations (user views of datasets).")
+    print("")
+    print("If using mysql, this script will display the following error, which is ")
+    print("corrected in the next migration script:")
+    print("history_dataset_association_tag_association table failed:  ")
+    print("(OperationalError) (1059, 'Identifier name ")
+    print("'ix_history_dataset_association_tag_association_history_dataset_association_id'")
+    print("is too long)")
 
 
 # New tables to support tagging of histories, datasets, and history-dataset associations.
@@ -66,51 +67,53 @@ HistoryDatasetAssociationTagAssociation_table = Table( "history_dataset_associat
                                                        Column( "value", TrimmedString(255), index=True),
                                                        Column( "user_value", TrimmedString(255), index=True) )
 
+
 def upgrade(migrate_engine):
     metadata.bind = migrate_engine
     display_migration_details()
     metadata.reflect()
     try:
         Tag_table.create()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Creating tag table failed: %s" % str( e ) )
     try:
         HistoryTagAssociation_table.create()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Creating history_tag_association table failed: %s" % str( e ) )
     try:
         DatasetTagAssociation_table.create()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Creating dataset_tag_association table failed: %s" % str( e ) )
     try:
         HistoryDatasetAssociationTagAssociation_table.create()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Creating history_dataset_association_tag_association table failed: %s" % str( e ) )
+
 
 def downgrade(migrate_engine):
     metadata.bind = migrate_engine
     metadata.reflect()
     try:
         Tag_table.drop()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Dropping tag table failed: %s" % str( e ) )
     try:
         HistoryTagAssociation_table.drop()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Dropping history_tag_association table failed: %s" % str( e ) )
     try:
         DatasetTagAssociation_table.drop()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Dropping dataset_tag_association table failed: %s" % str( e ) )
     try:
         HistoryDatasetAssociationTagAssociation_table.drop()
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print(str(e))
         log.debug( "Dropping history_dataset_association_tag_association table failed: %s" % str( e ) )

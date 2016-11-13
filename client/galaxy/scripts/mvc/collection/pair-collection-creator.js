@@ -4,6 +4,10 @@ define([
     "mvc/base-mvc",
     "utils/localization"
 ], function( LIST_CREATOR, HDCA, BASE_MVC, _l ){
+
+'use strict';
+
+var logNamespace = 'collections';
 /*==============================================================================
 TODO:
     the paired creator doesn't really mesh with the list creator as parent
@@ -14,6 +18,8 @@ TODO:
 ==============================================================================*/
 /**  */
 var PairedDatasetCollectionElementView = Backbone.View.extend( BASE_MVC.LoggableMixin ).extend({
+    _logNamespace : logNamespace,
+
 //TODO: use proper class (DatasetDCE or NestedDCDCE (or the union of both))
     tagName     : 'li',
     className   : 'collection-element',

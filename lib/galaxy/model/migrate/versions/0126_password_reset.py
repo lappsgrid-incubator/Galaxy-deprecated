@@ -1,19 +1,15 @@
 """
 Migration script for the password reset table
 """
-
-from sqlalchemy import *
-from sqlalchemy.orm import *
-from migrate import *
-from migrate.changeset import *
-from galaxy.model.custom_types import *
+from __future__ import print_function
 
 import datetime
-now = datetime.datetime.utcnow
-
 import logging
-log = logging.getLogger( __name__ )
 
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, MetaData, String, Table
+
+now = datetime.datetime.utcnow
+log = logging.getLogger( __name__ )
 metadata = MetaData()
 
 PasswordResetToken_table = Table("password_reset_token", metadata,
@@ -24,12 +20,12 @@ PasswordResetToken_table = Table("password_reset_token", metadata,
 
 def upgrade(migrate_engine):
     metadata.bind = migrate_engine
-    print __doc__
+    print(__doc__)
     metadata.reflect()
     try:
         PasswordResetToken_table.create()
     except Exception as e:
-        print str(e)
+        print(str(e))
         log.exception("Creating %s table failed: %s" % (PasswordResetToken_table.name, str( e ) ) )
 
 
@@ -39,5 +35,5 @@ def downgrade(migrate_engine):
     try:
         PasswordResetToken_table.drop()
     except Exception as e:
-        print str(e)
+        print(str(e))
         log.exception("Dropping %s table failed: %s" % (PasswordResetToken_table.name, str( e ) ) )

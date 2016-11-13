@@ -5,7 +5,7 @@ Upload class
 import logging
 import urllib
 
-from galaxy import jobs, util, web
+from galaxy import jobs, web
 from galaxy.util import Params
 from galaxy.util.hash_util import hmac_new
 from galaxy.web.base.controller import BaseUIController
@@ -32,7 +32,6 @@ class ASync( BaseUIController ):
         if not kwd:
             return trans.response.send_redirect( "/index" )
 
-        history = trans.get_history( create=True )
         params = Params(kwd, sanitize=False)
         STATUS = params.STATUS
         URL = params.URL
@@ -137,10 +136,10 @@ class ASync( BaseUIController ):
                 if not text.endswith('OK'):
                     raise Exception( text )
                 data.state = data.blurb = data.states.RUNNING
-            except Exception, e:
+            except Exception as e:
                 data.info = str(e)
                 data.state = data.blurb = data.states.ERROR
 
             trans.sa_session.flush()
 
-        return trans.fill_template( 'tool_executed.mako', history=history, toolbox=toolbox, tool=tool, util=util, out_data={}, num_jobs=1, job_errors=[] )
+        return trans.fill_template( 'root/tool_runner.mako', out_data={}, num_jobs=1, job_errors=[] )
